@@ -1,0 +1,775 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BakPisirDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CategoryTBL">
+          <Key>
+            <PropertyRef Name="categoryId" />
+          </Key>
+          <Property Name="categoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="categoryName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="isDelete" Type="bit" />
+        </EntityType>
+        <EntityType Name="CommentTBL">
+          <Key>
+            <PropertyRef Name="commentId" />
+          </Key>
+          <Property Name="commentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="recipeId" Type="int" />
+          <Property Name="userId" Type="int" />
+          <Property Name="comment" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="parentId" Type="int" />
+          <Property Name="commentImageUrl" Type="varchar(max)" />
+          <Property Name="isDelete" Type="bit" />
+          <Property Name="commentDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="LogTBL">
+          <Key>
+            <PropertyRef Name="logId" />
+          </Key>
+          <Property Name="logId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userId" Type="int" />
+          <Property Name="logActivity" Type="varchar(max)" />
+          <Property Name="logDate" Type="datetime" />
+          <Property Name="ipAddress" Type="varchar" MaxLength="20" />
+          <Property Name="logUsername" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="RecipeTBL">
+          <Key>
+            <PropertyRef Name="recipeId" />
+          </Key>
+          <Property Name="recipeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userId" Type="int" />
+          <Property Name="categoryId" Type="int" />
+          <Property Name="recipeVideoUrl" Type="varchar(max)" />
+          <Property Name="ingredients" Type="varchar(max)" />
+          <Property Name="isDelete" Type="bit" />
+          <Property Name="cookingTime" Type="varchar" MaxLength="50" />
+          <Property Name="recipeDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="RequestTBL">
+          <Key>
+            <PropertyRef Name="requestId" />
+          </Key>
+          <Property Name="requestId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="30" />
+          <Property Name="surname" Type="varchar" MaxLength="30" />
+          <Property Name="mail" Type="varchar" MaxLength="100" />
+          <Property Name="requestDate" Type="datetime" />
+          <Property Name="phone" Type="varchar" MaxLength="12" />
+          <Property Name="username" Type="varchar" MaxLength="50" />
+          <Property Name="isDelete" Type="bit" />
+          <Property Name="birthdate" Type="date" />
+          <Property Name="agreement" Type="bit" />
+          <Property Name="identityNumber" Type="varchar" MaxLength="11" />
+          <Property Name="password" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="StepTBL">
+          <Key>
+            <PropertyRef Name="stepId" />
+          </Key>
+          <Property Name="stepId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="recipeId" Type="int" />
+          <Property Name="stepName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="stepDescription" Type="varchar(max)" />
+          <Property Name="stepImageUrl" Type="varchar(max)" />
+          <Property Name="isDelete" Type="bit" />
+        </EntityType>
+        <EntityType Name="SubCategoryTBL">
+          <Key>
+            <PropertyRef Name="subCategoryId" />
+          </Key>
+          <Property Name="subCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="categoryId" Type="int" />
+          <Property Name="subCategoryName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="recipeId" Type="int" />
+          <Property Name="isDelete" Type="bit" />
+        </EntityType>
+        <EntityType Name="SubTransitionTBL">
+          <Key>
+            <PropertyRef Name="categoryTransitionId" />
+          </Key>
+          <Property Name="categoryTransitionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="subCategoryId" Type="int" />
+          <Property Name="recipeId" Type="int" />
+          <Property Name="isDelete" Type="bit" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="UserTBL">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="30" />
+          <Property Name="surname" Type="varchar" MaxLength="30" />
+          <Property Name="mail" Type="varchar" MaxLength="100" />
+          <Property Name="registrationDate" Type="datetime" />
+          <Property Name="phone" Type="varchar" MaxLength="12" />
+          <Property Name="username" Type="varchar" MaxLength="50" />
+          <Property Name="userType" Type="bit" />
+          <Property Name="password" Type="varchar" MaxLength="50" />
+          <Property Name="profilePictureUrl" Type="varchar(max)" />
+          <Property Name="isDelete" Type="bit" />
+          <Property Name="birthdate" Type="date" />
+          <Property Name="identityNumber" Type="varchar" MaxLength="11" />
+        </EntityType>
+        <Association Name="FK__CommentTB__recip__31EC6D26">
+          <End Role="RecipeTBL" Type="Self.RecipeTBL" Multiplicity="0..1" />
+          <End Role="CommentTBL" Type="Self.CommentTBL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RecipeTBL">
+              <PropertyRef Name="recipeId" />
+            </Principal>
+            <Dependent Role="CommentTBL">
+              <PropertyRef Name="recipeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CommentTB__userI__32E0915F">
+          <End Role="UserTBL" Type="Self.UserTBL" Multiplicity="0..1" />
+          <End Role="CommentTBL" Type="Self.CommentTBL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTBL">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="CommentTBL">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RecipeTBL__userI__33D4B598">
+          <End Role="UserTBL" Type="Self.UserTBL" Multiplicity="0..1" />
+          <End Role="RecipeTBL" Type="Self.RecipeTBL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTBL">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="RecipeTBL">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StepTBL__recipeI__35BCFE0A">
+          <End Role="RecipeTBL" Type="Self.RecipeTBL" Multiplicity="0..1" />
+          <End Role="StepTBL" Type="Self.StepTBL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RecipeTBL">
+              <PropertyRef Name="recipeId" />
+            </Principal>
+            <Dependent Role="StepTBL">
+              <PropertyRef Name="recipeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SubCatego__categ__36B12243">
+          <End Role="CategoryTBL" Type="Self.CategoryTBL" Multiplicity="0..1" />
+          <End Role="SubCategoryTBL" Type="Self.SubCategoryTBL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoryTBL">
+              <PropertyRef Name="categoryId" />
+            </Principal>
+            <Dependent Role="SubCategoryTBL">
+              <PropertyRef Name="categoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SubCatego__recip__37A5467C">
+          <End Role="RecipeTBL" Type="Self.RecipeTBL" Multiplicity="0..1" />
+          <End Role="SubCategoryTBL" Type="Self.SubCategoryTBL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RecipeTBL">
+              <PropertyRef Name="recipeId" />
+            </Principal>
+            <Dependent Role="SubCategoryTBL">
+              <PropertyRef Name="recipeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SubTransi__recip__38996AB5">
+          <End Role="RecipeTBL" Type="Self.RecipeTBL" Multiplicity="0..1" />
+          <End Role="SubTransitionTBL" Type="Self.SubTransitionTBL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RecipeTBL">
+              <PropertyRef Name="recipeId" />
+            </Principal>
+            <Dependent Role="SubTransitionTBL">
+              <PropertyRef Name="recipeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SubTransi__subCa__398D8EEE">
+          <End Role="SubCategoryTBL" Type="Self.SubCategoryTBL" Multiplicity="0..1" />
+          <End Role="SubTransitionTBL" Type="Self.SubTransitionTBL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategoryTBL">
+              <PropertyRef Name="subCategoryId" />
+            </Principal>
+            <Dependent Role="SubTransitionTBL">
+              <PropertyRef Name="subCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_logTBL_UserTBL">
+          <End Role="UserTBL" Type="Self.UserTBL" Multiplicity="0..1" />
+          <End Role="LogTBL" Type="Self.LogTBL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTBL">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="LogTBL">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecipeTBL_CategoryTBL">
+          <End Role="CategoryTBL" Type="Self.CategoryTBL" Multiplicity="0..1" />
+          <End Role="RecipeTBL" Type="Self.RecipeTBL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoryTBL">
+              <PropertyRef Name="categoryId" />
+            </Principal>
+            <Dependent Role="RecipeTBL">
+              <PropertyRef Name="categoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BakPisirDBModelStoreContainer">
+          <EntitySet Name="CategoryTBL" EntityType="Self.CategoryTBL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CommentTBL" EntityType="Self.CommentTBL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LogTBL" EntityType="Self.LogTBL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RecipeTBL" EntityType="Self.RecipeTBL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestTBL" EntityType="Self.RequestTBL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StepTBL" EntityType="Self.StepTBL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubCategoryTBL" EntityType="Self.SubCategoryTBL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubTransitionTBL" EntityType="Self.SubTransitionTBL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserTBL" EntityType="Self.UserTBL" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__CommentTB__recip__31EC6D26" Association="Self.FK__CommentTB__recip__31EC6D26">
+            <End Role="RecipeTBL" EntitySet="RecipeTBL" />
+            <End Role="CommentTBL" EntitySet="CommentTBL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CommentTB__userI__32E0915F" Association="Self.FK__CommentTB__userI__32E0915F">
+            <End Role="UserTBL" EntitySet="UserTBL" />
+            <End Role="CommentTBL" EntitySet="CommentTBL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RecipeTBL__userI__33D4B598" Association="Self.FK__RecipeTBL__userI__33D4B598">
+            <End Role="UserTBL" EntitySet="UserTBL" />
+            <End Role="RecipeTBL" EntitySet="RecipeTBL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StepTBL__recipeI__35BCFE0A" Association="Self.FK__StepTBL__recipeI__35BCFE0A">
+            <End Role="RecipeTBL" EntitySet="RecipeTBL" />
+            <End Role="StepTBL" EntitySet="StepTBL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SubCatego__categ__36B12243" Association="Self.FK__SubCatego__categ__36B12243">
+            <End Role="CategoryTBL" EntitySet="CategoryTBL" />
+            <End Role="SubCategoryTBL" EntitySet="SubCategoryTBL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SubCatego__recip__37A5467C" Association="Self.FK__SubCatego__recip__37A5467C">
+            <End Role="RecipeTBL" EntitySet="RecipeTBL" />
+            <End Role="SubCategoryTBL" EntitySet="SubCategoryTBL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SubTransi__recip__38996AB5" Association="Self.FK__SubTransi__recip__38996AB5">
+            <End Role="RecipeTBL" EntitySet="RecipeTBL" />
+            <End Role="SubTransitionTBL" EntitySet="SubTransitionTBL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SubTransi__subCa__398D8EEE" Association="Self.FK__SubTransi__subCa__398D8EEE">
+            <End Role="SubCategoryTBL" EntitySet="SubCategoryTBL" />
+            <End Role="SubTransitionTBL" EntitySet="SubTransitionTBL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_logTBL_UserTBL" Association="Self.FK_logTBL_UserTBL">
+            <End Role="UserTBL" EntitySet="UserTBL" />
+            <End Role="LogTBL" EntitySet="LogTBL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecipeTBL_CategoryTBL" Association="Self.FK_RecipeTBL_CategoryTBL">
+            <End Role="CategoryTBL" EntitySet="CategoryTBL" />
+            <End Role="RecipeTBL" EntitySet="RecipeTBL" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BakPisirDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CategoryTBL">
+          <Key>
+            <PropertyRef Name="categoryId" />
+          </Key>
+          <Property Name="categoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="categoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="isDelete" Type="Boolean" />
+          <NavigationProperty Name="SubCategoryTBL" Relationship="Self.FK__SubCatego__categ__36B12243" FromRole="CategoryTBL" ToRole="SubCategoryTBL" />
+          <NavigationProperty Name="RecipeTBL" Relationship="Self.FK_RecipeTBL_CategoryTBL" FromRole="CategoryTBL" ToRole="RecipeTBL" />
+        </EntityType>
+        <EntityType Name="CommentTBL">
+          <Key>
+            <PropertyRef Name="commentId" />
+          </Key>
+          <Property Name="commentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="recipeId" Type="Int32" />
+          <Property Name="userId" Type="Int32" />
+          <Property Name="comment" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="parentId" Type="Int32" />
+          <Property Name="commentImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isDelete" Type="Boolean" />
+          <NavigationProperty Name="RecipeTBL" Relationship="Self.FK__CommentTB__recip__31EC6D26" FromRole="CommentTBL" ToRole="RecipeTBL" />
+          <NavigationProperty Name="UserTBL" Relationship="Self.FK__CommentTB__userI__32E0915F" FromRole="CommentTBL" ToRole="UserTBL" />
+          <Property Name="commentDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="LogTBL">
+          <Key>
+            <PropertyRef Name="logId" />
+          </Key>
+          <Property Name="logId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userId" Type="Int32" />
+          <Property Name="logActivity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="logDate" Type="DateTime" Precision="3" />
+          <Property Name="ipAddress" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserTBL" Relationship="Self.FK_logTBL_UserTBL" FromRole="LogTBL" ToRole="UserTBL" />
+          <Property Name="logUsername" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="RecipeTBL">
+          <Key>
+            <PropertyRef Name="recipeId" />
+          </Key>
+          <Property Name="recipeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userId" Type="Int32" />
+          <Property Name="categoryId" Type="Int32" />
+          <Property Name="recipeVideoUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ingredients" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isDelete" Type="Boolean" />
+          <NavigationProperty Name="CategoryTBL" Relationship="Self.FK_RecipeTBL_CategoryTBL" FromRole="RecipeTBL" ToRole="CategoryTBL" />
+          <NavigationProperty Name="CommentTBL" Relationship="Self.FK__CommentTB__recip__31EC6D26" FromRole="RecipeTBL" ToRole="CommentTBL" />
+          <NavigationProperty Name="UserTBL" Relationship="Self.FK__RecipeTBL__userI__33D4B598" FromRole="RecipeTBL" ToRole="UserTBL" />
+          <NavigationProperty Name="StepTBL" Relationship="Self.FK__StepTBL__recipeI__35BCFE0A" FromRole="RecipeTBL" ToRole="StepTBL" />
+          <NavigationProperty Name="SubCategoryTBL" Relationship="Self.FK__SubCatego__recip__37A5467C" FromRole="RecipeTBL" ToRole="SubCategoryTBL" />
+          <NavigationProperty Name="SubTransitionTBL" Relationship="Self.FK__SubTransi__recip__38996AB5" FromRole="RecipeTBL" ToRole="SubTransitionTBL" />
+          <Property Name="cookingTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="recipeDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="RequestTBL">
+          <Key>
+            <PropertyRef Name="requestId" />
+          </Key>
+          <Property Name="requestId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="mail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="requestDate" Type="DateTime" Precision="3" />
+          <Property Name="phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="isDelete" Type="Boolean" />
+          <Property Name="agreement" Type="Boolean" />
+          <Property Name="identityNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="surname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="birthdate" Type="DateTime" Precision="0" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="StepTBL">
+          <Key>
+            <PropertyRef Name="stepId" />
+          </Key>
+          <Property Name="stepId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="recipeId" Type="Int32" />
+          <Property Name="stepName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="stepDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="stepImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isDelete" Type="Boolean" />
+          <NavigationProperty Name="RecipeTBL" Relationship="Self.FK__StepTBL__recipeI__35BCFE0A" FromRole="StepTBL" ToRole="RecipeTBL" />
+        </EntityType>
+        <EntityType Name="SubCategoryTBL">
+          <Key>
+            <PropertyRef Name="subCategoryId" />
+          </Key>
+          <Property Name="subCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="categoryId" Type="Int32" />
+          <Property Name="subCategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="recipeId" Type="Int32" />
+          <Property Name="isDelete" Type="Boolean" />
+          <NavigationProperty Name="CategoryTBL" Relationship="Self.FK__SubCatego__categ__36B12243" FromRole="SubCategoryTBL" ToRole="CategoryTBL" />
+          <NavigationProperty Name="RecipeTBL" Relationship="Self.FK__SubCatego__recip__37A5467C" FromRole="SubCategoryTBL" ToRole="RecipeTBL" />
+          <NavigationProperty Name="SubTransitionTBL" Relationship="Self.FK__SubTransi__subCa__398D8EEE" FromRole="SubCategoryTBL" ToRole="SubTransitionTBL" />
+        </EntityType>
+        <EntityType Name="SubTransitionTBL">
+          <Key>
+            <PropertyRef Name="categoryTransitionId" />
+          </Key>
+          <Property Name="categoryTransitionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="subCategoryId" Type="Int32" />
+          <Property Name="recipeId" Type="Int32" />
+          <Property Name="isDelete" Type="Boolean" />
+          <NavigationProperty Name="RecipeTBL" Relationship="Self.FK__SubTransi__recip__38996AB5" FromRole="SubTransitionTBL" ToRole="RecipeTBL" />
+          <NavigationProperty Name="SubCategoryTBL" Relationship="Self.FK__SubTransi__subCa__398D8EEE" FromRole="SubTransitionTBL" ToRole="SubCategoryTBL" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="UserTBL">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="mail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="registrationDate" Type="DateTime" Precision="3" />
+          <Property Name="phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="userType" Type="Boolean" />
+          <Property Name="profilePictureUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isDelete" Type="Boolean" />
+          <Property Name="identityNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CommentTBL" Relationship="Self.FK__CommentTB__userI__32E0915F" FromRole="UserTBL" ToRole="CommentTBL" />
+          <NavigationProperty Name="LogTBL" Relationship="Self.FK_logTBL_UserTBL" FromRole="UserTBL" ToRole="LogTBL" />
+          <NavigationProperty Name="RecipeTBL" Relationship="Self.FK__RecipeTBL__userI__33D4B598" FromRole="UserTBL" ToRole="RecipeTBL" />
+          <Property Name="surname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="birthdate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <Association Name="FK__SubCatego__categ__36B12243">
+          <End Role="CategoryTBL" Type="Self.CategoryTBL" Multiplicity="0..1" />
+          <End Role="SubCategoryTBL" Type="Self.SubCategoryTBL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoryTBL">
+              <PropertyRef Name="categoryId" />
+            </Principal>
+            <Dependent Role="SubCategoryTBL">
+              <PropertyRef Name="categoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecipeTBL_CategoryTBL">
+          <End Role="CategoryTBL" Type="Self.CategoryTBL" Multiplicity="0..1" />
+          <End Role="RecipeTBL" Type="Self.RecipeTBL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoryTBL">
+              <PropertyRef Name="categoryId" />
+            </Principal>
+            <Dependent Role="RecipeTBL">
+              <PropertyRef Name="categoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CommentTB__recip__31EC6D26">
+          <End Role="RecipeTBL" Type="Self.RecipeTBL" Multiplicity="0..1" />
+          <End Role="CommentTBL" Type="Self.CommentTBL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RecipeTBL">
+              <PropertyRef Name="recipeId" />
+            </Principal>
+            <Dependent Role="CommentTBL">
+              <PropertyRef Name="recipeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CommentTB__userI__32E0915F">
+          <End Role="UserTBL" Type="Self.UserTBL" Multiplicity="0..1" />
+          <End Role="CommentTBL" Type="Self.CommentTBL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTBL">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="CommentTBL">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_logTBL_UserTBL">
+          <End Role="UserTBL" Type="Self.UserTBL" Multiplicity="0..1" />
+          <End Role="LogTBL" Type="Self.LogTBL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTBL">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="LogTBL">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RecipeTBL__userI__33D4B598">
+          <End Role="UserTBL" Type="Self.UserTBL" Multiplicity="0..1" />
+          <End Role="RecipeTBL" Type="Self.RecipeTBL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTBL">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="RecipeTBL">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StepTBL__recipeI__35BCFE0A">
+          <End Role="RecipeTBL" Type="Self.RecipeTBL" Multiplicity="0..1" />
+          <End Role="StepTBL" Type="Self.StepTBL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RecipeTBL">
+              <PropertyRef Name="recipeId" />
+            </Principal>
+            <Dependent Role="StepTBL">
+              <PropertyRef Name="recipeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SubCatego__recip__37A5467C">
+          <End Role="RecipeTBL" Type="Self.RecipeTBL" Multiplicity="0..1" />
+          <End Role="SubCategoryTBL" Type="Self.SubCategoryTBL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RecipeTBL">
+              <PropertyRef Name="recipeId" />
+            </Principal>
+            <Dependent Role="SubCategoryTBL">
+              <PropertyRef Name="recipeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SubTransi__recip__38996AB5">
+          <End Role="RecipeTBL" Type="Self.RecipeTBL" Multiplicity="0..1" />
+          <End Role="SubTransitionTBL" Type="Self.SubTransitionTBL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RecipeTBL">
+              <PropertyRef Name="recipeId" />
+            </Principal>
+            <Dependent Role="SubTransitionTBL">
+              <PropertyRef Name="recipeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SubTransi__subCa__398D8EEE">
+          <End Role="SubCategoryTBL" Type="Self.SubCategoryTBL" Multiplicity="0..1" />
+          <End Role="SubTransitionTBL" Type="Self.SubTransitionTBL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategoryTBL">
+              <PropertyRef Name="subCategoryId" />
+            </Principal>
+            <Dependent Role="SubTransitionTBL">
+              <PropertyRef Name="subCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BakPisirDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CategoryTBL" EntityType="Self.CategoryTBL" />
+          <EntitySet Name="CommentTBL" EntityType="Self.CommentTBL" />
+          <EntitySet Name="LogTBL" EntityType="Self.LogTBL" />
+          <EntitySet Name="RecipeTBL" EntityType="Self.RecipeTBL" />
+          <EntitySet Name="RequestTBL" EntityType="Self.RequestTBL" />
+          <EntitySet Name="StepTBL" EntityType="Self.StepTBL" />
+          <EntitySet Name="SubCategoryTBL" EntityType="Self.SubCategoryTBL" />
+          <EntitySet Name="SubTransitionTBL" EntityType="Self.SubTransitionTBL" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="UserTBL" EntityType="Self.UserTBL" />
+          <AssociationSet Name="FK__SubCatego__categ__36B12243" Association="Self.FK__SubCatego__categ__36B12243">
+            <End Role="CategoryTBL" EntitySet="CategoryTBL" />
+            <End Role="SubCategoryTBL" EntitySet="SubCategoryTBL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecipeTBL_CategoryTBL" Association="Self.FK_RecipeTBL_CategoryTBL">
+            <End Role="CategoryTBL" EntitySet="CategoryTBL" />
+            <End Role="RecipeTBL" EntitySet="RecipeTBL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CommentTB__recip__31EC6D26" Association="Self.FK__CommentTB__recip__31EC6D26">
+            <End Role="RecipeTBL" EntitySet="RecipeTBL" />
+            <End Role="CommentTBL" EntitySet="CommentTBL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CommentTB__userI__32E0915F" Association="Self.FK__CommentTB__userI__32E0915F">
+            <End Role="UserTBL" EntitySet="UserTBL" />
+            <End Role="CommentTBL" EntitySet="CommentTBL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_logTBL_UserTBL" Association="Self.FK_logTBL_UserTBL">
+            <End Role="UserTBL" EntitySet="UserTBL" />
+            <End Role="LogTBL" EntitySet="LogTBL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RecipeTBL__userI__33D4B598" Association="Self.FK__RecipeTBL__userI__33D4B598">
+            <End Role="UserTBL" EntitySet="UserTBL" />
+            <End Role="RecipeTBL" EntitySet="RecipeTBL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StepTBL__recipeI__35BCFE0A" Association="Self.FK__StepTBL__recipeI__35BCFE0A">
+            <End Role="RecipeTBL" EntitySet="RecipeTBL" />
+            <End Role="StepTBL" EntitySet="StepTBL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SubCatego__recip__37A5467C" Association="Self.FK__SubCatego__recip__37A5467C">
+            <End Role="RecipeTBL" EntitySet="RecipeTBL" />
+            <End Role="SubCategoryTBL" EntitySet="SubCategoryTBL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SubTransi__recip__38996AB5" Association="Self.FK__SubTransi__recip__38996AB5">
+            <End Role="RecipeTBL" EntitySet="RecipeTBL" />
+            <End Role="SubTransitionTBL" EntitySet="SubTransitionTBL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SubTransi__subCa__398D8EEE" Association="Self.FK__SubTransi__subCa__398D8EEE">
+            <End Role="SubCategoryTBL" EntitySet="SubCategoryTBL" />
+            <End Role="SubTransitionTBL" EntitySet="SubTransitionTBL" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BakPisirDBModelStoreContainer" CdmEntityContainer="BakPisirDBEntities">
+          <EntitySetMapping Name="CategoryTBL">
+            <EntityTypeMapping TypeName="BakPisirDBModel.CategoryTBL">
+              <MappingFragment StoreEntitySet="CategoryTBL">
+                <ScalarProperty Name="categoryId" ColumnName="categoryId" />
+                <ScalarProperty Name="categoryName" ColumnName="categoryName" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CommentTBL">
+            <EntityTypeMapping TypeName="BakPisirDBModel.CommentTBL">
+              <MappingFragment StoreEntitySet="CommentTBL">
+                <ScalarProperty Name="commentDate" ColumnName="commentDate" />
+                <ScalarProperty Name="commentId" ColumnName="commentId" />
+                <ScalarProperty Name="recipeId" ColumnName="recipeId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+                <ScalarProperty Name="commentImageUrl" ColumnName="commentImageUrl" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogTBL">
+            <EntityTypeMapping TypeName="BakPisirDBModel.LogTBL">
+              <MappingFragment StoreEntitySet="LogTBL">
+                <ScalarProperty Name="logUsername" ColumnName="logUsername" />
+                <ScalarProperty Name="logId" ColumnName="logId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="logActivity" ColumnName="logActivity" />
+                <ScalarProperty Name="logDate" ColumnName="logDate" />
+                <ScalarProperty Name="ipAddress" ColumnName="ipAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RecipeTBL">
+            <EntityTypeMapping TypeName="BakPisirDBModel.RecipeTBL">
+              <MappingFragment StoreEntitySet="RecipeTBL">
+                <ScalarProperty Name="recipeDate" ColumnName="recipeDate" />
+                <ScalarProperty Name="cookingTime" ColumnName="cookingTime" />
+                <ScalarProperty Name="recipeId" ColumnName="recipeId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="categoryId" ColumnName="categoryId" />
+                <ScalarProperty Name="recipeVideoUrl" ColumnName="recipeVideoUrl" />
+                <ScalarProperty Name="ingredients" ColumnName="ingredients" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestTBL">
+            <EntityTypeMapping TypeName="BakPisirDBModel.RequestTBL">
+              <MappingFragment StoreEntitySet="RequestTBL">
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="birthdate" ColumnName="birthdate" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="requestId" ColumnName="requestId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="requestDate" ColumnName="requestDate" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+                <ScalarProperty Name="agreement" ColumnName="agreement" />
+                <ScalarProperty Name="identityNumber" ColumnName="identityNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StepTBL">
+            <EntityTypeMapping TypeName="BakPisirDBModel.StepTBL">
+              <MappingFragment StoreEntitySet="StepTBL">
+                <ScalarProperty Name="stepId" ColumnName="stepId" />
+                <ScalarProperty Name="recipeId" ColumnName="recipeId" />
+                <ScalarProperty Name="stepName" ColumnName="stepName" />
+                <ScalarProperty Name="stepDescription" ColumnName="stepDescription" />
+                <ScalarProperty Name="stepImageUrl" ColumnName="stepImageUrl" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubCategoryTBL">
+            <EntityTypeMapping TypeName="BakPisirDBModel.SubCategoryTBL">
+              <MappingFragment StoreEntitySet="SubCategoryTBL">
+                <ScalarProperty Name="subCategoryId" ColumnName="subCategoryId" />
+                <ScalarProperty Name="categoryId" ColumnName="categoryId" />
+                <ScalarProperty Name="subCategoryName" ColumnName="subCategoryName" />
+                <ScalarProperty Name="recipeId" ColumnName="recipeId" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubTransitionTBL">
+            <EntityTypeMapping TypeName="BakPisirDBModel.SubTransitionTBL">
+              <MappingFragment StoreEntitySet="SubTransitionTBL">
+                <ScalarProperty Name="categoryTransitionId" ColumnName="categoryTransitionId" />
+                <ScalarProperty Name="subCategoryId" ColumnName="subCategoryId" />
+                <ScalarProperty Name="recipeId" ColumnName="recipeId" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BakPisirDBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTBL">
+            <EntityTypeMapping TypeName="BakPisirDBModel.UserTBL">
+              <MappingFragment StoreEntitySet="UserTBL">
+                <ScalarProperty Name="birthdate" ColumnName="birthdate" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="registrationDate" ColumnName="registrationDate" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="userType" ColumnName="userType" />
+                <ScalarProperty Name="profilePictureUrl" ColumnName="profilePictureUrl" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+                <ScalarProperty Name="identityNumber" ColumnName="identityNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
