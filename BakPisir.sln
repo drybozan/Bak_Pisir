@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BakPisir.API", "BakPisir.AP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BakPisir.CORE", "BakPisir.CORE\BakPisir.CORE.csproj", "{C1B7EFBE-F68F-4502-BE62-B4709E94777E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BakPisir.UI", "BakPisir.UI\BakPisir.UI.csproj", "{E68382F8-820B-4C81-80FD-3C3F75697A43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{C1B7EFBE-F68F-4502-BE62-B4709E94777E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1B7EFBE-F68F-4502-BE62-B4709E94777E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1B7EFBE-F68F-4502-BE62-B4709E94777E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E68382F8-820B-4C81-80FD-3C3F75697A43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E68382F8-820B-4C81-80FD-3C3F75697A43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E68382F8-820B-4C81-80FD-3C3F75697A43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E68382F8-820B-4C81-80FD-3C3F75697A43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,6 +10,7 @@ using System.Web.Http;
 
 namespace BakPisir.API.Controllers
 {
+    [Authorize]
     public class SubTransitionApiController : ApiController
     {
         private SubTransitionApiService _subTransitionApiService = new SubTransitionApiService();

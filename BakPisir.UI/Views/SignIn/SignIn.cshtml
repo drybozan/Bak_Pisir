@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "SignIn";
+    Layout = "~/Views/Shared/AuthenticationView.cshtml";
+}
+
+@using BakPisir.CORE.Helper
+@model BakPisir.DTO.Dtos.UserDto
+
+<div class="card-body">
+    <!-- Logo -->
+    <div class="app-brand justify-content-center">
+        <img src="~/Templates/Images/loginwomanicon.svg" width="60" height="100" />
+        <h1 style="color:rebeccapurple" class="mb-md-0"> Bak Pişir  </h1>
+        <img src="~/Templates/Images/loginmanicon.svg" width="60" height="100" />
+    </div>
+    <!-- /Logo -->
+
+    <h2 class="mb-1">Giriş Yap</h2>
+
+
+    @using (Html.BeginForm("SignIn", "SignIn", FormMethod.Post))
+    {
+        <div class="mb-3">
+            @Html.TextBoxForControl(m => m.username, new { placeholder = "Kullanıcı adınızı giriniz." })
+        </div>
+        <div class="mb-3 form-password-toggle">
+            <div class="d-flex justify-content-between">
+                <label class="form-label" for="password">Şifre</label>
+                <a href="auth-forgot-password-basic.html">
+                    <small>Şifremi Unuttum?</small>
+                </a>
+            </div>
+            <div class="mb-3">
+                @Html.PasswordControlClassic(m => m.password, new { placeholder = "Şifre" })             
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <button class="btn btn-primary d-grid w-100" type="submit">GİRİŞ YAP</button>
+        </div>
+    }
+
+    <p class="text-center">
+        <span>Hesabın yok mu?</span>
+        <a href="auth-register-basic.html">
+            <span>Hesap Oluştur</span>
+        </a>
+    </p>
+</div>
+
+

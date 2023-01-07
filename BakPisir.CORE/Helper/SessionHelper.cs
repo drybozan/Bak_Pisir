@@ -17,6 +17,8 @@ namespace BakPisir.CORE.Helper
         /// <summary>Giriş yapmış kullanıcı kimlik bilgisi</summary>
         public static UserDto LoggedUserInfo
         {
+            //HttpContext dosyasında UserInfo nesnesi null dönerse bir UserDto nesnesi oluştur.
+
             get => (UserDto)HttpContext.Current.Session["UserInfo"] ?? new UserDto();
             set => HttpContext.Current.Session["UserInfo"] = value;
         }
@@ -24,6 +26,7 @@ namespace BakPisir.CORE.Helper
         /// <summary>Token bilgisi</summary>
         public static TokenDto TokenInfo
         {
+            //HttpContext dosyasında TokenInfo nesnesi null dönerse bir TokenDto nesnesi oluştur.
             get => (TokenDto)HttpContext.Current.Session["TokenInfo"] ?? new TokenDto();
             set => HttpContext.Current.Session["TokenInfo"] = value;
         }

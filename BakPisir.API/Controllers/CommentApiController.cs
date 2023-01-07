@@ -12,6 +12,7 @@ using System.Web.Http;
 
 namespace BakPisir.API.Controllers
 {
+    [Authorize]
     public class CommentApiController : ApiController
     {
         private CommentApiService commentApiService = new CommentApiService();

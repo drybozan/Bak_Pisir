@@ -10,6 +10,7 @@ using System.Web.Http;
 
 namespace BakPisir.API.Controllers
 {
+    [Authorize]
     public class LogApiController : ApiController
     {
         private LogApiService logApiService = new LogApiService();
@@ -30,10 +31,10 @@ namespace BakPisir.API.Controllers
 
         [Route("api/LogApi/Add")]
         [HttpPost]
-        public void Post(LogDto newLog)
+        public Result Post(LogDto newLog)
         {
 
-            logApiService.AddLog(newLog);
+           return logApiService.AddLog(newLog);
         }
 
         [Route("api/LogApi/Delete")]

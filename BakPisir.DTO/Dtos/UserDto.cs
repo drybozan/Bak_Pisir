@@ -38,7 +38,7 @@ namespace BakPisir.DTO.Dtos
         public DateTime birthdate { get; set; }
 
         [Display(Name = "Kullanıcı Adı")]
-        [Required]
+        [Required(ErrorMessage = "Kullanıcı adınızı giriniz")]
         [MaxLength(50, ErrorMessage = "Bu alana en fazla 50 karakter yazılabilir")]
         public string username { get; set; }
 
