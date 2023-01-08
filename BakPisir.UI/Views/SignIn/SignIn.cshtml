@@ -27,12 +27,12 @@
         <div class="mb-3 form-password-toggle">
             <div class="d-flex justify-content-between">
                 <label class="form-label" for="password">Şifre</label>
-                <a href="auth-forgot-password-basic.html">
+                <a href="/ForgotPassword/ForgotPassword">
                     <small>Şifremi Unuttum?</small>
                 </a>
             </div>
             <div class="mb-3">
-                @Html.PasswordControlClassic(m => m.password, new { placeholder = "Şifre" })             
+                @Html.PasswordControlClassic(m => m.password, new { placeholder = "Şifre" })
             </div>
         </div>
 
@@ -43,10 +43,24 @@
 
     <p class="text-center">
         <span>Hesabın yok mu?</span>
-        <a href="auth-register-basic.html">
+        <a href="/SignUp/SignUp">
             <span>Hesap Oluştur</span>
         </a>
     </p>
 </div>
+
+@if (ViewBag.Msg != null)
+{
+    <script type="text/javascript">
+
+        window.onload = function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Giriş yapılamadı!',
+                text: '@ViewBag.Msg'
+            });
+        };
+    </script>
+}
 
 

@@ -12,7 +12,7 @@ using System.Web.Http;
 
 namespace BakPisir.API.Controllers
 {
-    [Authorize]    
+    //[Authorize]    
     public class UserApiController : ApiController
     {
         private UserApiService _userApiService = new UserApiService();

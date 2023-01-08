@@ -9,6 +9,7 @@ using System.Text;
 using System.Web;
 using BakPisir.CORE.Helper;
 
+
 namespace BakPisir.UI.Services
 {
     public class WebApiService<T> where T : class
@@ -47,12 +48,12 @@ namespace BakPisir.UI.Services
         // GetBy Id 
         public T GetId(string method, int id)
         {
-            using (HttpClient _httpClient = new HttpClient())
+            using (HttpClient _httpClient= new HttpClient())
             {
-                _httpClient.BaseAddress = new Uri(url);
-                _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + SessionHelper.TokenInfo.access_token);
-                HttpResponseMessage response = _httpClient.GetAsync(method + "/" + id).Result;
+               // _httpClient.BaseAddress = new Uri(url);
+               _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                //   _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + SessionHelper.TokenInfo.access_token);
+                var response = _httpClient.GetAsync("http://localhost:44355/api/UserApi/Get?id=1").Result;
                 var message = response.Content.ReadAsStringAsync().Result;
                 var newData = JsonConvert.DeserializeObject<T>(JsonConvert.DeserializeObject<string>(message));
                 return newData;
@@ -143,16 +144,16 @@ namespace BakPisir.UI.Services
         }
 
         //Gönderilen veriler ile token alınmasını sağlar.
-        public T GetToken(string userName, string password)
+        public T GetToken(string username, string password)
         {
-            string baseAddress = "http://localhost:44355/api/";
+            string baseAddress = "http://localhost:44355/";
             T token;
             using (var client = new HttpClient())
             {
                 var form = new Dictionary<string, string>
                 {
                     {"grant_type", "password"},
-                    {"username", userName},
+                    {"username", username},
                     {"password", password},
                 };
                 var tokenResponse = client.PostAsync(baseAddress + "token", new FormUrlEncodedContent(form)).Result;

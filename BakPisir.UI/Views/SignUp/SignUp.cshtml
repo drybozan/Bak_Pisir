@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "SignUp";
+    Layout = "~/Views/Shared/AuthenticationView.cshtml";
+}
+
+@using BakPisir.CORE.Helper
+@model BakPisir.DTO.Dtos.RequestDto
+<!-- Register Card -->
+<div class="card-body">
+    <!-- Logo -->
+
+    <div class="app-brand justify-content-center">
+        <img src="~/Templates/Images/loginwomanicon.svg" width="60" height="100" />
+        <h1 style="color:rebeccapurple" class="mb-md-0">Bak Pişir</h1>
+        <img src="~/Templates/Images/loginmanicon.svg" width="60" height="100" />
+    </div>
+    <!-- /Logo -->
+    <h4 class="mb-2">KAYIT OL 🚀</h4>
+
+    @using (Html.BeginForm("SignUp", "SignUp", FormMethod.Post))
+    {
+        <div class="mb-3">
+            @(Html.TextBoxForControl(m => m.name, new { placeholder = "Ad" }))
+        </div>
+        <div class="mb-3">
+            @(Html.TextBoxForControl(m => m.surname, new { placeholder = "Soyad" }))
+        </div>
+        <div class="mb-3">
+            @(Html.TextBoxForControl(m => m.identityNumber, new { placeholder = "Kimlik Numarası" }))
+        </div>
+        <div class="mb-3 ">
+            @(Html.TextBoxForControl(m => m.birthdate, new { placeholder = "../../...." }))
+        </div>
+        <div class="mb-3">
+            @(Html.PhoneControl(m => m.phone))
+        </div>
+        <div class="mb-3">
+            @(Html.TextBoxForControl(m => m.username, new { placeholder = "Kullanıcı Adı" }))
+        </div>
+        <div class="mb-3">
+            @(Html.EMailControl(m => m.mail))
+        </div>
+
+        <div class="mb-3">
+            <span> <a href="https://www.iyzico.com/kendim-icin/kullanici-sozlesmesi">KULLANICI SÖZLEŞMESİNİ </a>  Okudum. Onaylıyorum.</span>
+            @(Html.CheckBoxControl(m => m.agreement, new { placeholder = "ONAY" }))
+        </div>
+        <button class="btn btn-primary d-grid w-100">KAYIT OL</button>
+    }
+    <p class="text-center">
+        <span>Hesabın var mı?</span>
+        <a href="/SignIn/SignIn">
+            <span>Giriş Yap</span>
+        </a>
+    </p>       
+
+</div>
+<!-- Register Card -->
+<script>
+
+</script>
+

@@ -9,7 +9,7 @@ namespace BakPisir.UI.Services
     public class TokenService
     {
         //Gelen bilgileri token almak için gönderir ve tokeni döndürür.
-        public TokenDto CheckToken(string username, string password)
+        public TokenDto GetToken(string username, string password)
         {
             WebApiService<TokenDto> was = new WebApiService<TokenDto>();
             TokenDto token = was.GetToken(username, password);

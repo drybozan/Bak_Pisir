@@ -24,21 +24,27 @@ namespace BakPisir.UI.Controllers
         //Bu action ile arayüzden alınan bilgiler servise gönderilir.
         public ActionResult SignIn(UserDto model)
         {
-            TokenService ts = new TokenService();
-            var token = ts.CheckToken(model.username, model.password);
+            TokenService tokenService = new TokenService();
+            //kullanıcıdan alınan username ve password bilgisi ile token alıyoruz.
+            TokenDto token = tokenService.GetToken(model.username, model.password);
             if (token.access_token != null && token.expires_in != null && token.token_type != null)
             {
+                //token bilgilerini session bilgisine atıyoruz.
                 SessionHelper.TokenInfo = token;
-                SessionHelper.LoggedUserInfo = ts.GetLoggedUser();
+
+                //token üzerinden kullanıcının bilgilerini çekip session bilgisine atıyoruz.
+                SessionHelper.LoggedUserInfo = tokenService.GetLoggedUser();
                 
+                //cookie'ye session üzerinden çektiğimiz kullanıcı bilgilerini ekliyoruz.
                 FormsAuthentication.SetAuthCookie(SessionHelper.LoggedUserInfo.username, false);
-                return RedirectToAction("Member", "Member");
+
+                return RedirectToAction("anasayafaya gidecek", "Member");
                 
             }
             else
             {
-                TempData["sign"] = "Kullanıcı adı veya şifre yanlış !!";
-                return RedirectToAction("Signin");
+                ViewBag.Msg = "Kullanıcı adı veya şifre yanlış !!";
+                return RedirectToAction("SignIn");
             }
         }
     }

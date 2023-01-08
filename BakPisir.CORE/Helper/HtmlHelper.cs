@@ -43,6 +43,8 @@ namespace BakPisir.CORE.Helper
             return new MvcHtmlString(BuildHorizontalTagOnly(editorFor, labelFor, validationFor, labelsize).ToString());
             //return MvcHtmlString.Create(htmlMerger(editorFor, labelFor, validationFor));
         }
+
+
         public static MvcHtmlString TextBoxForControl<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes = null)
         {
             var isRequired = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData).IsRequired;
@@ -74,6 +76,8 @@ namespace BakPisir.CORE.Helper
             return new MvcHtmlString(BuildTagOnly(editorFor, labelFor, validationFor).ToString());
         }
 
+
+
         public static MvcHtmlString TextboxControlNoLabel<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, object htmlAttributes = null)
         {
             var isRequired = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData).IsRequired;
@@ -101,6 +105,8 @@ namespace BakPisir.CORE.Helper
             return new MvcHtmlString(BuildTagOnlyWithoutLabel(editorFor, validationFor).ToString());
 
         }
+
+
 
         public static MvcHtmlString DropDownControl<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> selectList, object htmlAttributes = null, string firstItem = "")
         {
@@ -170,6 +176,8 @@ namespace BakPisir.CORE.Helper
             return new MvcHtmlString(BuildTagOnlyWithoutLabel(editorFor, validationFor).ToString());
 
         }
+
+
         public static MvcHtmlString PhoneControl<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TProperty>> expression, string extraAttr = "")
         {

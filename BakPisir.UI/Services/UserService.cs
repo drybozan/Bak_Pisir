@@ -19,7 +19,7 @@ namespace BakPisir.UI.Services
         //Verilen id değerine sahip user verisini çeker.
         public UserDto GetSingleUser(int id)
         {
-            var user = was.GetId("UserApi / Get", id);
+            var user = was.GetId("UserApi/Get?id=", id);
             return user;
         }
 
