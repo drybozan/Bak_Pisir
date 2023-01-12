@@ -6,7 +6,7 @@
 
 @using BakPisir.CORE.Helper
 @model BakPisir.DTO.Dtos.RequestDto
-<!-- Register Card -->
+
 <div class="card-body">
     <!-- Logo -->
 
@@ -53,11 +53,16 @@
         <a href="/SignIn/SignIn">
             <span>Giriş Yap</span>
         </a>
-    </p>       
+    </p>
 
 </div>
-<!-- Register Card -->
-<script>
-
-</script>
+@if (ViewBag.Msg != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            Swal.fire('İşlem Başarılı',
+                '@ViewBag.Msg', 'info');
+        };
+    </script>
+}
 

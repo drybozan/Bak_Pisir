@@ -22,7 +22,7 @@
     @using (Html.BeginForm("SignIn", "SignIn", FormMethod.Post))
     {
         <div class="mb-3">
-            @Html.TextBoxForControl(m => m.username, new { placeholder = "Kullanıcı adınızı giriniz." })
+            @Html.TextBoxForControl(m => m.username, new { placeholder = "Kullanıcı adınızı giriniz" })
         </div>
         <div class="mb-3 form-password-toggle">
             <div class="d-flex justify-content-between">
@@ -51,6 +51,7 @@
 
 @if (ViewBag.Msg != null)
 {
+
     <script type="text/javascript">
 
         window.onload = function () {

@@ -1,0 +1,45 @@
+﻿@model List<BakPisir.DTO.Dtos.CategoryDto>
+
+    <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+        <!--Menu logo-->
+        <div class="app-brand justify-content-center">
+            <a href="index.html" class="app-brand-link gap-2">
+                <img src="~/Templates/Images/loginwomanicon.svg" width="50" height="70" />
+                <h4 style="color:rebeccapurple" class="mb-md-0">Bak Pişir</h4>
+                <img src="~/Templates/Images/loginmanicon.svg" width="50" height="70" />
+            </a>
+        </div>
+
+
+        <ul class="menu-inner py-1">
+
+            @foreach (var category in Model)
+            {
+
+            <li class="menu-item">
+                <a class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                    <span class="menu-text" style="font-size:small">@category.categoryName</span>
+                </a>
+                @{ Html.RenderAction("SubMenu", new { id = @category.categoryId }); }
+            </li>             
+         }
+
+        </ul>
+
+    </aside>
+
+    @*Menude seçili olan kategoriye göre alt Kategorileri listeler*@
+    @*<script>
+    function getCategoryId(id) {
+        $.ajax({
+            url: '@Url.Action("SubMenu", "UserHomePage")/' + id,
+            datatype: 'JSON',
+            type: 'GET',
+        })
+    }
+    </script>*@
+
+
+
+

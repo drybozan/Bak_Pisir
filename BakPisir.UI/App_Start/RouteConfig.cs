@@ -16,7 +16,7 @@ namespace BakPisir.UI
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "SignIn", action = "SignIn", id = UrlParameter.Optional }
+                defaults: new { controller = "UserHomePage", action = "UserHomePage", id = UrlParameter.Optional }
             );
         }
     }

@@ -50,10 +50,10 @@ namespace BakPisir.UI.Services
         {
             using (HttpClient _httpClient= new HttpClient())
             {
-               // _httpClient.BaseAddress = new Uri(url);
+                _httpClient.BaseAddress = new Uri(url);
                _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                //   _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + SessionHelper.TokenInfo.access_token);
-                var response = _httpClient.GetAsync("http://localhost:44355/api/UserApi/Get?id=1").Result;
+                   _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + SessionHelper.TokenInfo.access_token);
+                var response = _httpClient.GetAsync(method+ "?id=" + id).Result;
                 var message = response.Content.ReadAsStringAsync().Result;
                 var newData = JsonConvert.DeserializeObject<T>(JsonConvert.DeserializeObject<string>(message));
                 return newData;
@@ -61,8 +61,7 @@ namespace BakPisir.UI.Services
         }
 
 
-        //Farklı methodlar ile verilen id değerine sahip verileri getirir.
-        // data getirmeyen, kullanıcıya sadece mesaj verir.
+        //Fverilen parametreye göre koşullu sorgu sonuçlarını getirir
         public List<T> GetSpecial(string method, int id)
         {
             using (HttpClient _httpClient = new HttpClient())
@@ -70,7 +69,7 @@ namespace BakPisir.UI.Services
                 _httpClient.BaseAddress = new Uri(url);
                 _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + SessionHelper.TokenInfo.access_token);
-                HttpResponseMessage response = _httpClient.GetAsync(method + "/" + id).Result;
+                HttpResponseMessage response = _httpClient.GetAsync(method + "?id=" + id).Result;
                 return ConvertList(response);
             }
 
@@ -78,7 +77,7 @@ namespace BakPisir.UI.Services
 
         //Gelen yeni veriyi veritabanına ekler.
         // post metodları için
-        public void Add(string method, T value)
+        public String Add(string method, T value)
         {
             using (HttpClient _httpClient = new HttpClient())
             {
@@ -87,6 +86,10 @@ namespace BakPisir.UI.Services
                 _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + SessionHelper.TokenInfo.access_token);
                 StringContent httpContent = new StringContent(JsonConvert.SerializeObject(value), Encoding.UTF8, "application/json");
                 HttpResponseMessage response = _httpClient.PostAsync(method, httpContent).Result;
+                var data = response.Content.ReadAsStringAsync().Result;
+                dynamic newData = JsonConvert.DeserializeObject(data);
+                var message = newData.Message;
+                return message;
             }
 
         }
@@ -101,15 +104,16 @@ namespace BakPisir.UI.Services
                 _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + SessionHelper.TokenInfo.access_token);
                 StringContent httpContent = new StringContent(JsonConvert.SerializeObject(mail), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = _httpClient.PostAsync(method, httpContent).Result;
-                var message = response.Content.ReadAsStringAsync().Result;
-                var newData = JsonConvert.DeserializeObject<string>(JsonConvert.DeserializeObject<string>(message));
-                return newData;
+                HttpResponseMessage response = _httpClient.PostAsync(method+"?mail="+mail, httpContent).Result;
+                var data = response.Content.ReadAsStringAsync().Result;
+                dynamic newData = JsonConvert.DeserializeObject(data);
+                var message= newData.Message;                
+                return message;
             }
         }
 
         //Verilen id değerine sahip veriyi günceller.
-        public void Update(string method, int id, T value)
+        public String Update(string method, int id, T value)
         {
             using (HttpClient _httpClient = new HttpClient())
             {
@@ -117,19 +121,27 @@ namespace BakPisir.UI.Services
                 _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + SessionHelper.TokenInfo.access_token);
                 StringContent httpContent = new StringContent(JsonConvert.SerializeObject(value), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = _httpClient.PutAsync(method + "/" + id, httpContent).Result;
+                HttpResponseMessage response = _httpClient.PutAsync(method + "?id=" + id, httpContent).Result;
+                var data = response.Content.ReadAsStringAsync().Result;
+                dynamic newData = JsonConvert.DeserializeObject(data);
+                var message = newData.Message;
+                return message;
             }
         }
 
         //Verilen id değerine sahip veriyi siler.
-        public void Delete(string method, int id)
+        public String Delete(string method, int id)
         {
             using (HttpClient _httpClient = new HttpClient())
             {
                 _httpClient.BaseAddress = new Uri(url);
                 _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + SessionHelper.TokenInfo.access_token);
-                HttpResponseMessage response = _httpClient.DeleteAsync(method + "/" + id).Result;
+                HttpResponseMessage response = _httpClient.DeleteAsync(method + "?id=" + id).Result;
+                var data = response.Content.ReadAsStringAsync().Result;
+                dynamic newData = JsonConvert.DeserializeObject(data);
+                var message = newData.Message;
+                return message;
             }
 
         }
@@ -164,7 +176,7 @@ namespace BakPisir.UI.Services
         }
 
         //Verilen id'ye gelen dosyaları yükler.
-        public void UploadFile(string method, int id, HttpPostedFileBase file)
+        public String UploadFile(string method, int id, HttpPostedFileBase file)
         {
             using (HttpClient _httpClient = new HttpClient())
             {
@@ -182,7 +194,12 @@ namespace BakPisir.UI.Services
 
                     _httpClient.BaseAddress = new Uri(url);
                     _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + SessionHelper.TokenInfo.access_token);
-                    HttpResponseMessage response = _httpClient.PostAsync(method + "/" + id, content).Result;
+                    HttpResponseMessage response = _httpClient.PostAsync(method + "?id=" + id, content).Result;
+
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    dynamic newData = JsonConvert.DeserializeObject(data);
+                    var message = newData.Message;
+                    return message;
                 }
             }
         }

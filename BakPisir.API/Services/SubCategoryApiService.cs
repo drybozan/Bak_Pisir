@@ -23,8 +23,8 @@ namespace BakPisir.API.Services
         public string GetAllSubCategory()
         {
             //projecTo, autommaper aracı. DB varlığımı dto ya mapler.
-            var subCategorys = efUnitOfWork.SubCategoryTemplate.GetAll(i => i.isDelete == false).ProjectTo<SubCategoryDto>().ToList();
-            return JsonConvert.SerializeObject(subCategorys);
+            var subCategories = efUnitOfWork.SubCategoryTemplate.GetAll(i => i.isDelete == false).ProjectTo<SubCategoryDto>().ToList();
+            return JsonConvert.SerializeObject(subCategories);
         }
 
         //Verilen id değerine sahip alt kategoriyi veritabanında bulur ve döndürür.
@@ -32,6 +32,14 @@ namespace BakPisir.API.Services
         {
             var subCategory = efUnitOfWork.SubCategoryTemplate.GetById(id).MapTo<SubCategoryDto>();
             return JsonConvert.SerializeObject(subCategory);
+        }
+
+        public string GetSubCategoryByCategoryId(int categoryId)
+        {
+            //gönderilen categoryId parametresi ile koşşulu sorgu atar.
+            //projecTo, autommaper aracı. DB varlığımı dto ya mapler.
+            var subCategories = efUnitOfWork.SubCategoryTemplate.GetAll(i => i.categoryId == categoryId).ProjectTo<SubCategoryDto>().ToList();
+            return JsonConvert.SerializeObject(subCategories);
         }
 
         //Verilen id değerine sahip veriyi veritabanından siler.

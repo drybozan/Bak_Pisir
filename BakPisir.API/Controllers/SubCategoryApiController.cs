@@ -10,8 +10,8 @@ using System.Web.Http;
 
 namespace BakPisir.API.Controllers
 {
-    [Authorize]
-    public class SubCategoryController : ApiController
+   // [Authorize]
+    public class SubCategoryApiController : ApiController
     {
         private SubCategoryApiService subCategoryApiService = new SubCategoryApiService();
 
@@ -27,6 +27,13 @@ namespace BakPisir.API.Controllers
         public string Get(int id)
         {
             return subCategoryApiService.GetSubCategoryById(id);
+        }
+
+        [Route("api/SubCategoryApi/GetByCategoryId")]
+        [HttpGet]
+        public string GetByCategoryId(int id)
+        {
+            return subCategoryApiService.GetSubCategoryByCategoryId(id);
         }
 
         [Route("api/SubCategoryApi/Add")]

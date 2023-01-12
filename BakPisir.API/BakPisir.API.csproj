@@ -202,7 +202,7 @@
     <Compile Include="Controllers\RecipeApiController.cs" />
     <Compile Include="Controllers\RequestApiController.cs" />
     <Compile Include="Controllers\StepApiController.cs" />
-    <Compile Include="Controllers\SubCategoryController.cs" />
+    <Compile Include="Controllers\SubCategoryApiController.cs" />
     <Compile Include="Controllers\SubTransitionApiController.cs" />
     <Compile Include="Controllers\UploadPictureController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />

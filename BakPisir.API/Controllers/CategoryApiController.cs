@@ -10,7 +10,7 @@ using System.Web.Http;
 namespace BakPisir.API.Controllers
 
 {
-    [Authorize]
+    //[Authorize]
     public class CategoryApiController : ApiController
     {
         private CategoryApiService _categoryApiService = new CategoryApiService();

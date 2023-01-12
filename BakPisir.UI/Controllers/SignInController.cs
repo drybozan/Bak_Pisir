@@ -17,6 +17,7 @@ namespace BakPisir.UI.Controllers
         // Bu action ile giriş yap arayüzü kullanıcıya döndürülür.
         public ActionResult SignIn()
         {
+            ViewBag.Message = TempData["login"];
             return View();
         }
 
@@ -43,9 +44,18 @@ namespace BakPisir.UI.Controllers
             }
             else
             {
-                ViewBag.Msg = "Kullanıcı adı veya şifre yanlış !!";
+                TempData["login"] = "Kullanıcı adı veya şifre yanlış !!";
                 return RedirectToAction("SignIn");
             }
+        }
+
+        public ActionResult LogOut()
+        {
+            Session.Clear();
+            Session.Abandon();
+            Session.RemoveAll();
+            FormsAuthentication.SignOut();
+            return View("Signin");
         }
     }
 }

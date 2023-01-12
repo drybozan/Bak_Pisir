@@ -19,37 +19,37 @@ namespace BakPisir.UI.Services
         //Verilen id değerine sahip user verisini çeker.
         public UserDto GetSingleUser(int id)
         {
-            var user = was.GetId("UserApi/Get?id=", id);
+            var user = was.GetId("UserApi/Get", id);
             return user;
         }
 
         //Verilen id değerine sahip user verisini veritabanından siler.
-        public void DeleteUser(int id)
+        public String DeleteUser(int id)
         {
-            was.Delete("UserApi / Delete", id);
+           return was.Delete("UserApi/Delete", id);
         }
 
         //Yeni user ekler.
-        public void AddUser(UserDto value)
+        public String AddUser(UserDto value)
         {
-            was.Add("UserApi / Add", value);
+            return was.Add("UserApi/Add", value);
         }
 
         //Verilen id değerine sahip user verisini günceller.
-        public void UpdateUser(int id, UserDto value)
+        public String UpdateUser(int id, UserDto value)
         {
-            was.Update("UserApi / Update", id, value);
+           return was.Update("UserApi/Update", id, value);
         }
 
-        public void UploadPicture(HttpPostedFileBase file, int id)
+        public String UploadPicture(HttpPostedFileBase file, int id)
         {
-            was.UploadFile("UserApi / UploadProfilePicture", id, file);
+           return was.UploadFile("UserApi/UploadProfilePicture", id, file);
         }
 
 
         public string SendMailPassword(string mail)
         {
-            return was.GetMailFeedback("UserApi / SendMail", mail);
+            return was.GetMailFeedback("UserApi/SendMail", mail);
         }
     }
 }

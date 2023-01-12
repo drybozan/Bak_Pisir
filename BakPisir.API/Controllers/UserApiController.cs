@@ -59,9 +59,9 @@ namespace BakPisir.API.Controllers
 
         [Route("api/UserApi/SendMail")]
         [HttpPost]
-        public Result SendMail(string name)
+        public Result SendMail(string mail)
         {
-            return _userApiService.SendMailPassword(name);
+            return _userApiService.SendMailPassword(mail);
         }
 
         [Route("api/UserApi/UploadProfilePicture")]
