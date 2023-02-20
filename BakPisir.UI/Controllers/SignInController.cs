@@ -17,7 +17,7 @@ namespace BakPisir.UI.Controllers
         // Bu action ile giriş yap arayüzü kullanıcıya döndürülür.
         public ActionResult SignIn()
         {
-            ViewBag.Message = TempData["login"];
+            ViewBag.Msg = TempData["login"];
             return View();
         }
 

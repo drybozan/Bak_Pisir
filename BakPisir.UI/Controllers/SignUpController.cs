@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 
 namespace BakPisir.UI.Controllers
 {
@@ -23,13 +24,21 @@ namespace BakPisir.UI.Controllers
         [HttpPost]
         public ActionResult SignUp(RequestDto requestDto)
         {
-            //kayıt sayfasından alınan bilgilerden sonra kullanıcıya bir bilgi maili atılır başvurunun başarıyla alındığına dair.
-            var info = requestService.SendMailInfo(requestDto.mail);
-            TempData["info"] = info;
-
             //alınan bilgiler kayıt altına alınır.
-            requestService.AddRequest(requestDto);
-          
+            var message = requestService.AddRequest(requestDto);
+            try
+            {               
+               
+                TempData["info"] = message;
+                //kayıt sayfasından alınan bilgilerden sonra kullanıcıya bir bilgi maili atılır başvurunun başarıyla alındığına dair.
+                requestService.SendMailInfo(requestDto.mail);
+
+            }
+            catch (Exception)
+            {
+
+                TempData["info"] = message;
+            }  
             return RedirectToAction("SignUp");
         }
     }

@@ -47,12 +47,11 @@
             <span>Hesap Oluştur</span>
         </a>
     </p>
-</div>
 
-@if (ViewBag.Msg != null)
-{
+    @if (ViewBag.Msg != null)
+    {
 
-    <script type="text/javascript">
+        <script type="text/javascript">
 
         window.onload = function () {
             Swal.fire({
@@ -61,7 +60,10 @@
                 text: '@ViewBag.Msg'
             });
         };
-    </script>
-}
+        </script>
+    }
+</div>
+
+
 
 

@@ -1,5 +1,8 @@
 ﻿@model List<BakPisir.DTO.Dtos.CategoryDto>
 
+@*UserHomePage/Menu actionı tarafından gönderilen View.Get isteğiyle menuyu çizer sol tarafta.
+ Controllerdan gönderilen dinamik datayı listeler*@
+
     <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
         <!--Menu logo-->
         <div class="app-brand justify-content-center">
@@ -21,6 +24,10 @@
                     <i class="menu-icon tf-icons bx bx-home-circle"></i>
                     <span class="menu-text" style="font-size:small">@category.categoryName</span>
                 </a>
+
+                @*UserHomePage/SubMenu/id actionı tarafından gönderilen partialview burda render edilir.
+                  Get isteğiyle id yi alıp sorgu döndürüp SubMenu.cshmtl partialviewa göndertir*@
+
                 @{ Html.RenderAction("SubMenu", new { id = @category.categoryId }); }
             </li>             
          }

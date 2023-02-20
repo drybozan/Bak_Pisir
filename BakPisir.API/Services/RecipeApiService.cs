@@ -125,4 +125,32 @@ public class RecipeApiService
 
     }
 
+    public Result UploadRecipePicture(int id, string filePath)
+    {
+        var result = Result.Instance.Warning("HATA! Güncellemek istediğiniz kayıt bulunamadı.");
+
+        // gelen id yi sorgula db de sorgula. 
+        var recipe = efUnitOfWork.RecipeTemplate.GetById(id).MapTo<RecipeDto>();
+
+        if (recipe != null)
+        {
+            //gönderilen dosyanın yolunu gönder.
+            recipe.recipeImageUrl = filePath;
+
+            //veritabanı nesnesi ile maple.
+            var mappedRecipe = recipe.MapTo<RecipeTBL>();
+
+            // yapılan değişikliği güncelle
+            efUnitOfWork.RecipeTemplate.Update(mappedRecipe);
+
+            // değişiklikleri kaydet ve veritabanına yansıt
+            efUnitOfWork.SaveChanges();
+
+            result = Result.Instance.Success("Fotoğraf başarıyla eklendi.");
+            return result;
+        }
+        return result;
+
+    }
+
 }

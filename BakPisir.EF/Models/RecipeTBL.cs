@@ -31,6 +31,8 @@ namespace BakPisir.EF.Models
         public Nullable<bool> isDelete { get; set; }
         public string cookingTime { get; set; }
         public Nullable<System.DateTime> recipeDate { get; set; }
+        public string recipeName { get; set; }
+        public string recipeImageUrl { get; set; }
     
         public virtual CategoryTBL CategoryTBL { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

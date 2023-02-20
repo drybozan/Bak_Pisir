@@ -98,7 +98,6 @@ namespace BakPisir.API.Services
                         return result;
                     }
                 }
-                result = Result.Instance.Info("Kimlik numaranızı kontrol ediniz.");
                 return result;
 
 
@@ -177,7 +176,7 @@ namespace BakPisir.API.Services
         {
             var result = Result.Instance.Warning("HATA! Kayıtlı email adresi bulunamadı.");
 
-            var email = efUnitOfWork.RequestTemplate.Get(x => x.mail == mail.ToString()).MapTo<RequestDto>();
+            var email = efUnitOfWork.RequestTemplate.Get(x => x.mail == mail).MapTo<RequestDto>();
             if (email != null)
             {
                 Mail sender = new Mail();
@@ -195,9 +194,9 @@ namespace BakPisir.API.Services
         //Verilen mail adresine başvurunun alındığını mail atar.
         public Result SendMailInfo(object mail)
         {
-            var result = Result.Instance.Success("BAŞARILI!Bilgilendirme maili gönderildi.");
-            var email = efUnitOfWork.RequestTemplate.Get(x => x.mail == mail.ToString()).MapTo<RequestDto>();
-            var user = efUnitOfWork.UserTemplate.Get(x => x.mail == mail.ToString()).MapTo<UserDto>();
+            var result = Result.Instance.Success("HATA! Kayıtlı email adresi bulunamadı.");
+            var email = efUnitOfWork.RequestTemplate.Get(x => x.mail == mail).MapTo<RequestDto>();
+            var user = efUnitOfWork.UserTemplate.Get(x => x.mail == mail).MapTo<UserDto>();
             if (user != null)
             {
               result= Result.Instance.Warning("HATA! Bu mail adresine kayıtlı üye mevcuttur.");
@@ -205,15 +204,13 @@ namespace BakPisir.API.Services
             }
             else if (email != null)
             {
-                result = Result.Instance.Warning("HATA! Bu mail adresine kayıtlı başvuru mevcuttur.");
-                return result;
-            }
-            else
-            {
                 Mail sender = new Mail();
                 sender.sendMail(mail.ToString(), "Üyelik Bildirimi", "Sitemize üye olma talebiniz alınmıştır. Başvurunuz en kısa sürede değerlendirilecektir ve size geri dönüş sağlanacaktır.Sağlıklı günler dileriz.");
-                return result;
+                return result = Result.Instance.Warning("Başarılı! Bilgilendirme mesajı gönderildi.");
+
             }
+            return result;
+           
         }
 
 

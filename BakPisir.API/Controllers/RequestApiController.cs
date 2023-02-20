@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace BakPisir.API.Controllers
 {
-    [Authorize]
+   // [Authorize]
     public class RequestApiController : ApiController
     {
          RequestApiService  requestApiService = new RequestApiService();
@@ -31,10 +31,10 @@ namespace BakPisir.API.Controllers
 
         [Route("api/RequestApi/Add")]
         [HttpPost]
-        public void Post(RequestDto newRequest)
+        public Result Post(RequestDto newRequest)
         {
             
-            requestApiService.AddRequest(newRequest);
+           return requestApiService.AddRequest(newRequest);
         }
 
         [Route("api/RequestApi/Delete")]
@@ -56,25 +56,25 @@ namespace BakPisir.API.Controllers
 
         [Route("api/RequestApi/SendMailPassword")]
         [HttpPost]
-        public Result SendMailPassword(string name)
+        public Result SendMailPassword(string mail)
         {
-            return requestApiService.SendMailPassword(name);
+            return requestApiService.SendMailPassword(mail);
         }
 
         //Üyelik reddedildiğine dair mail yollar.
         [Route("api/RequestApi/SendMailRejection")]
         [HttpPost]
-        public Result SendMailRejection( string name)
+        public Result SendMailRejection( string mail)
         {
-            return requestApiService.SendMailRejection(name);
+            return requestApiService.SendMailRejection(mail);
         }
 
         //Üyelik başvurusunun alındığına dair mail yollar.
         [Route("api/RequestApi/SendMailInfo")]
         [HttpPost]
-        public Result SendMailApp(string name)
+        public Result SendMailApp(string mail)
         {
-            return requestApiService.SendMailInfo(name);
+            return requestApiService.SendMailInfo(mail);
         }
     }
 }

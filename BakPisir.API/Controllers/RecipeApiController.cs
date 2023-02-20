@@ -102,5 +102,50 @@ namespace BakPisir.API.Controllers
             return Result.Instance.Warning("HATA! Yüklemek istediğiniz video yüklenemedi.");
         }
 
+        [Route("api/RecipeApi/UploadRecipePicture")]
+        [HttpPost]
+        public Result UploadRecipePicture(int id)
+        {
+            // isteği al.
+            var httpRequest = HttpContext.Current.Request;
+
+            // istek içine bak dosya var mı ?
+            if (httpRequest.Files.Count > 0)
+            {
+                // Serverda dosyaları saklayacağım dizini belirt
+                string path = HttpContext.Current.Server.MapPath("~/Uploads/RecipePictures");
+
+                // eğer dizin yoksa oluştur
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                // istek içinde bulunan dosyaları al
+                foreach (string file in httpRequest.Files)
+                {
+                    //dosyayı değişkende tut
+                    var postedFile = httpRequest.Files[file];
+
+                    //dosyaya random isim hazırla.
+                    string fNAme = Guid.NewGuid().ToString();
+
+                    // dosyanın uzantısını al
+                    string fExt = Path.GetExtension(postedFile.FileName);
+
+                    // oluşturulan path içinde verdiğin isimle dosyayı yerleştir.Dosya yolunu değişkende tut
+                    var filePath = Path.Combine(path, fNAme + fExt);
+
+                    //dosyayı servera kaydet.
+                    postedFile.SaveAs(filePath);
+
+                    //ilgili kullanıcının id ' si ile dosyanın adını servise gönder dbye kaydetmesi için.
+                    return recipeApiService.UploadRecipePicture(id, filePath);
+
+                }
+            }
+            return Result.Instance.Warning("HATA! Yüklemek istediğiniz fotoğraf yüklenemedi.");
+        }
+
     }
 }

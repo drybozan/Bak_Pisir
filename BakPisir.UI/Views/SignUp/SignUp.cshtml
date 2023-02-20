@@ -54,15 +54,16 @@
             <span>Giriş Yap</span>
         </a>
     </p>
-
-</div>
-@if (ViewBag.Msg != null)
-{
-    <script type="text/javascript">
+    @if (ViewBag.Msg != null)
+    {
+        <script type="text/javascript">
         window.onload = function () {
-            Swal.fire('İşlem Başarılı',
+            Swal.fire('Bilgi',
                 '@ViewBag.Msg', 'info');
         };
-    </script>
-}
+        </script>
+    }
+
+</div>
+
 

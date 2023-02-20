@@ -23,6 +23,8 @@ namespace BakPisir.DTO.MappingProfiles
                 .ForMember(d => d.ingredients, o => o.MapFrom(s => s.ingredients))
                 .ForMember(d => d.isDelete, o => o.MapFrom(s => s.isDelete))
                 .ForMember(d => d.recipeDate, o => o.MapFrom(s => s.recipeDate))
+                .ForMember(d => d.recipeName, o => o.MapFrom(s => s.recipeName))
+                .ForMember(d => d.recipeImageUrl, o => o.MapFrom(s => s.recipeImageUrl))
                 .ReverseMap()
                 .ForMember(s => s.recipeId, o => o.MapFrom(d => d.recipeId))
                 .ForMember(s => s.userId, o => o.MapFrom(d => d.userId))
@@ -32,6 +34,8 @@ namespace BakPisir.DTO.MappingProfiles
                 .ForMember(s => s.ingredients, o => o.MapFrom(d => d.ingredients))
                 .ForMember(s => s.isDelete, o => o.MapFrom(d => d.isDelete))
                 .ForMember(s => s.recipeDate, o => o.MapFrom(d => d.recipeDate))
+                .ForMember(s => s.recipeName, o => o.MapFrom(d => d.recipeName))
+                .ForMember(s => s.recipeImageUrl, o => o.MapFrom(d => d.recipeImageUrl))
                 ;
             ;
         }

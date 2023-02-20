@@ -2,16 +2,20 @@
 @model  List<BakPisir.DTO.Dtos.SubCategoryDto>
 
 
+@*UserHomePage/SubMenu/id actionı tarafından gönderilen partialview burda ekrana döndürülür.
+    Get isteğiyle id sonucu oluşan verileri ekrana listeler*@
+
+
 @foreach (var subCategory in Model)
-{             
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a class="menu-link">
-                        <span class="menu-text" style="font-size:small">@subCategory.subCategoryName</span>
-                    </a>
-                </li>               
-                
-            </ul>        
+{
+    <ul class="menu-sub">
+        <li class="menu-item">
+            <a class="menu-link">
+                <span class="menu-text" style="font-size:small">@subCategory.subCategoryName</span>
+            </a>
+        </li>
+
+    </ul>
 
 }
 

@@ -21,6 +21,14 @@ namespace BakPisir.DTO.Dtos
         [Required]
         public int categoryId { get; set; }
 
+        [Display(Name = "Tarif Adı")]
+        [Required]
+        public string recipeName { get; set; }
+
+        [Display(Name = "Tarif Resmi")]
+        [Required]
+        public string recipeImageUrl { get; set; }
+
         [Display(Name = "Tarif Video Url")]
         [Required]
         public string recipeVideoUrl { get; set; }
@@ -37,7 +45,7 @@ namespace BakPisir.DTO.Dtos
 
         [Display(Name = "Tarif Tarihi")]
         [Required]
-        public DateTime recipeDate { get; set; }
+        public DateTime recipeDate { get; set; }        
 
         public bool isDelete { get; set; }
 

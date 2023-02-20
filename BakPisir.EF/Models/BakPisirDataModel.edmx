@@ -49,6 +49,8 @@
           <Property Name="isDelete" Type="bit" />
           <Property Name="cookingTime" Type="varchar" MaxLength="50" />
           <Property Name="recipeDate" Type="datetime" />
+          <Property Name="recipeName" Type="varchar" MaxLength="200" />
+          <Property Name="recipeImageUrl" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="RequestTBL">
           <Key>
@@ -356,6 +358,8 @@
           <NavigationProperty Name="SubTransitionTBL" Relationship="Self.FK__SubTransi__recip__38996AB5" FromRole="RecipeTBL" ToRole="SubTransitionTBL" />
           <Property Name="cookingTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="recipeDate" Type="DateTime" Precision="3" />
+          <Property Name="recipeName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="recipeImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="RequestTBL">
           <Key>
@@ -657,6 +661,8 @@
           <EntitySetMapping Name="RecipeTBL">
             <EntityTypeMapping TypeName="BakPisirDBModel.RecipeTBL">
               <MappingFragment StoreEntitySet="RecipeTBL">
+                <ScalarProperty Name="recipeImageUrl" ColumnName="recipeImageUrl" />
+                <ScalarProperty Name="recipeName" ColumnName="recipeName" />
                 <ScalarProperty Name="recipeDate" ColumnName="recipeDate" />
                 <ScalarProperty Name="cookingTime" ColumnName="cookingTime" />
                 <ScalarProperty Name="recipeId" ColumnName="recipeId" />
