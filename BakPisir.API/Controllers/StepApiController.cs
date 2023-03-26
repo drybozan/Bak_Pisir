@@ -95,7 +95,7 @@ namespace BakPisir.API.Controllers
                     postedFile.SaveAs(filePath);
 
                     //ilgili kullanıcının id ' si ile dosyanın adını servise gönder dbye kaydetmesi için.
-                   return stepApiService.UploadStepPicture(id, filePath);
+                   return stepApiService.UploadStepPicture(id, fNAme + fExt);
 
                 }
             }

@@ -1,4 +1,5 @@
 ﻿using BakPisir.DTO.Dtos;
+using BakPisir.DTO.ModelforList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,12 @@ namespace BakPisir.UI.Services
     public class UserService
     {
         WebApiService<UserDto> was = new WebApiService<UserDto>();
+        WebApiService<UserListModel> _was = new WebApiService<UserListModel>();
 
         //Bütün user tablosunu çeker.
-        public List<UserDto> GetAllUsers(int page, int pageSize)
+        public UserListModel GetAllUsers(int page, int pageSize)
         {
-            return was.Get("UserApi/GetAll",page,pageSize);
+            return _was.Get("UserApi/GetAll", page, pageSize);
         }
 
         //Verilen id değerine sahip user verisini çeker.

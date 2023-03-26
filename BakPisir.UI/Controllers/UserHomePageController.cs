@@ -1,5 +1,5 @@
 ﻿using BakPisir.DTO.Dtos;
-using BakPisir.UI.Models;
+using BakPisir.DTO.ModelforList;
 using BakPisir.UI.Services;
 using System;
 using System.Collections.Generic;
@@ -16,18 +16,29 @@ namespace BakPisir.UI.Controllers
         /// Kullanıcı arayüzünde anasayfayı döndürür. Bu Action UserHomeView layoutunda  render edilmekte.
         /// </summary>
         /// 
+        RecipeService recipeService = new RecipeService();
 
         static int pageNumber = 1;
-        static int pageSize = 10;
+        static int pageSize = 9;
         [HttpGet]
         public ActionResult UserHomePage()
-        {
-            // RecipeService recipeService=new RecipeService();
-            // var recipes = recipeService.GetAllRecipes(pageNumber,pageSize);
-            // var recipes = recipes.Where(x => x.isDelete == false).ToList();
-            return View();
+        {            
+            RecipeListModel recipes = recipeService.GetAllRecipes(pageNumber, pageSize);
+           
+            return View(recipes);
         }
-      
+
+    
+
+        //UserHomeView üzerinden JQuery ile sayfa numarası verilir. Sorgu sonucu burdan veriler Json formatından viewa gider. SetPageNumber Fonsiyonu ile data yerleştirlir.
+        [HttpGet]
+        public JsonResult SetPageNumber(int id)
+        {
+            RecipeListModel recipes = recipeService.GetAllRecipes(id, pageSize);
+            return Json(recipes, JsonRequestBehavior.AllowGet);
+        }
+
+
         /// <summary>
         //Kullanıcı arayüzünde sol tarafta dinamik olarak kategorileri listelemek için bir partialview render eder.Menu.cshtml dosyasına sorgu sonucu gelen dataları gönderir. 
         /// </summary>
@@ -40,6 +51,22 @@ namespace BakPisir.UI.Controllers
             return PartialView("Menu", categories);
 
         }
+
+        /// <summary>
+        /// Menu.cshtml üzerinden seçilen categoryId ile sorgu yapar. Dönen sonucu Json formatında menu.cshtml'deki getCategoryId(id) scriptine teslim eder. Data Jquery sayfayı yenilemeden yerleştirir.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+
+        [HttpGet]
+        public JsonResult GetAllRecipeByCategoryId(int id)
+        {
+            RecipeListModel recipes = recipeService.GetRecipeByCategoryId(id, pageNumber, pageSize);
+
+            return Json(recipes, JsonRequestBehavior.AllowGet);
+        }
+
+
         /// <summary>
         /// Listelenmiş kategorilerin alt kategorilerini dinamik olarak listelemek için SubMenu.cshtml dosyasına sorgu sonucu dataları gönderir.
         /// </summary>
@@ -50,6 +77,16 @@ namespace BakPisir.UI.Controllers
             SubCategoryService subCategoryService = new SubCategoryService();   
             List<SubCategoryDto> subCategories = subCategoryService.GetSubCategoryByCategoryId(id);
             return PartialView("SubMenu",subCategories);
+        }
+
+
+        [HttpGet]
+        public JsonResult GetAllRecipeBySubCategoryId(int id)
+        {           
+            SubTransitionService subTransitionService = new SubTransitionService();
+            var recipes = subTransitionService.GetSubTransitionBySubCategoryId(id, pageNumber,pageSize);
+
+            return Json(recipes, JsonRequestBehavior.AllowGet);
         }
 
     }

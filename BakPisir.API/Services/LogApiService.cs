@@ -28,9 +28,7 @@ namespace BakPisir.API.Services
             //projecTo, autommaper aracı. DB varlığımı dto ya mapler.
            
             var logs = efUnitOfWork.LogTemplate.GetAll()
-            .OrderBy(o => o.logId) // gelen datayı id ye göre sırala
-            .Skip((page - 1) * pageSize) //Sayfa numrası * sayfa boytuna göre belrli bir kayıt kümesini atlar.
-               .Take(pageSize)  //Yalnızca sayfa boyutuna göre belirlenen gerekli miktarda veriyi alır.
+            .OrderBy(o => o.logId) // gelen datayı id ye göre sırala           
             .ProjectTo<LogDto>()
                .ToList()
                .ToPaginate(page, pageSize);

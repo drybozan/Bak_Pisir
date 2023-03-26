@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace BakPisir.API.Controllers
 {
-    [Authorize]
+   // [Authorize]
     public class SubTransitionApiController : ApiController
     {
         private SubTransitionApiService _subTransitionApiService = new SubTransitionApiService();
@@ -27,6 +27,13 @@ namespace BakPisir.API.Controllers
         public string Get(int id)
         {
             return _subTransitionApiService.GetSubTransitionById(id);
+        }
+
+        [Route("api/SubTransitionApi/GetSubTransitionBySubCategoryId")]
+        [HttpGet]
+        public string GetBySubCategoryId(int id, int page, int pageSize)
+        {
+            return _subTransitionApiService.GetSubTransitionBySubCategoryId(id,page,pageSize);
         }
 
         [Route("api/SubTransitionApi/Add")]

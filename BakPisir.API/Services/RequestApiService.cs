@@ -35,8 +35,6 @@ namespace BakPisir.API.Services
 
             var requests = efUnitOfWork.RequestTemplate.GetAll(i => i.isDelete == false)
                 .OrderBy(o => o.requestId) // gelen datayı id ye göre sırala
-                .Skip((page - 1) * pageSize) //Sayfa numrası * sayfa boytuna göre belrli bir kayıt kümesini atlar.
-                .Take(pageSize)  //Yalnızca sayfa boyutuna göre belirlenen gerekli miktarda veriyi alır.
                 .ProjectTo<RequestDto>()
                 .ToList()
                 .ToPaginate(page, pageSize);

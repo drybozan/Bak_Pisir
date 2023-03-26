@@ -5,27 +5,392 @@
 }
 
 
-@model List<BakPisir.DTO.Dtos.RecipeDto>
+@model BakPisir.DTO.ModelforList.RecipeListModel
 
-@*UserHomePage tarifleri dinamik olarak listeler.*@
+<div class="container " id="listRecipe">
+    @if (Model.Items.Count % 3 == 0)
+    {
+        for (int i = 0; i < Model.Items.Count; i = i + 3)
+        {
+            <div class="row">
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i].recipeImageUrl" alt="Card image cap" height="300" weight="700" />
+                        <div class="card-body">
+                            <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i].recipeName) </h4>
+                            <h6>@Html.DisplayNameFor(model => model.Items[i].cookingTime):@Html.DisplayFor(model => model.Items[i].cookingTime)</h6>
+                            <p class="card-text">
+                                @Html.DisplayNameFor(model => model.Items[i].ingredients): @Html.DisplayFor(model => model.Items[i].ingredients)
+                            </p>
+                            <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a>
+                        </div>
+                    </div>
+                </div>
 
-<div class="content-wrapper">
-    <!-- Content -->
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i+1].recipeImageUrl" alt="Card image cap" height="300" weight="700" />
+                        <div class="card-body">
+                            <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i + 1].recipeName) </h4>
+                            <h6>@Html.DisplayNameFor(model => model.Items[i + 1].cookingTime):@Html.DisplayFor(model => model.Items[i + 1].cookingTime)</h6>
+                            <p class="card-text">
+                                @Html.DisplayNameFor(model => model.Items[i + 1].ingredients): @Html.DisplayFor(model => model.Items[i + 1].ingredients)
+                            </p>
+                            <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a>
+                        </div>
+                    </div>
+                </div>
 
-    <div class="container-xxl flex-grow-1 container-p-y">
-        <div class="row mb-5">
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i+2].recipeImageUrl" alt="Card image cap" height="300" weight="700" />
+                        <div class="card-body">
+                            <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i + 2].recipeName) </h4>
+                            <h6>@Html.DisplayNameFor(model => model.Items[i + 2].cookingTime):@Html.DisplayFor(model => model.Items[i + 2].cookingTime)</h6>
+
+                            <p class="card-text">
+                                @Html.DisplayNameFor(model => model.Items[i + 2].ingredients): @Html.DisplayFor(model => model.Items[i + 2].ingredients)
+                            </p>
+                            <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        }
+    }
+
+    @if ((Model.Items.Count % 3) == 1)
+    {
+        for (int i = 0; i < (Model.Items.Count - 1); i = i + 3)
+        {
+            <div class="row">
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i].recipeImageUrl" alt="Card image cap" height="300" weight="700" />
+                        <div class="card-body">
+                            <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i].recipeName) </h4>
+                            <h6>@Html.DisplayNameFor(model => model.Items[i].cookingTime):@Html.DisplayFor(model => model.Items[i].cookingTime)</h6>
+                            <p class="card-text">
+                                @Html.DisplayNameFor(model => model.Items[i].ingredients): @Html.DisplayFor(model => model.Items[i].ingredients)
+                            </p>
+                            <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i+1].recipeImageUrl" alt="Card image cap" height="300" weight="700" />
+                        <div class="card-body">
+                            <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i + 1].recipeName) </h4>
+                            <h6>@Html.DisplayNameFor(model => model.Items[i + 1].cookingTime):@Html.DisplayFor(model => model.Items[i + 1].cookingTime)</h6>
+                            <p class="card-text">
+                                @Html.DisplayNameFor(model => model.Items[i + 1].ingredients): @Html.DisplayFor(model => model.Items[i + 1].ingredients)
+                            </p>
+                            <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i+2].recipeImageUrl" alt="Card image cap" height="300" weight="700" />
+                        <div class="card-body">
+                            <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i + 2].recipeName) </h4>
+                            <h6>@Html.DisplayNameFor(model => model.Items[i + 2].cookingTime):@Html.DisplayFor(model => model.Items[i + 2].cookingTime)</h6>
+
+                            <p class="card-text">
+                                @Html.DisplayNameFor(model => model.Items[i + 2].ingredients): @Html.DisplayFor(model => model.Items[i + 2].ingredients)
+                            </p>
+                            <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        }
+        <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card h-100">
+                <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[(Model.Items.Count) - 1].recipeImageUrl" alt="Card image cap" height="300" weight="700" />
+                <div class="card-body">
+                    <h4 class="card-title"> @Html.DisplayFor(model => model.Items[(Model.Items.Count) - 1].recipeName) </h4>
+                    <h6>@Html.DisplayNameFor(model => model.Items[(Model.Items.Count) - 1].cookingTime):@Html.DisplayFor(model => model.Items[(Model.Items.Count) - 1].cookingTime)</h6>
+
+                    <p class="card-text">
+                        @Html.DisplayNameFor(model => model.Items[(Model.Items.Count) - 1].ingredients): @Html.DisplayFor(model => model.Items[(Model.Items.Count) - 1].ingredients)
+                    </p>
+                    <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if ((Model.Items.Count % 3) == 2)
+    {
+        for (int i = 0; i < (Model.Items.Count - 2); i = i + 3)
+        {
+            <div class="row">
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i].recipeImageUrl" alt="Card image cap" height="300" weight="700" />
+                        <div class="card-body">
+                            <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i].recipeName) </h4>
+                            <h6>@Html.DisplayNameFor(model => model.Items[i].cookingTime):@Html.DisplayFor(model => model.Items[i].cookingTime)</h6>
+                            <p class="card-text">
+                                @Html.DisplayNameFor(model => model.Items[i].ingredients): @Html.DisplayFor(model => model.Items[i].ingredients)
+                            </p>
+                            <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i+1].recipeImageUrl" alt="Card image cap" height="300" weight="700" />
+                        <div class="card-body">
+                            <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i + 1].recipeName) </h4>
+                            <h6>@Html.DisplayNameFor(model => model.Items[i + 1].cookingTime):@Html.DisplayFor(model => model.Items[i + 1].cookingTime)</h6>
+                            <p class="card-text">
+                                @Html.DisplayNameFor(model => model.Items[i + 1].ingredients): @Html.DisplayFor(model => model.Items[i + 1].ingredients)
+                            </p>
+                            <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i+2].recipeImageUrl" alt="Card image cap" height="300" weight="700" />
+                        <div class="card-body">
+                            <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i + 2].recipeName) </h4>
+                            <h6>@Html.DisplayNameFor(model => model.Items[i + 2].cookingTime):@Html.DisplayFor(model => model.Items[i + 2].cookingTime)</h6>
+
+                            <p class="card-text">
+                                @Html.DisplayNameFor(model => model.Items[i + 2].ingredients): @Html.DisplayFor(model => model.Items[i + 2].ingredients)
+                            </p>
+                            <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        }
+
+        <div class="row">
             <div class="col-md-6 col-lg-4 mb-3">
                 <div class="card h-100">
-                    <img class="card-img-top" src="../assets/img/elements/2.jpg" alt="Card image cap" />
+                    <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[(Model.Items.Count) - 1].recipeImageUrl" alt="Card image cap" height="300" weight="700" />
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
+                        <h4 class="card-title"> @Html.DisplayFor(model => model.Items[(Model.Items.Count) - 1].recipeName) </h4>
+                        <h6>@Html.DisplayNameFor(model => model.Items[(Model.Items.Count) - 1].cookingTime):@Html.DisplayFor(model => model.Items[(Model.Items.Count) - 1].cookingTime)</h6>
+
                         <p class="card-text">
-                            Some quick example text to build on the card title and make up the bulk of the card's content.
+                            @Html.DisplayNameFor(model => model.Items[(Model.Items.Count) - 1].ingredients): @Html.DisplayFor(model => model.Items[(Model.Items.Count) - 1].ingredients)
                         </p>
-                        <a href="javascript:void(0)" class="btn btn-outline-primary">Go somewhere</a>
+                        <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 mb-3">
+                <div class="card h-100">
+                    <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[(Model.Items.Count) - 2].recipeImageUrl" alt="Card image cap" height="300" weight="700" />
+                    <div class="card-body">
+                        <h4 class="card-title"> @Html.DisplayFor(model => model.Items[(Model.Items.Count) - 2].recipeName) </h4>
+                        <h6>@Html.DisplayNameFor(model => model.Items[(Model.Items.Count) - 2].cookingTime):@Html.DisplayFor(model => model.Items[(Model.Items.Count) - 2].cookingTime)</h6>
+
+                        <p class="card-text">
+                            @Html.DisplayNameFor(model => model.Items[(Model.Items.Count) - 2].ingredients): @Html.DisplayFor(model => model.Items[(Model.Items.Count) - 2].ingredients)
+                        </p>
+                        <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
 </div>
+
+
+
+<!-- Basic Pagination -->
+<nav aria-label="Page navigation"  >
+    <ul class="pagination position-absolute" >
+        @if (Model.HasPrevious == true)
+        {
+            <li class="page-item first" >
+                <a class="page-link" >
+                    <i class="tf-icon bx bx-chevrons-left">ÖNCEKİ</i>
+                </a>
+            </li>
+        }
+
+
+        @for (int i = 1; i <= Model.Pages; i++)
+        {
+            <li class="page-item">
+                <a class="page-link"  onclick="SetPageNumber(@i)">@i</a>
+            </li>
+
+        }
+
+
+
+        @if (Model.HasNext == true)
+        {
+            <li class="page-item last">
+                <a class="page-link" >
+                    <i class="tf-icon bx bx-chevrons-right">SONRAKİ</i>
+                </a>
+            </li>
+        }
+
+    </ul>
+</nav>
+
+@*onclick="SetPageNumber(@i) fonksiyonu ile bu script çalışır. Sayfalama kısmında seçili olan sayfa numarasına göre  UserHomePage Controller altındaki
+    SetPageNumber(int id) fonksiyonunu tetikler
+    Sorgu sonucunda gelen datayı Jquery ile UserHomePage.cshtml'de bulunana listRecipe id'li container içine datayı dinamik olarak yerleştirir.
+    Bu sırada sayfanın tamamı yenilenmez.*@
+
+<script>
+    function SetPageNumber(number) {
+        $.ajax({
+            url: '@Url.Action("SetPageNumber", "UserHomePage")/' + number,
+            datatype: 'JSON',
+            type: 'GET',
+            success: function (data) {
+                var $myHtml = $('<div>');
+              if (data.Items.length % 3 == 0) {
+                    for ( i = 0; i < data.Items.length; i=i+3){
+                        $myHtml.append('<div class="row">\
+                                <div class="col-md-6 col-lg-4 mb-3">\
+                                    <div class="card h-100">\
+                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i].recipeImageUrl+'" alt="Card image cap" height="300" weight="700" />\
+                                     <div class="card-body">\
+                                         <h4 class="card-title">' + data.Items[i].recipeName + '</h4>\
+                                          <h6>Pişirme Süresi:' + data.Items[i].cookingTime + '</h6>\
+                                                 <p class="card-text">İçindekiler:' + data.Items[i].ingredients + '</p>\
+                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
+                                 <div class="col-md-6 col-lg-4 mb-3">\
+                                    <div class="card h-100">\
+                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i+1].recipeImageUrl +'" alt="Card image cap" height="300" weight="700" />\
+                                     <div class="card-body">\
+                                         <h4 class="card-title">' + data.Items[i + 1].recipeName + '</h4>\
+                                          <h6>Pişirme Süresi:' + data.Items[i + 1].cookingTime + '</h6>\
+                                                 <p class="card-text">İçindekiler:' + data.Items[i + 1].ingredients + '</p>\
+                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
+                                  <div class="col-md-6 col-lg-4 mb-3">\
+                                   <div class="card h-100">\
+                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i+2].recipeImageUrl +'" alt="Card image cap" height="300" weight="700" />\
+                                <div class="card-body">\
+                                 <h4 class="card-title">' + data.Items[i + 2].recipeName + ' </h4>\
+                                  <h6>Pişirme Süresi:' + data.Items[i + 2].cookingTime + '</h6>\
+                                    <p class="card-text">İçindekiler:' + data.Items[i + 2].ingredients + '</p>\
+                                         <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div></div>')
+                     }
+                }
+             if (data.Items.length % 3 == 1) {
+                    for (i = 0; i < (data.Items.length-1); i = i + 3) {
+                        $myHtml.append('<div class="row">\
+                                <div class="col-md-6 col-lg-4 mb-3">\
+                                    <div class="card h-100">\
+                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i].recipeImageUrl +'" alt="Card image cap" height="300" weight="700" />\
+                                     <div class="card-body">\
+                                         <h4 class="card-title">' + data.Items[i].recipeName + '</h4>\
+                                          <h6>Pişirme Süresi:' + data.Items[i].cookingTime + '</h6>\
+                                                 <p class="card-text">İçindekiler:' + data.Items[i].ingredients + '</p>\
+                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
+                                 <div class="col-md-6 col-lg-4 mb-3">\
+                                    <div class="card h-100">\
+                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i+1].recipeImageUrl +'" alt="Card image cap" height="300" weight="700" />\
+                                     <div class="card-body">\
+                                         <h4 class="card-title">' + data.Items[i+1].recipeName + '</h4>\
+                                          <h6>Pişirme Süresi:' + data.Items[i+1].cookingTime + '</h6>\
+                                                 <p class="card-text">İçindekiler:' + data.Items[i+1].ingredients + '</p>\
+                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
+                                  <div class="col-md-6 col-lg-4 mb-3">\
+                                   <div class="card h-100">\
+                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i+2].recipeImageUrl +'" alt="Card image cap" height="300" weight="700" />\
+                                <div class="card-body">\
+                                 <h4 class="card-title">' + data.Items[i + 2].recipeName + ' </h4>\
+                                  <h6>Pişirme Süresi:' + data.Items[i + 2].cookingTime + '</h6>\
+                                    <p class="card-text">İçindekiler:' + data.Items[i + 2].ingredients + '</p>\
+                                         <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div></div>')
+                    }
+                    $myHtml.append('<div class="col-md-6 col-lg-4 mb-3" >\
+                            <div class="card h-100">\
+                                <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[(data.Items.length)-1].recipeImageUrl +'" alt="Card image cap" height="300" weight="700" />\
+                                        <div class="card-body">\
+                                        <h4 class="card-title">' + data.Items[(data.Items.length)-1].recipeName + '</h4>\
+                                             <h6>Pişirme Süresi:' + data.Items[(data.Items.length)-1].cookingTime + '</h6>\
+                                              <p class="card-text">İçindekiler:' + data.Items[(data.Items.length)-1].ingredients + '</p>\
+                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>')
+
+                }
+                if (data.Items.length % 3 == 2) {
+                    for (i = 0; i <(data.Items.length-2); i = i + 3) {
+                        $myHtml.append('<div class="row">\
+                                <div class="col-md-6 col-lg-4 mb-3">\
+                                    <div class="card h-100">\
+                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i].recipeImageUrl +'" alt="Card image cap" height="300" weight="700" />\
+                                     <div class="card-body">\
+                                         <h4 class="card-title">' + data.Items[i].recipeName + '</h4>\
+                                          <h6>Pişirme Süresi:' + data.Items[i].cookingTime + '</h6>\
+                                                 <p class="card-text">İçindekiler:' + data.Items[i].ingredients + '</p>\
+                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
+                                 <div class="col-md-6 col-lg-4 mb-3">\
+                                    <div class="card h-100">\
+                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i+1].recipeImageUrl +'" alt="Card image cap" height="300" weight="700" />\
+                                     <div class="card-body">\
+                                         <h4 class="card-title">' + data.Items[i + 1].recipeName + '</h4>\
+                                          <h6>Pişirme Süresi:' + data.Items[i + 1].cookingTime + '</h6>\
+                                                 <p class="card-text">İçindekiler:' + data.Items[i + 1].ingredients + '</p>\
+                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
+                                  <div class="col-md-6 col-lg-4 mb-3">\
+                                   <div class="card h-100">\
+                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i+2].recipeImageUrl +'" alt="Card image cap" height="300" weight="700" />\
+                                <div class="card-body">\
+                                 <h4 class="card-title">' + data.Items[i + 2].recipeName + ' </h4>\
+                                  <h6>Pişirme Süresi:' + data.Items[i + 2].cookingTime + '</h6>\
+                                    <p class="card-text">İçindekiler:' + data.Items[i + 2].ingredients + '</p>\
+                                         <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div></div>')
+                    }
+                    $myHtml.append('<div class="row">\
+                                        <div class="col-md-6 col-lg-4 mb-3" >\
+                                         <div class="card h-100">\
+                                             <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[(data.Items.length) - 1].recipeImageUrl +'" alt="Card image cap" height="300" weight="700" />\
+                                        <div class="card-body">\
+                                        <h4 class="card-title">' + data.Items[(data.Items.length) - 1].recipeName + '</h4>\
+                                             <h6>Pişirme Süresi:' + data.Items[(data.Items.length) - 1].cookingTime + '</h6>\
+                                              <p class="card-text">İçindekiler:' + data.Items[(data.Items.length) - 1].ingredients + '</p>\
+                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
+                                           <div class="col-md-6 col-lg-4 mb-3" >\
+                                         <div class="card h-100">\
+                                             <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[(data.Items.length) - 2].recipeImageUrl +'" alt="Card image cap" height="300" weight="700" />\
+                                        <div class="card-body">\
+                                        <h4 class="card-title">' + data.Items[(data.Items.length) - 2].recipeName + '</h4>\
+                                             <h6>Pişirme Süresi:' + data.Items[(data.Items.length) - 2].cookingTime + '</h6>\
+                                              <p class="card-text">İçindekiler:' + data.Items[(data.Items.length) - 2].ingredients + '</p>\
+                                <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div ></div>')
+                }
+                $("#listRecipe").html($myHtml);
+
+
+                   },
+            error: function (response) {
+                       console.log(response)
+
+             }
+
+             });
+
+           }
+</script>
+
+
+
+
+<!--/ Basic Pagination -->

@@ -94,7 +94,7 @@ namespace BakPisir.API.Controllers
                     postedFile.SaveAs(filePath);
 
                     //ilgili kullanıcının id ' si ile dosyanın adını servise gönder dbye kaydetmesi için.
-                   return  commentApiService.UploadCommentPicture(id, filePath);
+                   return  commentApiService.UploadCommentPicture(id, fNAme + fExt);
                 }
             }
             return Result.Instance.Warning("HATA! Yüklemek istediğiniz fotoğraf yüklenemedi.");

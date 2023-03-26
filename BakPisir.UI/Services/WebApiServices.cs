@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Web;
 using BakPisir.CORE.Helper;
+using System.Web.Services.Description;
 
 
 namespace BakPisir.UI.Services
@@ -30,17 +31,37 @@ namespace BakPisir.UI.Services
             }
         }
 
+    
+
         //parçalı veri getirir.
         // paging için
-        public List<T> Get(string method, int page, int pageSize)
+        public T Get(string method, int page, int pageSize)
         {
             using (HttpClient _httpClient = new HttpClient())
             {
                 _httpClient.BaseAddress = new Uri(url);
                 _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + SessionHelper.TokenInfo.access_token);
-                HttpResponseMessage response = _httpClient.GetAsync(method + "/?page=" + page + "&pageSize=" + pageSize).Result;             
-                return ConvertList(response);
+                HttpResponseMessage response = _httpClient.GetAsync(method + "/?page=" + page + "&pageSize=" + pageSize).Result;
+                var data = response.Content.ReadAsStringAsync().Result;
+                var newData = JsonConvert.DeserializeObject<T>(JsonConvert.DeserializeObject<string>(data));                
+                return newData;
+            }
+        }
+
+        //parçalı veri getirir. Seçilen kategoriye göre
+        // paging için
+        public T Get(string method,int id, int page, int pageSize)
+        {
+            using (HttpClient _httpClient = new HttpClient())
+            {
+                _httpClient.BaseAddress = new Uri(url);
+                _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + SessionHelper.TokenInfo.access_token);
+                HttpResponseMessage response = _httpClient.GetAsync(method +"/?id="+id + "&page=" + page + "&pageSize=" + pageSize).Result;
+                var data = response.Content.ReadAsStringAsync().Result;
+                var newData = JsonConvert.DeserializeObject<T>(JsonConvert.DeserializeObject<string>(data));
+                return newData;
             }
         }
 

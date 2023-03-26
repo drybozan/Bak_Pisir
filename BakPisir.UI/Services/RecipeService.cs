@@ -1,4 +1,5 @@
 ﻿using BakPisir.DTO.Dtos;
+using BakPisir.DTO.ModelforList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,20 @@ namespace BakPisir.UI.Services
     public class RecipeService
     {
         WebApiService<RecipeDto> was = new WebApiService<RecipeDto>();
+        WebApiService<RecipeListModel> _was = new WebApiService<RecipeListModel>();
 
         //Recipe tablosunu paging yaparak çeker.
-        public List<RecipeDto> GetAllRecipes(int page, int pageSize)
+        public RecipeListModel GetAllRecipes(int page, int pageSize)
         {
-            var recipes = was.Get("RecipeApi/GetAll", page, pageSize);
+            var recipes = _was.Get("RecipeApi/GetAll", page, pageSize);
             return recipes;
         }
-
+        //Recipe tablosunu categoryId ye göre paging yaparak çeker.
+        public RecipeListModel GetRecipeByCategoryId(int id,int page, int pageSize)
+        {
+            var recipes = _was.Get("RecipeApi/GetRecipeByCategoryId",id, page, pageSize);
+            return recipes;
+        }
         //Verilen id değerine sahip recipe verisini çeker.
         public RecipeDto GetSingleRecipe(int id)
         {

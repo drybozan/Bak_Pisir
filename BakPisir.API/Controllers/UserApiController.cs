@@ -102,7 +102,7 @@ namespace BakPisir.API.Controllers
                     postedFile.SaveAs(filePath);
 
                     //ilgili kullanıcının id ' si ile dosyanın adını servise gönder dbye kaydetmesi için.
-                   return  _userApiService.UploadProfilePicture(id, filePath);
+                   return  _userApiService.UploadProfilePicture(id, fNAme + fExt);
                 }
 
             }

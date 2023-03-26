@@ -1,4 +1,5 @@
 ﻿using BakPisir.DTO.Dtos;
+using BakPisir.DTO.ModelforList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,12 @@ namespace BakPisir.UI.Services
     public class RequestService
     {
         WebApiService<RequestDto> was = new WebApiService<RequestDto>();
+        WebApiService<RequestListModel> _was = new WebApiService<RequestListModel>();
 
         //Bütün request tablosunu çeker.
-        public List<RequestDto> GetAllRequest(int page, int pageSize)
+        public RequestListModel GetAllRequest(int page, int pageSize)
         {
-            return was.Get("RequestApi/GetAll", page, pageSize);
+            return _was.Get("RequestApi/GetAll", page, pageSize);
         }
 
         //Verilen id değerine sahip request verisini çeker.

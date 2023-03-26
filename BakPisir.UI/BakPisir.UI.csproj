@@ -120,7 +120,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\denemeController.cs" />
     <Compile Include="Controllers\ForgotPasswordController.cs" />
     <Compile Include="Controllers\SignInController.cs" />
     <Compile Include="Controllers\SignUpController.cs" />
@@ -128,12 +127,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\MenuModelView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\RecipeService.cs" />
     <Compile Include="Services\RequestService.cs" />
     <Compile Include="Services\SubCategoryService.cs" />
+    <Compile Include="Services\SubTransitionService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\TokenService.cs" />
     <Compile Include="Services\WebApiServices.cs" />
@@ -241,6 +240,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />
@@ -252,7 +252,6 @@
     <Content Include="Views\SignUp\SignUp.cshtml" />
     <Content Include="Views\ForgotPassword\ForgotPassword.cshtml" />
     <Content Include="Views\Shared\deneme.cshtml" />
-    <Content Include="Views\deneme\Index.cshtml" />
     <Content Include="Views\Shared\UserHomeView.cshtml" />
     <Content Include="Views\UserHomePage\UserHomePage.cshtml" />
     <Content Include="Views\UserHomePage\Menu.cshtml" />

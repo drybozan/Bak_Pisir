@@ -29,8 +29,6 @@ namespace BakPisir.API.Services
             //projecTo, autommaper aracı. DB varlığımı dto ya mapler.
             var users = efUnitOfWork.UserTemplate.GetAll(i => i.isDelete == false)
             .OrderBy(o => o.userId) // gelen datayı id ye göre sırala
-            .Skip((page - 1) * pageSize) //Sayfa numrası * sayfa boytuna göre belrli bir kayıt kümesini atlar.
-            .Take(pageSize)  //Yalnızca sayfa boyutuna göre belirlenen gerekli miktarda veriyi alır.
             .ProjectTo<UserDto>()
             .ToList()
             .ToPaginate(page, pageSize);

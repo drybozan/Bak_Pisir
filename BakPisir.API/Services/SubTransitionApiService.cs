@@ -1,14 +1,18 @@
 ﻿using AutoMapper.QueryableExtensions;
 using BakPisir.CORE.Helper;
+using BakPisir.CORE.Paging;
 using BakPisir.CORE.Result;
 using BakPisir.CORE.UnitOfWork;
 using BakPisir.DTO.Dtos;
+using BakPisir.DTO.ModelforList;
 using BakPisir.EF.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Web;
+using System.Web.UI;
 
 namespace BakPisir.API.Services
 {
@@ -32,6 +36,29 @@ namespace BakPisir.API.Services
         {
             var subTransition = efUnitOfWork.SubTransitionTemplate.GetById(id).MapTo<SubTransitionDto>();
             return JsonConvert.SerializeObject(subTransition);
+        }
+
+        //Verilen id değerine sahip datayı veritabanında bulur ve döndürür.
+        public string GetSubTransitionBySubCategoryId(int id , int page, int pageSize)
+        {
+            var subTransition = efUnitOfWork.SubTransitionTemplate.GetAll(i =>i.subCategoryId==id).ProjectTo<SubTransitionDto>().ToList();
+
+            List<RecipeDto> recipes = new List<RecipeDto>();           
+            for (int i = 0; i < subTransition.Count; i++)
+            {
+                var sorgu = efUnitOfWork.RecipeTemplate.GetById(subTransition[i].recipeId).MapTo<RecipeDto>();
+                                                 
+                          
+                recipes.Add(sorgu);
+            }
+            recipes.OrderBy(o => o.recipeId); // gelen datayı id ye göre sırala)
+           var paginatedRecipes= recipes.ToPaginate(page, pageSize);
+
+            RecipeListModel mappedRecipeListModel = paginatedRecipes.MapTo<RecipeListModel>();
+            return JsonConvert.SerializeObject(mappedRecipeListModel); 
+
+           // return JsonConvert.SerializeObject(subTransition);
+           
         }
 
         //Verilen id değerine sahip datayı veritabanından siler.
