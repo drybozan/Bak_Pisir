@@ -124,9 +124,13 @@
     <Compile Include="Controllers\SignInController.cs" />
     <Compile Include="Controllers\SignUpController.cs" />
     <Compile Include="Controllers\UserHomePageController.cs" />
+    <Compile Include="Controllers\UserProfileController.cs" />
+    <Compile Include="Controllers\UserProfileSettingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountSettingsViewModel.cs" />
+    <Compile Include="Models\ProfileSettingViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\RecipeService.cs" />
@@ -240,7 +244,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />
@@ -251,11 +254,15 @@
     <Content Include="Views\SignIn\SignIn.cshtml" />
     <Content Include="Views\SignUp\SignUp.cshtml" />
     <Content Include="Views\ForgotPassword\ForgotPassword.cshtml" />
-    <Content Include="Views\Shared\deneme.cshtml" />
     <Content Include="Views\Shared\UserHomeView.cshtml" />
     <Content Include="Views\UserHomePage\UserHomePage.cshtml" />
     <Content Include="Views\UserHomePage\Menu.cshtml" />
     <Content Include="Views\UserHomePage\SubMenu.cshtml" />
+    <Content Include="Views\Shared\UserProfileView.cshtml" />
+    <Content Include="Views\UserProfile\UserProfile.cshtml" />
+    <Content Include="Views\UserProfileSetting\UserProfileSetting.cshtml" />
+    <Content Include="Views\UserProfileSetting\AccountSetting.cshtml" />
+    <Content Include="Views\UserProfileSetting\ProfileSetting.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BakPisir.CORE\BakPisir.CORE.csproj">

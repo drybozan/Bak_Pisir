@@ -1,0 +1,90 @@
+﻿@using BakPisir.CORE.Helper
+@model BakPisir.UI.Models.AccountSettingsViewModel
+
+<div class="col-md-12">
+
+    <div class="card mb-4">
+        <h5 class="card-header">Hesap Ayarları</h5>
+        <!-- Account -->
+        @using (Html.BeginForm("AccountSetting", "UserProfileSetting", FormMethod.Post, new { id = "userForm" }))
+        {
+
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        @(Html.TextBoxForControl(m => m.userDto.username, new { placeholder = "Kullanıcı Adı" }))
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        @(Html.EMailControl(m => m.userDto.mail))
+                    </div>
+
+                    <div class="mb-3 col-md-6">
+                        @(Html.PasswordControlClassic(m => m.oldPassword, new { placeholder = "Eski Şifrenizi Giriniz", @id = "oldPw", autocomplete = "off" }))
+
+                    </div><br />
+                    <div class="mb-3 col-md-6">
+                        @(Html.PasswordControlClassic(m => m.newPassword1, new { placeholder = "Yeni Şifrenizi Giriniz", @id = "newPw1", autocomplete = "off" }))
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        @(Html.PasswordControlClassic(m => m.newPassword2, new { placeholder = "Yeni Şifre Kontrol", @id = "newPw2", autocomplete = "off" }))
+                    </div>
+                </div>
+                @Html.HiddenFor(m => m.userDto.userId)
+                @Html.HiddenFor(m => m.userDto.name)
+                @Html.HiddenFor(m => m.userDto.surname)
+                @Html.HiddenFor(m => m.userDto.phone)
+                @Html.HiddenFor(m => m.userDto.birthdate)
+                @Html.HiddenFor(m => m.userDto.profilePictureUrl)
+                @Html.HiddenFor(m => m.userDto.identityNumber)
+                @Html.HiddenFor(m => m.userDto.registrationDate)
+                @Html.HiddenFor(m => m.userDto.userType)
+                @Html.HiddenFor(m => m.userDto.isDelete)
+                @Html.HiddenFor(m => m.userDto.password)
+                
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-success me-2">KAYDET</button>
+                    <button type="reset" class="btn btn-outline-warning">VAZGEÇ</button>
+                </div>
+
+            </div>
+        }
+        <!-- /Account -->
+    </div>
+<script>
+    $(function () {
+        $("#userForm").submit(function (e) {
+            e.preventDefault();
+
+            var str = $('#newPw1').val();
+            var str2 = $('#newPw2').val();
+            if (str === str2) {
+                $.ajax({
+                    url: this.action,
+                    type: 'post',
+                    data: new FormData(this),
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        Swal.fire('İşlem Başarılı',
+                            response, 'success');
+                        setTimeout(function () {
+                            location.reload(true);
+                        }, 3000); // 3000 milisaniye = 3 saniye
+                    },
+                    error: function (response) {
+                        Swal.fire('Hata', response, 'error');
+
+                    }
+                });
+            }
+            else {
+                Swal.fire('Hata',
+                    'Girdiğiniz şifreler uyuşmuyor !!', 'error');
+            }
+        });    
+  });
+
+</script>
+
+</div>

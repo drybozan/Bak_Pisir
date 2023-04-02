@@ -1,0 +1,122 @@
+﻿
+@using BakPisir.CORE.Helper
+@model BakPisir.UI.Models.ProfileSettingViewModel
+
+
+<div class="col-md-12">
+
+    <div class="card mb-4">
+        <h5 class="card-header">Profil Ayarları</h5>
+        <!-- Account -->
+        @using (Html.BeginForm("ProfileSetting", "UserProfileSetting", FormMethod.Post, new { enctype = "multipart/form-data", id = "profilForm" }))
+        {
+            <div class="card-body">
+                <div class="d-flex align-items-start align-items-sm-center gap-4">
+
+                    <img id="image_upload_preview" src="http://localhost:44355/Uploads/UserProfile/@Model.userDto.profilePictureUrl" width="100" height="100" />
+
+                    <div class="my-auto">
+                        <input type="file" name="ImageFile" accept="image/*" id="inputFile" />
+                    </div>
+                   
+
+                        <button type="button" id="reset" class="btn btn-outline-danger account-image-reset mb-4">
+                            <i class="bx bx-reset d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block"> Profil Fotoğrafını Kaldır</span>
+                        </button>
+                   
+                </div>
+            </div>
+            <hr class="my-0" />
+            <div class="card-body">              
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            @(Html.TextBoxForControl(m => m.userDto.name, new { placeholder = "İsim"}))
+
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            @(Html.TextBoxForControl(m => m.userDto.surname, new { placeholder = "Soyisim"}))
+
+                        </div>
+
+                        <div class="mb-3 col-md-6">
+                            @(Html.TextBoxForControl(m => m.userDto.birthdate, new { placeholder = "gg / aa / yyyy"}))
+
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <div class="input-group input-group-merge">
+                                @(Html.PhoneControl(m => m.userDto.phone))
+
+                            </div>
+                        </div>
+                    </div>
+                    @Html.HiddenFor(m => m.userDto.userId)
+                    @Html.HiddenFor(m => m.userDto.username)
+                    @Html.HiddenFor(m => m.userDto.mail)
+                    @Html.HiddenFor(m => m.userDto.password)
+                    @Html.HiddenFor(m => m.userDto.identityNumber)
+                    @Html.HiddenFor(m => m.userDto.registrationDate)
+                    @Html.HiddenFor(m => m.userDto.userType)
+                    @Html.HiddenFor(m => m.userDto.isDelete)
+                    @Html.HiddenFor(m => m.userDto.profilePictureUrl)
+
+                    <div class="mt-2">
+                        <button type="submit" class="btn btn-success me-2">KAYDET</button>
+                        <button type="reset" class="btn btn-outline-warning">VAZGEÇ</button>
+                    </div>
+              
+            </div>
+        }
+        <!-- /Account -->
+    </div>
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#image_upload_preview').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#inputFile").change(function () {
+            readURL(this);
+        });
+
+        $("#reset").click(function () {
+            $('#image_upload_preview').attr('src', null);
+        });
+
+        $("#profilForm").submit(function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Değişiklikleri kaydetmek istiyor musunuz ?',
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Hayır',
+                confirmButtonText: 'Evet'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: this.action,
+                        type: 'post',
+                        data: new FormData(this),
+                        processData: false,
+                        contentType: false,
+                        success: function (result) {
+                            Swal.fire('İşlem Başarılı',
+                                result, 'success');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+
+</div>

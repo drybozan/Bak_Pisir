@@ -42,7 +42,14 @@ namespace BakPisir.API.Services
         public string GetUserById(int id)
         {
             var user = efUnitOfWork.UserTemplate.GetById(id).MapTo<UserDto>();
+            
+            if (user.isDelete == true)
+            {
+                return "HATA! Böyle bir kullanıcı yok.";
+               
+            }
             return JsonConvert.SerializeObject(user);
+
         }
 
         //Verilen id değerine sahip user verisini veritabanından siler.
