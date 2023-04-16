@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "RecipeDetail";
+    Layout = "~/Views/Shared/UserHomeView.cshtml";
+}
+
+@using BakPisir.CORE.Helper
+@model BakPisir.DTO.Dtos.RecipeDto
+
+<div class="mb-3">
+    <div class="col-md">
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-md-1">
+
+                    <img id="image_upload_preview" src="http://localhost:44355/Uploads/UserProfile/@Model.user.profilePictureUrl" width="60" height="60" style="border-radius:50%; margin:15px" />
+
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body" style="font-family:'Times New Roman', Times, serif">
+                        <b>@Model.user.name &nbsp; @Model.user.surname</b>  <br />
+                        <b> @Html.DisplayFor(model => model.user.username)</b> 
+                    </div>
+                </div>
+                <div class="col-md-3" style="margin-top:30px">
+                    <button type="button" id="ziyaret" class="btn btn-outline-secondary  mb-4" onclick="redirectUser(@Model.userId)">
+                        <i class="bx bx-reset d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block"> Profili Ziyaret Et</span>
+                       
+                    </button>
+
+                    <script>
+                        function redirectUser(userId) {
+                            window.location.href = '/UserHomePage/VisitedProfile/' + userId;
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+          
+            <div style="margin-left:180px">
+                <img class="d-block " src="http://localhost:44355/Uploads/RecipePictures/@Model.recipeImageUrl" style="height:400px; width:80%x">
+
+            </div>        
+    
+</div>
+
+<div class="col-lg">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-header" style="text-transform: uppercase;"> @Model.recipeName</h5>
+            <dl class="row mt-2">
+                
+                <dt class="col-sm-3">KATEGORİ</dt>
+                <dd class="col-sm-9">
+                    <p>
+                        @Model.category.categoryName
+                </p>
+            </dd>
+
+            <dt class="col-sm-3">PİŞME SÜRESİ</dt>
+            <dd class="col-sm-9">
+                <p>@Model.cookingTime Dakika</p>
+            </dd>
+
+            <dt class="col-sm-3">YAYINLANMA TARİHİ</dt>
+            <dd class="col-sm-9">@Model.recipeDate</dd>
+           
+
+            </dl>
+        </div>
+        <hr class="m-0">
+        <h5 class="card-header">İÇİNDEKİLER</h5>
+        <div class="card-body">
+            <p>@Model.ingredients</p>
+
+        </div>
+        <hr class="m-0">
+        <div class="card-body">
+            @{ Html.RenderAction("StepsRecipe", new { id = @Model.recipeId });}
+
+
+        </div>
+        <div class="col-md-6 col-lg-4 mb-3" style="margin-left:160px; margin-top:-10px">
+            <video controls style="height: 400px; width:740px;">
+                <source src="http://localhost:44355/Uploads/RecipeVideos/@Model.recipeVideoUrl" type="audio/mp4" alt="recipe_video" />
+            </video>
+        </div>
+              
+            
+
+      
+    </div>
+    </div>
+
+

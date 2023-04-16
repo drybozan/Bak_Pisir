@@ -22,9 +22,9 @@ namespace BakPisir.UI.Controllers
         static int pageSize = 3;
         [HttpGet]
         public ActionResult UserHomePage()
-        {            
+        {
             RecipeListModel recipes = recipeService.GetAllRecipes(pageNumber, pageSize);
-           
+
             return View(recipes);
         }
 
@@ -74,20 +74,69 @@ namespace BakPisir.UI.Controllers
         [HttpGet]
         public PartialViewResult SubMenu(int id)
         {
-            SubCategoryService subCategoryService = new SubCategoryService();   
+            SubCategoryService subCategoryService = new SubCategoryService();
             List<SubCategoryDto> subCategories = subCategoryService.GetSubCategoryByCategoryId(id);
-            return PartialView("SubMenu",subCategories);
+            return PartialView("SubMenu", subCategories);
         }
 
-
+        /// <summary>
+        /// Kategori id sine göre tarif getirir. UserHomePage içine çizer
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public JsonResult GetAllRecipeBySubCategoryId(int id)
-        {           
+        {
             SubTransitionService subTransitionService = new SubTransitionService();
-            var recipes = subTransitionService.GetSubTransitionBySubCategoryId(id, pageNumber,pageSize);
+            var recipes = subTransitionService.GetSubTransitionBySubCategoryId(id, pageNumber, pageSize);
 
             return Json(recipes, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Seçilen tarifin detayını getirir. RecipeDetail View ın içine listeler.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult RecipeDetail(int id)
+        {
+            var singleRecipe = recipeService.GetSingleRecipe(id);
+            return View(singleRecipe);
+        }
+
+        /// <summary>
+        /// Tarifin detayı listelenirken ilgili tarifin adımalrını RecipeDetailin içindeki partialview içine listeler.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public PartialViewResult StepsRecipe(int id)
+        {
+            StepService stepService = new StepService();
+            List<StepDto> steps = stepService.GetStepByRecipeId(id);
+            return PartialView("StepsRecipe", steps);
+        }
+
+        /// <summary>
+        /// profili görüntüle diyince. İlgili kullanıcının profilini ve tariflerini çizer.
+        /// </summary>
+        /// <returns></returns>
+
+        [HttpGet]
+        public ActionResult VisitedProfile(int id)
+        {
+            var recipes = recipeService.GetRecipeByUserId(id, pageNumber, pageSize);
+            return View(recipes);
+        }
+
+        [HttpGet]
+        public PartialViewResult UserInfo(int id)
+        {
+            UserService userService = new UserService();
+            UserDto user = userService.GetSingleUser(id);
+            return PartialView("UserInfo", user);
+
+        }
     }
 }

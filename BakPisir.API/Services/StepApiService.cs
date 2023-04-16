@@ -34,6 +34,13 @@ namespace BakPisir.API.Services
             return JsonConvert.SerializeObject(step);
         }
 
+        //Verilen recipeId değerine sahip step verisini veritabanında bulur ve döndürür.
+        public string GetStepByRecipeId(int id)
+        {
+            var steps = efUnitOfWork.StepTemplate.GetAll(i => i.recipeId== id).ProjectTo<StepDto>().ToList();
+            return JsonConvert.SerializeObject(steps);
+        }
+
         //Verilen id değerine sahip başvuru verisini veritabanından siler.
         public Result DeleteStep(int id)
         {

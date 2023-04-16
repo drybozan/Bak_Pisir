@@ -35,15 +35,35 @@ public class RecipeApiService
     //kategoriye göre tarifleri listeler
     public string GetRecipeByCategoryId(int categoryId,int page, int pageSize)
     {
-        //projecTo, autommaper aracı. DB varlığımı dto ya mapler.
-        var recipes = efUnitOfWork.RecipeTemplate.GetAll(i=> i.categoryId==categoryId)
-            .OrderBy(o => o.recipeId) // gelen datayı id ye göre sırala
-            .ProjectTo<RecipeDto>()
-            .ToList()
-            .ToPaginate(page, pageSize);
+        
+            //projecTo, autommaper aracı. DB varlığımı dto ya mapler.
+            var recipes = efUnitOfWork.RecipeTemplate.GetAll(i => i.categoryId == categoryId)
+                .OrderBy(o => o.recipeId) // gelen datayı id ye göre sırala
+                .ProjectTo<RecipeDto>()
+                .ToList()
+                .ToPaginate(page, pageSize);
 
-        RecipeListModel mappedRecipeListModel = recipes.MapTo<RecipeListModel>();
-        return JsonConvert.SerializeObject(mappedRecipeListModel);
+            RecipeListModel mappedRecipeListModel = recipes.MapTo<RecipeListModel>();
+            return JsonConvert.SerializeObject(mappedRecipeListModel);
+       
+      
+    }
+
+
+    //kullanıcıya göre tarifleri listeler
+    public string GetRecipeByUserId(int userId, int page, int pageSize)
+    {       
+       
+            //projecTo, autommaper aracı. DB varlığımı dto ya mapler.
+            var recipes = efUnitOfWork.RecipeTemplate.GetAll(i => i.userId == userId)
+                .OrderBy(o => o.recipeId) // gelen datayı id ye göre sırala
+                .ProjectTo<RecipeDto>()
+                .ToList()
+                .ToPaginate(page, pageSize);
+
+            RecipeListModel mappedRecipeListModel = recipes.MapTo<RecipeListModel>();
+            return JsonConvert.SerializeObject(mappedRecipeListModel);
+      
     }
 
     //Verilen id değerine sahip tarifi veritabanında bulur ve döndürür.

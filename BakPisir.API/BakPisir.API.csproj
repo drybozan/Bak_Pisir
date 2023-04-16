@@ -204,7 +204,6 @@
     <Compile Include="Controllers\StepApiController.cs" />
     <Compile Include="Controllers\SubCategoryApiController.cs" />
     <Compile Include="Controllers\SubTransitionApiController.cs" />
-    <Compile Include="Controllers\UploadPictureController.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

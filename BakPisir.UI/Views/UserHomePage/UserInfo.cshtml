@@ -1,0 +1,20 @@
+﻿@model BakPisir.DTO.Dtos.UserDto
+
+
+<div class="col-md">
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-2">
+
+                <img id="image_upload_preview" src="http://localhost:44355/Uploads/UserProfile/@Model.profilePictureUrl" alt="profile_picture" width="120" height="120" style=" border-radius:50%; margin:15px" />
+
+            </div>
+            <div class="col-md-8">
+                <div class="card-body" style="font-family:'Times New Roman', Times, serif ; font-size:x-large ;margin-top:15px">
+                    <b>@Model.name &nbsp; @Model.surname </b>  <br />
+                    <b>@Model.username </b>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

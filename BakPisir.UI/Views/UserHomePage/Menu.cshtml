@@ -8,13 +8,20 @@
     <div class="app-brand justify-content-center">
         <a href="index.html" class="app-brand-link gap-2">
             <img src="~/Templates/Images/loginwomanicon.svg" width="50" height="70" />
-            <h4 style="color:rebeccapurple" class="mb-md-0">Bak Pişir</h4>
+            <h4 style="color:rebeccapurple ; text-align: center" class="mb-md-0">Bak Pişir</h4>
             <img src="~/Templates/Images/loginmanicon.svg" width="50" height="70" />
         </a>
     </div>
 
 
     <ul class="menu-inner py-1">
+
+        <li  class="menu-item">
+            <a  class="menu-link menu-divider" href="/UserHomePage/UserHomePage">
+                <i class="menu-icon tf-icons bx bx-home"></i>
+                <span class="menu-text" style="font-size:small">ANASAYFA</span>
+            </a>
+        </li>
 
         @foreach (var category in Model)
         {
@@ -26,7 +33,7 @@
                 </a>
 
                 @*UserHomePage/SubMenu/id actionı tarafından gönderilen partialview burda render edilir.
-                    Get isteğiyle id yi alıp sorgu döndürüp SubMenu.cshmtl partialviewa göndertir*@
+                Get isteğiyle id yi alıp sorgu döndürüp SubMenu.cshmtl partialviewa göndertir*@
 
                 @{ Html.RenderAction("SubMenu", new { id = @category.categoryId }); }
             </li>

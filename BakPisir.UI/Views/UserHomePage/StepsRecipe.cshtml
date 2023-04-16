@@ -1,0 +1,33 @@
+﻿@model List<BakPisir.DTO.Dtos.StepDto>
+
+<h5 class="card-header">TARİF</h5>
+
+@foreach (var step in Model)
+{
+    <h5 style="opacity:80%" class="card-header">
+        @step.stepName
+    </h5>
+    <p>
+        @step.stepDescription
+    </p>
+    <div class="col-md-6 col-lg-4 mb-3" style="margin-left:270px">
+      
+            <img class="card-img" style="height:300px;width:150%" src="http://localhost:44355/Uploads/StepPictures/@step.stepImageUrl" alt="step_image">
+
+    </div>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

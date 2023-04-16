@@ -17,7 +17,7 @@ public class CategoryApiService
 
     public string GetAllCategory()
     {
-        CategoryDto categoryDto = new CategoryDto();    
+        
         //projecTo, autommaper aracı. DB varlığımı dto ya mapler.
         var categories = efUnitOfWork.CategoryTemplate.GetAll(i=>i.isDelete==false).ProjectTo<CategoryDto>().ToList();
       

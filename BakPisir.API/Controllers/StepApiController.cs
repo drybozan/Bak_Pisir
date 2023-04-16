@@ -12,7 +12,7 @@ using System.Web.Http;
 
 namespace BakPisir.API.Controllers
 {
-    [Authorize]
+   // [Authorize]
     public class StepApiController : ApiController
     {
         private StepApiService stepApiService = new StepApiService();
@@ -29,6 +29,12 @@ namespace BakPisir.API.Controllers
         public string Get(int id)
         {
             return stepApiService.GetStepById(id);
+        }
+        [Route("api/StepApi/GetStepByRecipeId")]
+        [HttpGet]
+        public string GetStepByRecipeId(int id)
+        {
+            return stepApiService.GetStepByRecipeId(id);
         }
 
         [Route("api/StepApi/Add")]

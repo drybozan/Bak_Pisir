@@ -32,6 +32,8 @@ namespace BakPisir.DTO.Dtos
 
         public bool isDelete { get; set; }
 
+    
+
 
     }
 }

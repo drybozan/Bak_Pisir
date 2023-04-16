@@ -135,27 +135,57 @@ namespace BakPisir.API.Services
       
         public Result UploadProfilePicture(int id, string filePath)
         {
+            //var result = Result.Instance.Warning("HATA! Güncellemek istediğiniz kayıt bulunamadı.");
+
+            //// gelen id yi sorgula db de sorgula. Bu id ile kullanıcı kayıtlı ise onu UserDto entity ile maple.
+            //var user = efUnitOfWork.UserTemplate.GetById(id).MapTo<UserDto>();
+
+            //if (user != null)
+            //{
+            //    //kullanıcının profil fotoğrafına gönderilen dosyanın yolunu gönder.
+            //    user.profilePictureUrl = filePath;
+
+            //    //kullanıcıyı veritabanı nesnesi ile maple.
+            //    var mappedUser = user.MapTo<UserTBL>();
+            //    // yapılan değişikliği güncelle
+            //    efUnitOfWork.UserTemplate.Update(mappedUser);
+
+            //    // değişiklikleri kaydet ve veritabanına yansıt
+            //    efUnitOfWork.SaveChanges();
+
+            //    result = Result.Instance.Success("Kullanıcı profili başarıyla güncellendi.");
+            //    return result;
+            //}
+            //return result;
+
             var result = Result.Instance.Warning("HATA! Güncellemek istediğiniz kayıt bulunamadı.");
 
-            // gelen id yi sorgula db de sorgula. Bu id ile kullanıcı kayıtlı ise onu UserDto entity ile maple.
-            var user = efUnitOfWork.UserTemplate.GetById(id).MapTo<UserDto>();
-
-            if (user != null)
+            try
             {
-                //kullanıcının profil fotoğrafına gönderilen dosyanın yolunu gönder.
-                user.profilePictureUrl = filePath;
+                // gelen id yi sorgula db de sorgula. Bu id ile kullanıcı kayıtlı ise onu UserDto entity ile maple.
+                var user = efUnitOfWork.UserTemplate.GetById(id).MapTo<UserDto>();
 
-                //kullanıcıyı veritabanı nesnesi ile maple.
-                var mappedUser = user.MapTo<UserTBL>();
-                // yapılan değişikliği güncelle
-                efUnitOfWork.UserTemplate.Update(mappedUser);
+                if (user != null)
+                {
+                    //kullanıcının profil fotoğrafına gönderilen dosyanın yolunu gönder.
+                    user.profilePictureUrl = filePath;
 
-                // değişiklikleri kaydet ve veritabanına yansıt
-                efUnitOfWork.SaveChanges();
+                    //kullanıcıyı veritabanı nesnesi ile maple.
+                    var mappedUser = user.MapTo<UserTBL>();
+                    // yapılan değişikliği güncelle
+                    efUnitOfWork.UserTemplate.Update(mappedUser);
 
-                result = Result.Instance.Success("Kullanıcı profili başarıyla güncellendi.");
-                return result;
+                    // değişiklikleri kaydet ve veritabanına yansıt
+                    efUnitOfWork.SaveChanges();
+
+                    result = Result.Instance.Success("Kullanıcı profili başarıyla güncellendi.");
+                }
             }
+            catch (Exception ex)
+            {
+                result = Result.Instance.Fail("HATA! Bir hata oluştu: " + ex.Message);
+            }
+
             return result;
 
         }

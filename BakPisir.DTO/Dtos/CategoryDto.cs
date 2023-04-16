@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BakPisir.EF.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace BakPisir.DTO.Dtos
         [MaxLength(50, ErrorMessage = "Bu alana en fazla 50 karakter yazılabilir")]
         public string categoryName { get; set; }
 
-        public bool isDelete { get; set; }    
+        public bool isDelete { get; set; }
+
+        public virtual List<RecipeTBL> recipes { get; set; }
     }
 }

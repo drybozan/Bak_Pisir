@@ -24,6 +24,14 @@ namespace BakPisir.UI.Services
             var recipes = _was.Get("RecipeApi/GetRecipeByCategoryId",id, page, pageSize);
             return recipes;
         }
+
+        //Recipe tablosunu categoryId ye göre paging yaparak çeker.
+        public RecipeListModel GetRecipeByUserId(int id, int page, int pageSize)
+        {
+            var recipes = _was.Get("RecipeApi/GetRecipeByUserId", id, page, pageSize);
+            return recipes;
+        }
+
         //Verilen id değerine sahip recipe verisini çeker.
         public RecipeDto GetSingleRecipe(int id)
         {

@@ -131,10 +131,12 @@
     </Compile>
     <Compile Include="Models\AccountSettingsViewModel.cs" />
     <Compile Include="Models\ProfileSettingViewModel.cs" />
+    <Compile Include="Models\RecipeStepSubCategoryModelView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\RecipeService.cs" />
     <Compile Include="Services\RequestService.cs" />
+    <Compile Include="Services\StepService.cs" />
     <Compile Include="Services\SubCategoryService.cs" />
     <Compile Include="Services\SubTransitionService.cs" />
     <Compile Include="Services\UserService.cs" />
@@ -263,6 +265,13 @@
     <Content Include="Views\UserProfileSetting\UserProfileSetting.cshtml" />
     <Content Include="Views\UserProfileSetting\AccountSetting.cshtml" />
     <Content Include="Views\UserProfileSetting\ProfileSetting.cshtml" />
+    <Content Include="Views\UserHomePage\RecipeDetail.cshtml" />
+    <Content Include="Views\UserHomePage\StepsRecipe.cshtml" />
+    <Content Include="Views\UserHomePage\VisitedProfile.cshtml" />
+    <Content Include="Views\UserHomePage\UserInfo.cshtml" />
+    <Content Include="Views\UserProfile\RecipeListByUser.cshtml" />
+    <Content Include="Views\UserProfile\NavbarForUser.cshtml" />
+    <Content Include="Views\UserProfile\UpdateRecipe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BakPisir.CORE\BakPisir.CORE.csproj">

@@ -1,6 +1,9 @@
-﻿using BakPisir.UI.Services;
+﻿using BakPisir.DTO.Dtos;
+using BakPisir.UI.Models;
+using BakPisir.UI.Services;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,6 +13,14 @@ namespace BakPisir.UI.Controllers
     public class UserProfileController : Controller
     {
          UserService userService = new UserService();
+        RecipeService recipeService = new RecipeService();
+        StepService stepService = new StepService();
+        CategoryService categoryService = new CategoryService();
+        SubCategoryService subCategoryService = new SubCategoryService();
+
+        static int pageNumber = 1;
+        static int pageSize = 9;
+
         [HttpGet]
         public ActionResult UserProfile()
         {
@@ -27,5 +38,41 @@ namespace BakPisir.UI.Controllers
         {
             userService.DeleteUser(id);
         }
+
+        //session bilgiisnden user id si alınacak ve parametre olarak verilecek
+        [HttpGet]
+        public ActionResult RecipeListByUser()
+        {
+            var recipes = recipeService.GetRecipeByUserId(1, pageNumber, pageSize);
+
+            return View(recipes);
+        }
+
+        public PartialViewResult NavbarForUser(int id)
+        {
+            UserService userService = new UserService();
+            UserDto user = userService.GetSingleUser(id);
+            return PartialView("NavbarForUser",user);
+        }
+
+
+        [HttpGet]
+        public ActionResult UpdateRecipe(int id)
+        {
+            var recipe = recipeService.GetSingleRecipe(id);
+            var steps = stepService.GetStepByRecipeId(id);
+            RecipeStepSubCategoryModelView recipeStepModelView = new RecipeStepSubCategoryModelView();
+            recipeStepModelView.recipeDto = recipe;
+            recipeStepModelView.stepDto = steps;
+
+            var categories = categoryService.GetAllCategories();
+            ViewBag.Categories = categories;
+
+            var subCategories = subCategoryService.GetAllSubCategories();           
+            ViewBag.SubCategories = subCategories;
+
+            return View(recipeStepModelView);
+        }
+
     }
 }

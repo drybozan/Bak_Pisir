@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "UpdateRecipe";
+    Layout = "~/Views/Shared/UserProfileView.cshtml";
+}
+@model BakPisir.UI.Models.RecipeStepSubCategoryModelView
+
+<div class="col-md-12">
+    <div class="card mb-4">
+        <h5 class="card-header">GÜNCELLE</h5>
+        <div class="card-body">
+
+
+            <div class="mt-2 mb-3">
+                <label for="largeInput" class="form-label">TARİF İSMİ</label>
+                <input id="largeInput" class="form-control form-control-lg" type="text" value=@Html.DisplayFor(m => Model.recipeDto.recipeName)>
+            </div>
+            <div class="row mb-3">
+                <div class="col-6">
+                    <label for="defaultInput" class="form-label">Pişirme Süresi</label>
+                    <input id="defaultInput" class="form-control" type="text" value=@Html.DisplayFor(m => Model.recipeDto.cookingTime)>
+                </div>
+                <div class="col-6">
+                    <label for="defaultInput" class="form-label">Yayınlanma Tarihi</label>
+                    <input id="defaultInput" class="form-control" type="datetime" value=@Html.DisplayFor(m => Model.recipeDto.recipeDate)>
+                </div>
+            </div>
+
+
+            <div class="mb-3">
+                <label for="defaultSelect" class="form-label">KATEGORİ</label>
+
+                @(Html.DropDownListFor(m=>Model.recipeDto.categoryId,new SelectList(ViewBag.Categories,"categoryId","categoryName") ,new { @class = "form-control" }))
+
+             
+            </div>
+            <div class="mb-3">
+                <label for="defaultSelect" class="form-label">ALT KATEGORİ</label>
+                @(Html.DropDownListFor(m=>Model.subCategoryDto.subCategoryId,new SelectList(ViewBag.SubCategories, "subCategoryId","subCategoryName") ,new { @class = "form-control" }))
+
+            </div>
+
+            <div>
+                <label for="exampleFormControlTextarea1" class="form-label">İÇİNDEKİLER</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">@Html.DisplayFor(m => Model.recipeDto.ingredients)</textarea>
+            </div>
+            @foreach (var step in Model.stepDto)
+            {
+            <div class="row mb-4 mt-3">
+                <label for="defaultInput" class="form-label">@Html.DisplayFor(m => step.stepName)</label>
+
+                <div class="col-8">
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="7">@Html.DisplayFor(m => step.stepDescription)</textarea>
+                </div>
+                <div class="col-3">
+                    <img class="card-img-top" src="http://localhost:44355/Uploads/StepPictures/@step.stepImageUrl" alt="Card image cap" height="180" width="700" />
+                    <div class="my-auto">
+                        <input type="file" name="ImageFile" accept="image/*" id="inputFile" />
+                    </div>
+                </div>
+
+                
+
+            </div>
+            }
+
+        </div>
+       
+       
+    </div>
+</div>
+

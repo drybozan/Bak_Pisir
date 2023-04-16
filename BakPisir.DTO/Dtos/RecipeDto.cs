@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BakPisir.EF.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -48,6 +49,14 @@ namespace BakPisir.DTO.Dtos
         public DateTime recipeDate { get; set; }        
 
         public bool isDelete { get; set; }
+
+        //kategori ismi
+        public virtual CategoryDto category { get; set; }
+
+        //user 
+        public virtual UserDto user { get; set; }
+
+       
 
 
     }

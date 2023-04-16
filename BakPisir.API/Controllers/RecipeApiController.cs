@@ -32,6 +32,14 @@ namespace BakPisir.API.Controllers
             return recipeApiService.GetRecipeByCategoryId(id,page, pageSize);
         }
 
+
+        [Route("api/RecipeApi/GetRecipeByUserId")]
+        [HttpGet]
+        public string GetRecipeByUserId(int id, int page, int pageSize)
+        {
+            return recipeApiService.GetRecipeByUserId(id, page, pageSize);
+        }
+
         [Route("api/RecipeApi/Get")]
         [HttpGet]
         public string Get(int id)
