@@ -99,7 +99,7 @@ namespace BakPisir.API.Services
             {
                 var mapped = userDto.MapTo<UserTBL>();
                 mapped.userId = user.userId;
-
+              
                 efUnitOfWork.UserTemplate.Update(mapped);
                 efUnitOfWork.SaveChanges();
 

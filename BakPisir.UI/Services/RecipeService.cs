@@ -57,12 +57,12 @@ namespace BakPisir.UI.Services
             return was.Update("RecipeApi/Update", id, value);
         }
 
-        public String UploadRecipeVideo(string method, int id, HttpPostedFileBase file)
+        public String UploadRecipeVideo(int id, HttpPostedFileBase file)
         {
             return was.UploadFile("RecipeApi/UploadRecipeVideo", id, file);
         }
 
-        public String UploadRecipePicture(string method, int id, HttpPostedFileBase file)
+        public String UploadRecipePicture(int id, HttpPostedFileBase file)
         {
             return was.UploadFile("RecipeApi/UploadRecipePicture", id, file);
         }

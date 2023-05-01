@@ -10,7 +10,7 @@ namespace BakPisir.DTO.Dtos
 {
     public class SubTransitionDto
     {
-        [Display(Name = "Kategori Geçiş Id")]       
+        [Display(Name = "Kategori Geçiş Id")]
         public int categoryTransitionId { get; set; }
 
         [Display(Name = "Alt Kategori Id")]
@@ -22,6 +22,9 @@ namespace BakPisir.DTO.Dtos
         public int recipeId { get; set; }
 
         public bool isDelete { get; set; }
+
+        public virtual SubCategoryDto subCategory { get; set; }
+
 
     }
 }

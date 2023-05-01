@@ -19,7 +19,7 @@
                         <input type="file" name="ImageFile" accept="image/*" id="inputFile" />
                     </div>
 
-                        <button type="button" id="reset" class="btn btn-outline-danger account-image-reset mb-4">
+                        <button type="button" id="reset" class="btn btn-outline-danger account-image-reset mb-4" onclick="resetProfilePicture()">
                             <i class="bx bx-reset d-block d-sm-none"></i>
                             <span class="d-none d-sm-block"> Profil Fotoğrafını Kaldır</span>
                         </button>
@@ -85,9 +85,14 @@
             readURL(this);
         });
 
-        $("#reset").click(function () {
+        //$("#reset").click(function () {
+        //    $('#image_upload_preview').attr('src', null);
+        //});
+
+        function resetProfilePicture() {
+            $('#userDto_profilePictureUrl').val('');
             $('#image_upload_preview').attr('src', null);
-        });
+        }
 
         $("#profilForm").submit(function (e) {
             e.preventDefault();

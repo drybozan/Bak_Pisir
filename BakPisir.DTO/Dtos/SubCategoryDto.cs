@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BakPisir.EF.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -27,6 +28,8 @@ namespace BakPisir.DTO.Dtos
         public string subCategoryName { get; set; }
 
         public bool isDelete { get; set; }
+
+        public virtual List<SubTransitionTBL> subTransitions { get; set; }
 
     }
 }

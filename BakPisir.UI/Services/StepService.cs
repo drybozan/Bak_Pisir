@@ -47,5 +47,10 @@ namespace BakPisir.UI.Services
         {
             return was.Update("StepApi/Update", id, value);
         }
+
+        public String UploadStepPicture(int id, HttpPostedFileBase file)
+        {
+            return was.UploadFile("StepApi/UploadStepPicture", id, file);
+        }
     }
 }

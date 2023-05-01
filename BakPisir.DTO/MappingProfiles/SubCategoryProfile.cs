@@ -12,7 +12,7 @@ public class SubCategoryProfile : Profile
             .ForMember(d => d.categoryId, o => o.MapFrom(s => s.categoryId))
             .ForMember(d => d.subCategoryName, o => o.MapFrom(s => s.subCategoryName))
             .ForMember(d => d.recipeId, o => o.MapFrom(s => s.recipeId))
-            .ForMember(d => d.isDelete, o => o.MapFrom(s => s.isDelete))
+            .ForMember(d => d.isDelete, o => o.MapFrom(s => s.isDelete))          
             .ReverseMap()
             .ForMember(s => s.subCategoryId, o => o.MapFrom(d => d.subCategoryId))
             .ForMember(s => s.categoryId, o => o.MapFrom(d => d.categoryId))

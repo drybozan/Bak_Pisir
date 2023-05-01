@@ -11,6 +11,6 @@ namespace BakPisir.UI.Models
         public RecipeDto recipeDto { get; set; }
         public List<StepDto> stepDto { get; set; }
         public SubCategoryDto subCategoryDto { get; set; }
-        public HttpPostedFileBase ImageFile { get; set; }
+        public List<HttpPostedFileBase> ImageFile { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BakPisir.DTO.Dtos;
 using BakPisir.DTO.ModelforList;
+using BakPisir.UI.Models;
 using BakPisir.UI.Services;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,10 @@ namespace BakPisir.UI.Controllers
         /// </summary>
         /// 
         RecipeService recipeService = new RecipeService();
+        SubTransitionService subTransitionService = new SubTransitionService();
 
         static int pageNumber = 1;
-        static int pageSize = 3;
+        static int pageSize = 9;
         [HttpGet]
         public ActionResult UserHomePage()
         {
@@ -59,9 +61,9 @@ namespace BakPisir.UI.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        public JsonResult GetAllRecipeByCategoryId(int id)
+        public JsonResult GetAllRecipeByCategoryId(int id,int number)
         {
-            RecipeListModel recipes = recipeService.GetRecipeByCategoryId(id, pageNumber, pageSize);
+            RecipeListModel recipes = recipeService.GetRecipeByCategoryId(id, number, pageSize);
 
             return Json(recipes, JsonRequestBehavior.AllowGet);
         }
@@ -85,10 +87,10 @@ namespace BakPisir.UI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public JsonResult GetAllRecipeBySubCategoryId(int id)
+        public JsonResult GetAllRecipeBySubCategoryId(int id,int number )
         {
-            SubTransitionService subTransitionService = new SubTransitionService();
-            var recipes = subTransitionService.GetSubTransitionBySubCategoryId(id, pageNumber, pageSize);
+           
+            var recipes = subTransitionService.GetSubTransitionBySubCategoryId(id, number, pageSize);
 
             return Json(recipes, JsonRequestBehavior.AllowGet);
         }
@@ -102,7 +104,12 @@ namespace BakPisir.UI.Controllers
         public ActionResult RecipeDetail(int id)
         {
             var singleRecipe = recipeService.GetSingleRecipe(id);
-            return View(singleRecipe);
+            var subTransitions = subTransitionService.GetSubCategoryByRecipeId(id);
+            RecipeSubTransitionViewModel recipeSubTransitionViewModel = new RecipeSubTransitionViewModel();
+
+            recipeSubTransitionViewModel.recipeDto = singleRecipe;
+            recipeSubTransitionViewModel.subTransitionDto = subTransitions;
+            return View(recipeSubTransitionViewModel);
         }
 
         /// <summary>

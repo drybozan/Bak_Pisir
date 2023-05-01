@@ -31,6 +31,12 @@ namespace BakPisir.UI.Services
             return recipes;
         }
 
+        //Verilen recipeId değerine sahip subcategory verisini çeker.
+        public List<SubTransitionDto> GetSubCategoryByRecipeId(int id)
+        {
+            var category = was.GetSpecial("SubTransitionApi/GetByRecipeId", id);
+            return category;
+        }
         //Verilen id değerine sahip SubTransition verisini veritabanından siler.
         public String DeleteSubTransition(int id)
         {

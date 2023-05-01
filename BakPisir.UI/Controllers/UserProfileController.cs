@@ -74,5 +74,42 @@ namespace BakPisir.UI.Controllers
             return View(recipeStepModelView);
         }
 
+        [HttpPost]
+        public string UpdateRecipe(RecipeStepSubCategoryModelView recipeStepSubCategoryModelView)
+        {
+            //int id = SessionHelper.LoggedUserInfo.userId; ileryene zamanda giriş yapan id yi yükle
+            int recipeId = recipeStepSubCategoryModelView.recipeDto.recipeId;            
+            int subTransitonId = recipeStepSubCategoryModelView.recipeDto.recipeId;
+            int subCategoryId = recipeStepSubCategoryModelView.subCategoryDto.subCategoryId;
+
+            recipeService.UpdateRecipe(recipeId, recipeStepSubCategoryModelView.recipeDto);
+            if (recipeStepSubCategoryModelView.ImageFile[0] != null)
+            {
+                recipeService.UploadRecipePicture(recipeId, recipeStepSubCategoryModelView.ImageFile[0]);
+             
+            }
+            if (recipeStepSubCategoryModelView.ImageFile[recipeStepSubCategoryModelView.ImageFile.Count] != null)
+            {
+                recipeService.UploadRecipePicture(recipeId, recipeStepSubCategoryModelView.ImageFile[0]);
+
+            }
+
+
+            for (int i = 0; i< recipeStepSubCategoryModelView.stepDto.Count; i++)
+            {
+               int stepId = recipeStepSubCategoryModelView.stepDto[i].stepId;
+                stepService.UpdateStep(stepId, recipeStepSubCategoryModelView.stepDto[i]);
+                if (recipeStepSubCategoryModelView.ImageFile[i+1] != null)
+                {
+                    stepService.UploadStepPicture(stepId, recipeStepSubCategoryModelView.ImageFile[i+1]);
+
+                }
+
+            }
+           
+            // recipeService.UpdateRecipe(recipeId, recipeStepSubCategoryModelView.recipeDto);
+            return "selam";
+        }
+
     }
 }

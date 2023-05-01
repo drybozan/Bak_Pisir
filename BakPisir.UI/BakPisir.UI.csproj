@@ -130,6 +130,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountSettingsViewModel.cs" />
+    <Compile Include="Models\RecipeSubTransitionViewModel.cs" />
     <Compile Include="Models\ProfileSettingViewModel.cs" />
     <Compile Include="Models\RecipeStepSubCategoryModelView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

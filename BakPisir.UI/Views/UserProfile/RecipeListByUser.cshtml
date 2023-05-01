@@ -42,7 +42,11 @@
                             <p class="card-text">
                                 @Html.DisplayNameFor(model => model.Items[i + 1].ingredients): @Html.DisplayFor(model => model.Items[i + 1].ingredients)
                             </p>
-                            <a href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[i+1].recipeId)" class="btn btn-outline-primary">Tarifi Dene</a>
+                            <div class="row">
+                                <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[i+1].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
+                                <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[i+1].recipeId)" class="btn btn-outline-warning">Güncelle</a>
+                                <a style="margin-bottom:5px" href="#" class="btn btn-outline-danger">Sil</a>
+                            </div>
                         </div>
                     </div>
                 </div>

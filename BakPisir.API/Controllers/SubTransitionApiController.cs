@@ -36,6 +36,14 @@ namespace BakPisir.API.Controllers
             return _subTransitionApiService.GetSubTransitionBySubCategoryId(id,page,pageSize);
         }
 
+
+        [Route("api/SubTransitionApi/GetByRecipeId")]
+        [HttpGet]
+        public string GetByCategoryId(int id)
+        {
+            return _subTransitionApiService.GetSubCategoryByRecipeId(id);
+        }
+
         [Route("api/SubTransitionApi/Add")]
         [HttpPost]
         public Result Post(SubTransitionDto newSubTransition)

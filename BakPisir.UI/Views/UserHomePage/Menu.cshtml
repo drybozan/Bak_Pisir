@@ -16,8 +16,8 @@
 
     <ul class="menu-inner py-1">
 
-        <li  class="menu-item">
-            <a  class="menu-link menu-divider" href="/UserHomePage/UserHomePage">
+        <li class="menu-item">
+            <a class="menu-link menu-divider" href="/UserHomePage/UserHomePage">
                 <i class="menu-icon tf-icons bx bx-home"></i>
                 <span class="menu-text" style="font-size:small">ANASAYFA</span>
             </a>
@@ -26,14 +26,14 @@
         @foreach (var category in Model)
         {
 
-            <li class="menu-item" onclick="getCategoryId(@category.categoryId)">
+            <li class="menu-item" onclick="getCategoryId(@category.categoryId,1)">
                 <a class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons bx bx-food-menu"></i>
                     <span class="menu-text" style="font-size:small">@category.categoryName</span>
                 </a>
 
                 @*UserHomePage/SubMenu/id actionı tarafından gönderilen partialview burda render edilir.
-                Get isteğiyle id yi alıp sorgu döndürüp SubMenu.cshmtl partialviewa göndertir*@
+                    Get isteğiyle id yi alıp sorgu döndürüp SubMenu.cshmtl partialviewa göndertir*@
 
                 @{ Html.RenderAction("SubMenu", new { id = @category.categoryId }); }
             </li>
@@ -45,14 +45,16 @@
 </aside>
 
 @*Menude seçili olan kategoriye göre tarifleri listeler*@
- @*onclick="getCategoryId(@category.categoryId) fonksiyonu ile ilgili seçili olan category id yi alır. 
-  UserHomePage Controller altındakş GetAllRecipeByCategoryId fonksiyonunu tetikler
-Sorgu sonucunda gelen datayı Jquery ile UserHomePage.cshtml'de bulunana listRecipe id'li container içine datayı dinamik olarak yerleştirir. 
-Bu sırada sayfanın tamamı yenilenmez.*@
+@*onclick="getCategoryId(@category.categoryId) fonksiyonu ile ilgili seçili olan category id yi alır.
+      UserHomePage Controller altındakş GetAllRecipeByCategoryId fonksiyonunu tetikler
+    Sorgu sonucunda gelen datayı Jquery ile UserHomePage.cshtml'de bulunana listRecipe id'li container içine datayı dinamik olarak yerleştirir.
+    Bu sırada sayfanın tamamı yenilenmez.*@
+
+
 <script>
-    function getCategoryId(id) {
+    function getCategoryId(id,number) {
         $.ajax({
-            url: '@Url.Action("GetAllRecipeByCategoryId", "UserHomePage")/' + id,
+            url: '@Url.Action("GetAllRecipeByCategoryId", "UserHomePage")?id=' + id + '&number=' + number,
             datatype: 'JSON',
             type: 'GET',
             success: function (data) {
@@ -67,7 +69,7 @@ Bu sırada sayfanın tamamı yenilenmez.*@
                                          <h4 class="card-title">' + data.Items[i].recipeName + '</h4>\
                                           <h6>Pişirme Süresi:' + data.Items[i].cookingTime + '</h6>\
                                                  <p class="card-text">İçindekiler:' + data.Items[i].ingredients + '</p>\
-                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
+                                                 <a href="/UserHomePage/RecipeDetail/'+ data.Items[i].recipeId + ' " class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
                                  <div class="col-md-6 col-lg-4 mb-3">\
                                     <div class="card h-100">\
                                   <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i + 1].recipeImageUrl + '" alt="Card image cap" height="300" weight="700" />\
@@ -75,7 +77,7 @@ Bu sırada sayfanın tamamı yenilenmez.*@
                                          <h4 class="card-title">' + data.Items[i + 1].recipeName + '</h4>\
                                           <h6>Pişirme Süresi:' + data.Items[i + 1].cookingTime + '</h6>\
                                                  <p class="card-text">İçindekiler:' + data.Items[i + 1].ingredients + '</p>\
-                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
+                                                 <a href="/UserHomePage/RecipeDetail/'+ data.Items[i + 1].recipeId + ' " class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
                                   <div class="col-md-6 col-lg-4 mb-3">\
                                    <div class="card h-100">\
                                   <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i + 2].recipeImageUrl + '" alt="Card image cap" height="300" weight="700" />\
@@ -83,7 +85,7 @@ Bu sırada sayfanın tamamı yenilenmez.*@
                                  <h4 class="card-title">' + data.Items[i + 2].recipeName + ' </h4>\
                                   <h6>Pişirme Süresi:' + data.Items[i + 2].cookingTime + '</h6>\
                                     <p class="card-text">İçindekiler:' + data.Items[i + 2].ingredients + '</p>\
-                                         <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div></div>')
+                                         <a href="/UserHomePage/RecipeDetail/'+ data.Items[i + 2].recipeId + ' " class="btn btn-outline-primary">Tarifi Dene</a></div></div></div></div>')
                     }
                 }
                 if (data.Items.length % 3 == 1) {
@@ -96,7 +98,7 @@ Bu sırada sayfanın tamamı yenilenmez.*@
                                          <h4 class="card-title">' + data.Items[i].recipeName + '</h4>\
                                           <h6>Pişirme Süresi:' + data.Items[i].cookingTime + '</h6>\
                                                  <p class="card-text">İçindekiler:' + data.Items[i].ingredients + '</p>\
-                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
+                                                 <a href="/UserHomePage/RecipeDetail/'+ data.Items[i].recipeId + ' " class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
                                  <div class="col-md-6 col-lg-4 mb-3">\
                                     <div class="card h-100">\
                                   <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i + 1].recipeImageUrl + '" alt="Card image cap" height="300" weight="700" />\
@@ -104,7 +106,7 @@ Bu sırada sayfanın tamamı yenilenmez.*@
                                          <h4 class="card-title">' + data.Items[i + 1].recipeName + '</h4>\
                                           <h6>Pişirme Süresi:' + data.Items[i + 1].cookingTime + '</h6>\
                                                  <p class="card-text">İçindekiler:' + data.Items[i + 1].ingredients + '</p>\
-                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
+                                                 <a href="/UserHomePage/RecipeDetail/'+ data.Items[i + 1].recipeId + ' " class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
                                   <div class="col-md-6 col-lg-4 mb-3">\
                                    <div class="card h-100">\
                                   <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i + 2].recipeImageUrl + '" alt="Card image cap" height="300" weight="700" />\
@@ -112,7 +114,7 @@ Bu sırada sayfanın tamamı yenilenmez.*@
                                  <h4 class="card-title">' + data.Items[i + 2].recipeName + ' </h4>\
                                   <h6>Pişirme Süresi:' + data.Items[i + 2].cookingTime + '</h6>\
                                     <p class="card-text">İçindekiler:' + data.Items[i + 2].ingredients + '</p>\
-                                         <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div></div>')
+                                         <a href="/UserHomePage/RecipeDetail/'+ data.Items[i + 2].recipeId + ' " class="btn btn-outline-primary">Tarifi Dene</a></div></div></div></div>')
                     }
                     $myHtml.append('<div class="col-md-6 col-lg-4 mb-3" >\
                             <div class="card h-100">\
@@ -121,7 +123,7 @@ Bu sırada sayfanın tamamı yenilenmez.*@
                                         <h4 class="card-title">' + data.Items[(data.Items.length) - 1].recipeName + '</h4>\
                                              <h6>Pişirme Süresi:' + data.Items[(data.Items.length) - 1].cookingTime + '</h6>\
                                               <p class="card-text">İçindekiler:' + data.Items[(data.Items.length) - 1].ingredients + '</p>\
-                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>')
+                                                 <a href="/UserHomePage/RecipeDetail/'+ data.Items[(data.Items.length) - 1].recipeId + ' " class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>')
 
                 }
                 if (data.Items.length % 3 == 2) {
@@ -134,7 +136,7 @@ Bu sırada sayfanın tamamı yenilenmez.*@
                                          <h4 class="card-title">' + data.Items[i].recipeName + '</h4>\
                                           <h6>Pişirme Süresi:' + data.Items[i].cookingTime + '</h6>\
                                                  <p class="card-text">İçindekiler:' + data.Items[i].ingredients + '</p>\
-                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
+                                                 <a href="/UserHomePage/RecipeDetail/'+ data.Items[i].recipeId + ' " class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
                                  <div class="col-md-6 col-lg-4 mb-3">\
                                     <div class="card h-100">\
                                   <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i + 1].recipeImageUrl + '" alt="Card image cap" height="300" weight="700" />\
@@ -142,7 +144,7 @@ Bu sırada sayfanın tamamı yenilenmez.*@
                                          <h4 class="card-title">' + data.Items[i + 1].recipeName + '</h4>\
                                           <h6>Pişirme Süresi:' + data.Items[i + 1].cookingTime + '</h6>\
                                                  <p class="card-text">İçindekiler:' + data.Items[i + 1].ingredients + '</p>\
-                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
+                                                 <a href="/UserHomePage/RecipeDetail/'+ data.Items[i + 1].recipeId + ' " class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
                                   <div class="col-md-6 col-lg-4 mb-3">\
                                    <div class="card h-100">\
                                   <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i + 2].recipeImageUrl + '" alt="Card image cap" height="300" weight="700" />\
@@ -150,7 +152,7 @@ Bu sırada sayfanın tamamı yenilenmez.*@
                                  <h4 class="card-title">' + data.Items[i + 2].recipeName + ' </h4>\
                                   <h6>Pişirme Süresi:' + data.Items[i + 2].cookingTime + '</h6>\
                                     <p class="card-text">İçindekiler:' + data.Items[i + 2].ingredients + '</p>\
-                                         <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div></div>')
+                                         <a href="/UserHomePage/RecipeDetail/'+ data.Items[i + 2].recipeId + ' " class="btn btn-outline-primary">Tarifi Dene</a></div></div></div></div>')
                     }
                     $myHtml.append('<div class="row">\
                                         <div class="col-md-6 col-lg-4 mb-3" >\
@@ -160,7 +162,7 @@ Bu sırada sayfanın tamamı yenilenmez.*@
                                         <h4 class="card-title">' + data.Items[(data.Items.length) - 1].recipeName + '</h4>\
                                              <h6>Pişirme Süresi:' + data.Items[(data.Items.length) - 1].cookingTime + '</h6>\
                                               <p class="card-text">İçindekiler:' + data.Items[(data.Items.length) - 1].ingredients + '</p>\
-                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
+                                                 <a href="/UserHomePage/RecipeDetail/'+ data.Items[(data.Items.length) - 1].recipeId + ' " class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
                                            <div class="col-md-6 col-lg-4 mb-3" >\
                                          <div class="card h-100">\
                                              <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[(data.Items.length) - 2].recipeImageUrl + '" alt="Card image cap" height="300" weight="700" />\
@@ -168,10 +170,108 @@ Bu sırada sayfanın tamamı yenilenmez.*@
                                         <h4 class="card-title">' + data.Items[(data.Items.length) - 2].recipeName + '</h4>\
                                              <h6>Pişirme Süresi:' + data.Items[(data.Items.length) - 2].cookingTime + '</h6>\
                                               <p class="card-text">İçindekiler:' + data.Items[(data.Items.length) - 2].ingredients + '</p>\
-                                <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div ></div>')
+                                <a href="/UserHomePage/RecipeDetail/'+ data.Items[(data.Items.length) - 1].recipeId + '" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div ></div>')
                 }
-                $("#listRecipe").html($myHtml);
 
+
+                var $nav = $('<nav>').addClass('d-flex justify-content-center align-items-center mt-4');
+                var $ul = $('<ul>').addClass('pagination position-absolute');
+
+
+                $('<li>').addClass('page-item first')
+                    .append($('<a>').addClass('page-link')
+                        .append($('<i>').addClass('tf-icon bx bx-chevrons-left').text('ÖNCEKİ')))
+                    .appendTo($ul);
+
+
+                for (i = 1; i <= 3; i++) {
+                    $('<li>').addClass('page-item')
+                        .append($('<a>').addClass('page-link').text(i)
+                            .on('click', function () {
+                               
+                                getCategoryId(data.Items[1].categoryId, $(this).text()); // sıradaki tarifi istiyoruz
+
+                                
+
+                            }))
+                        .appendTo($ul);
+                }
+
+                $('<li>').addClass('page-item last')
+                    .append($('<a>').addClass('page-link')
+                        .append($('<i>').addClass('tf-icon bx bx-chevrons-right').text('SONRAKİ')))
+                    .appendTo($ul);
+
+
+                $ul.appendTo($nav);
+                $myHtml.append($nav);
+
+
+                $("#dataDoldur").html($myHtml);
+
+                $(document).ready(function () {
+                    var currentPage = parseInt(data.Index, 10);// 10'luk sayı sistemi kullanıldığını belirtiyoruz
+                    var totalPages = parseInt(data.Pages);
+                    $('<div>').text(currentPage + 1 + '. sayfayı görüntülüyorsunuz.')
+                        .css('margin-left', '700px')
+                        .appendTo($myHtml);
+
+
+                    $('.first a').on('click', function () {
+
+                        if (currentPage > 0) {
+                            currentPage--;
+                            updatePageNumbersDecrease();
+
+                        }
+                    });
+
+                    $('.last a').on('click', function () {
+
+                        if (currentPage < totalPages) {
+                            currentPage++;
+                            updatePageNumbersIncrease();
+                        }
+                    });
+
+
+                    function updatePageNumbersIncrease() {
+                        $('.page-link').each(function () {
+                            var pageNum = parseInt($.trim($(this).text()));
+                            if (!isNaN(pageNum)) {
+                                $(this).text(pageNum + currentPage);
+                                if (pageNum + currentPage > totalPages) // sayfa numarası sınırı aşıyorsa
+                                {
+                                
+                                    $(this).parent().addClass('d-none'); // gizle
+                                } else {
+                                   // $('.last').removeClass('d-none'); // sonraki butonunu göster
+                                    $(this).parent().removeClass('d-none'); // aksi halde göster
+                                }
+                            }
+                        });
+                    }
+
+                    updatePageNumbersIncrease(); // sayfaların ilk yüklenişinde de güncelle
+
+
+                    function updatePageNumbersDecrease() {
+                        $('.page-link').each(function () {
+                            var pageNum = parseInt($.trim($(this).text()) - 1);
+                            if (!isNaN(pageNum)) {
+                                $(this).text(pageNum - 1);
+                                if (pageNum - 2 < 0)// sayfa numarası sınırı aşıyorsa
+                                {
+                                    $(this).parent().addClass('d-none'); // gizle
+                                } else {
+                                    $(this).parent().removeClass('d-none'); // aksi halde göster
+                                }
+                            }
+                        });
+                    }
+
+                    // updatePageNumbersDecrease();
+                });
 
             },
             error: function (response) {

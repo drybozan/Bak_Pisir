@@ -1,4 +1,5 @@
 ﻿using BakPisir.CORE.Helper;
+using BakPisir.DTO.Dtos;
 using BakPisir.UI.Models;
 using BakPisir.UI.Services;
 using System;
@@ -33,16 +34,13 @@ namespace BakPisir.UI.Controllers
         {
             //int id = SessionHelper.LoggedUserInfo.userId; ileryene zamanda giriş yapan id yi yükle
             int id = viewModel.userDto.userId;
+            userService.UpdateUser(id, viewModel.userDto);
+           
             if (viewModel.ImageFile != null)
             {
-                userService.UploadPicture(viewModel.ImageFile, id);
-            }else if(viewModel.ImageFile == null)
-            {
-                 viewModel.userDto.profilePictureUrl = null;
+                userService.UploadPicture(viewModel.ImageFile, id);               
 
             }
-
-            userService.UpdateUser(id, viewModel.userDto);
             return "Bilgileriniz başarıyla kaydedilmiştir.";
         }
 

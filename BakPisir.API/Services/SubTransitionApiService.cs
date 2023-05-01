@@ -46,6 +46,7 @@ namespace BakPisir.API.Services
             List<RecipeDto> recipes = new List<RecipeDto>();           
             for (int i = 0; i < subTransition.Count; i++)
             {
+                
                 var sorgu = efUnitOfWork.RecipeTemplate.GetById(subTransition[i].recipeId).MapTo<RecipeDto>();
                                                  
                           
@@ -59,6 +60,20 @@ namespace BakPisir.API.Services
 
            // return JsonConvert.SerializeObject(subTransition);
            
+        }
+
+
+        //recipeId ye göre subcategory değerini döndürür
+        //Mapto kullanırken koşullu arama yapabildik.
+        public string GetSubCategoryByRecipeId(int recipeId)
+        {
+            //gönderilen categoryId parametresi ile koşşulu sorgu atar.
+            //projecTo, autommaper aracı. DB varlığımı dto ya mapler.
+
+            var subTransitions = efUnitOfWork.SubTransitionTemplate.GetAll(i => i.recipeId == recipeId).ToList();
+            var subTransitionDtoList = subTransitions.MapTo<List<SubTransitionDto>>();
+
+            return JsonConvert.SerializeObject(subTransitionDtoList);
         }
 
         //Verilen id değerine sahip datayı veritabanından siler.
