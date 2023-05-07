@@ -213,6 +213,7 @@ namespace BakPisir.UI.Services
                     content.Add(fileContent);
                     content.Add(new StringContent("123"), "FileId");
 
+
                     _httpClient.BaseAddress = new Uri(url);
                     _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + SessionHelper.TokenInfo.access_token);
                     HttpResponseMessage response = _httpClient.PostAsync(method + "?id=" + id, content).Result;

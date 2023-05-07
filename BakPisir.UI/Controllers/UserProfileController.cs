@@ -12,7 +12,7 @@ namespace BakPisir.UI.Controllers
 {
     public class UserProfileController : Controller
     {
-         UserService userService = new UserService();
+        UserService userService = new UserService();
         RecipeService recipeService = new RecipeService();
         StepService stepService = new StepService();
         CategoryService categoryService = new CategoryService();
@@ -55,6 +55,12 @@ namespace BakPisir.UI.Controllers
             return PartialView("NavbarForUser",user);
         }
 
+        [HttpPost]
+        public string DeleteRecipe(int id)
+        {
+            recipeService.DeleteRecipe(id);
+            return "Tarifiniz silindi";
+        }
 
         [HttpGet]
         public ActionResult UpdateRecipe(int id)
@@ -74,6 +80,7 @@ namespace BakPisir.UI.Controllers
             return View(recipeStepModelView);
         }
 
+
         [HttpPost]
         public string UpdateRecipe(RecipeStepSubCategoryModelView recipeStepSubCategoryModelView)
         {
@@ -88,9 +95,9 @@ namespace BakPisir.UI.Controllers
                 recipeService.UploadRecipePicture(recipeId, recipeStepSubCategoryModelView.ImageFile[0]);
              
             }
-            if (recipeStepSubCategoryModelView.ImageFile[recipeStepSubCategoryModelView.ImageFile.Count] != null)
+            if (recipeStepSubCategoryModelView.ImageFile[recipeStepSubCategoryModelView.ImageFile.Count-1] != null)
             {
-                recipeService.UploadRecipePicture(recipeId, recipeStepSubCategoryModelView.ImageFile[0]);
+                recipeService.UploadRecipeVideo(recipeId, recipeStepSubCategoryModelView.ImageFile[recipeStepSubCategoryModelView.ImageFile.Count-1]);
 
             }
 
@@ -106,10 +113,26 @@ namespace BakPisir.UI.Controllers
                 }
 
             }
-           
-            // recipeService.UpdateRecipe(recipeId, recipeStepSubCategoryModelView.recipeDto);
-            return "selam";
+            return "Tarifiniz Başarıyla Güncellendi.";
         }
 
+        [HttpGet]
+        public ActionResult AddRecipe()
+        {
+            var categories = categoryService.GetAllCategories();
+            ViewBag.Categories = categories;
+
+            var subCategories = subCategoryService.GetAllSubCategories();
+            ViewBag.SubCategories = subCategories;
+
+            return View();
+        }
+
+        [HttpPost]
+        public string AddRecipe(RecipeStepSubCategoryModelView recipeStepSubCategoryModelView)
+        {
+           
+            return "Tarifiniz Başarıyla Eklendi";
+        }
     }
 }

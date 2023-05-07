@@ -37,7 +37,7 @@ public class RecipeApiService
     {
         
             //projecTo, autommaper aracı. DB varlığımı dto ya mapler.
-            var recipes = efUnitOfWork.RecipeTemplate.GetAll(i => i.categoryId == categoryId)
+            var recipes = efUnitOfWork.RecipeTemplate.GetAll(i => i.categoryId == categoryId && i.isDelete == false)
                 .OrderBy(o => o.recipeId) // gelen datayı id ye göre sırala
                 .ProjectTo<RecipeDto>()
                 .ToList()
@@ -52,11 +52,11 @@ public class RecipeApiService
 
     //kullanıcıya göre tarifleri listeler
     public string GetRecipeByUserId(int userId, int page, int pageSize)
-    {       
-       
-            //projecTo, autommaper aracı. DB varlığımı dto ya mapler.
-            var recipes = efUnitOfWork.RecipeTemplate.GetAll(i => i.userId == userId)
-                .OrderBy(o => o.recipeId) // gelen datayı id ye göre sırala
+    {
+
+        //projecTo, autommaper aracı. DB varlığımı dto ya mapler.
+        var recipes = efUnitOfWork.RecipeTemplate.GetAll(i => i.userId == userId && i.isDelete == false)
+                 .OrderBy(o => o.recipeId) // gelen datayı id ye göre sırala
                 .ProjectTo<RecipeDto>()
                 .ToList()
                 .ToPaginate(page, pageSize);
@@ -89,6 +89,9 @@ public class RecipeApiService
 
         return result;
     }
+
+
+
 
     //Yeni tarif ekler.
     public Result AddRecipe(RecipeDto recipeDto)

@@ -40,8 +40,7 @@ namespace BakPisir.CORE.Repositories
         {
            return _dbSet.Where(predicate);
         }
-
-        
+    
 
 
         //Veritabanındaki verilen id'ye sahip veriyi bulur ve döndürür.

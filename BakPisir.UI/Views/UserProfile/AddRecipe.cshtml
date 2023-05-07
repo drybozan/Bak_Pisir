@@ -1,0 +1,286 @@
+﻿
+@{
+    ViewBag.Title = "AddRecipe";
+    Layout = "~/Views/Shared/UserProfileView.cshtml";
+}
+
+
+@model BakPisir.UI.Models.RecipeStepSubCategoryModelView
+@using BakPisir.CORE.Helper
+<div class="col-md-12">
+    <div class="card mb-4">
+        <h5 class="card-header" style="color: #4a47a3">TARİF EKLE</h5>
+        <div class="card-body">
+            @using (Html.BeginForm("AddRecipe", "UserProfile", FormMethod.Post, new { enctype = "multipart/form-data", id = "addRecipeForm" }))
+            {
+                <div style="margin-left:160px; ">
+                    <img id="image_upload_preview" class="d-block " src="" style="height:400px; width:80%" alt="recipe_image"><br />
+                    <div class="my-auto">
+                        <input type="file" name="ImageFile" accept="image/*" id="inputFile1" />
+                    </div>
+                </div>
+
+                <div class="mt-2 mb-3">
+                    @(Html.TextBoxForControl(m => Model.recipeDto.recipeName, new { placeholder = "Tarif İsmi" , style = "color:black"  }))
+
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        @(Html.TextBoxForControl(m => Model.recipeDto.cookingTime, new { placeholder = "Pişirme Süresi", style = "color:black" }))
+
+                    </div>
+                    <div class="col-6">
+                        @(Html.TextBoxForControl(m => Model.recipeDto.recipeDate, new { placeholder = "Yayınlanma Tarihi", style = "color:black" }))
+                    </div>
+                </div>
+
+
+                <div class="mb-3">
+                    <label for="defaultSelect" class="form-label" style="color: #4a47a3">KATEGORİ</label>
+
+                    @(Html.DropDownListFor(m => Model.recipeDto.categoryId, new SelectList(ViewBag.Categories, "categoryId", "categoryName"), new { @class = "form-control", style = "color:black" }))
+
+
+                </div>
+                <div class="mb-3">
+                    <label for="defaultSelect" class="form-label" style="color: #4a47a3">ALT KATEGORİ</label>
+                    @(Html.DropDownListFor(m => Model.subCategoryDto.subCategoryId, new SelectList(ViewBag.SubCategories, "subCategoryId", "subCategoryName"), new { @class = "form-control", style = "color:black" }))
+
+                </div>
+
+                <div>
+                    @(Html.TextAreaForControl(m =>m.recipeDto.ingredients, new { style = "width: 300px; height: 170px; color:black" }))
+                </div>
+
+                @Html.HiddenFor(m => m.recipeDto.recipeId)
+                @Html.HiddenFor(m => m.recipeDto.isDelete)
+                @Html.HiddenFor(m => m.recipeDto.userId)
+                @Html.HiddenFor(m => m.recipeDto.recipeImageUrl)
+                @Html.HiddenFor(m => m.recipeDto.recipeVideoUrl)
+
+                <div class="row mb-4 mt-3">
+                    <div>
+                        <label style="color: #4a47a3" for="stepName" class="form-label">TARİF ADIM</label>
+                        <input style="color:black" id="stepName" name="stepName" class="form-control" type="text" placeholder="Adım adı giriniz">
+                    </div>
+
+                    <div class="col-8" style="margin-top:10px">
+                        <label style="color: #4a47a3" for="stepDescription" class="form-label">TARİF ADIMI DETAY</label>
+                        <textarea class="form-control" id="stepDescription" name="stepDetail" style="color:black" rows="5"></textarea>
+                    </div>
+                    <div class="col-3" style="margin-top:15px">
+                        <img id="stepImage" class="card-img-top" src="" alt="step_image" height="180" width="700" />
+                        <div class="my-auto">
+                            <input type="file" id="stepImageFile" onchange="addImage(this)" name="ImageFile" accept="image/*" />
+                        </div>
+                    </div>
+
+                </div>
+                <div id="addStepDiv">
+
+                </div>
+                <button type="button" id="addStep" class="btn btn-outline-primary" style="margin-top:10px">
+                    <span class="d-none d-sm-block">Adım Ekle</span>
+                </button>
+
+
+                <div class="col-md-6 col-lg-4 mb-3" style="margin-left:130px; margin-top:10px">
+                    <video controls style="height: 400px; width:740px;" id="image_upload_for_video">
+                        <source src="" type="audio/mp4" alt="recipe_video" />
+
+                    </video>
+
+                    <div class="my-auto">
+                        <br />
+                        <input type="file" name="ImageFile" accept="video/*" id="inputFile2" />
+                    </div>
+                </div>
+                <button type="submit" id="save" class="btn btn-outline-warning" style="margin-left:400px">
+                    <span class="d-none d-sm-block">Tarifi Kaydet</span>
+                </button>
+
+            }
+        </div>
+
+
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+         var stepDtoList = [];
+        // Yeni alan ekle butonuna tıklandığında
+        $("#addStep").click(function () {
+            // Yeni bir id oluştur
+            var newId = "step_" + new Date().getTime();
+
+            // Adımlar div'inin içinde yeni bir row oluştur
+            var newRow = $('<div class="row mb-4 mt-3"></div>');
+
+            // Adım adı inputunu oluştur
+            var stepNameInput = $('<input style="color:black" id="' + newId + '_stepName" name="' + newId + '_stepName" class="form-control" type="text" placeholder="Adım adı giriniz" />');
+            var stepNameDiv = $('<div></div>').append('<label style="color: #4a47a3" for="' + newId + '_stepName" class="form-label">TARİF ADIM</label>').append(stepNameInput);
+            newRow.append(stepNameDiv);
+
+            // Adım detayı textarea'yı oluştur
+            var stepDetailTextarea = $('<textarea class="form-control" id="' + newId + '_stepDetail" name="' + newId + '_stepDetail" style="color:black" rows="5"></textarea>');
+            var stepDetailDiv = $('<div class="col-8" style="margin-top:10px"></div>').append('<label style="color: #4a47a3" for="' + newId + '_stepDetail" class="form-label">TARİF ADIMI DETAY</label>').append(stepDetailTextarea);
+            newRow.append(stepDetailDiv);
+
+            // Adım resmi input ve resim görüntüleyiciyi oluştur
+            var stepImageInput = $('<input type="file" id="' + newId + '_stepImageFile" onchange="addImage(this)" name="' + newId + '_ImageFile" accept="image/*" />');
+            var stepImageDiv = $('<div class="col-3" style="margin-top:15px"></div>').append('<img id="' + newId + '_stepImage" class="card-img-top" src="" alt="step_image" height="180" width="700" />').append($('<div class="my-auto"></div>').append(stepImageInput));
+            newRow.append(stepImageDiv);
+
+            // Yeni row'u Adımlar div'ine ekle
+            $("#addStepDiv").append(newRow);
+            // Yeni adımı oluşturmak için gerekli verileri al
+            var stepName = $("#stepName").val();
+            var stepDetail = $("#stepDescription").val();
+
+
+            // Yeni bir StepDto oluştur
+            var newStep = {
+                stepName: stepName,
+                stepDescription: stepDetail
+
+            };
+
+            // Yeni adımı stepDto listesine ekleyin
+            
+            stepDtoList.push(newStep);
+            $("#addStepDiv .row").each(function () {
+                var row = $(this);
+                var nameInput = row.find("input[id$='_stepName']");
+                var detailInput = row.find("textarea[id$='_stepDetail']");
+
+
+                var name = nameInput.val();
+                var detail = detailInput.val();
+
+
+                var step = {
+                    stepName: name,
+                    stepDescription: detail
+
+                };
+                stepDtoList.push(step);
+            });
+
+          
+
+        });
+
+        $(function () {
+
+            $("#addRecipeForm").submit(function (e) {
+                e.preventDefault();
+
+                // stepDto listesini RecipeStepSubCategoryModelView nesnesine atayın
+                var recipeStepSubCategoryModelView = {
+                    stepDto: stepDtoList
+                }
+                var formData = new FormData($("#addRecipeForm")[0]);
+                formData.append("recipeStepSubCategoryModelView", JSON.stringify(recipeStepSubCategoryModelView));
+
+
+                $.ajax({
+                    url: this.action,
+                    type: 'post',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        Swal.fire('İşlem Başarılı',
+                            response, 'success');
+                        setTimeout(function () {
+                            location.reload(true);
+                        }, 3000); // 3000 milisaniye = 3 saniye
+                    },
+                    error: function (response) {
+                        Swal.fire('Hata', response, 'error');
+
+                    }
+                });
+
+            });
+        });
+
+    });
+
+   
+
+
+</script>
+
+
+<script>
+   
+
+</script>
+
+
+<script>
+
+    $(document).ready(function () {
+        $("#inputFile1").change(function () {
+            readURL(this);
+        });
+    });
+
+
+    $(document).ready(function () {
+        $("#inputFile2").change(function () {
+            readURL(this);
+        });
+    });
+
+
+
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            // ilk resim öğesi için
+            if (input.id == "inputFile1") {
+                reader.onload = function (e) {
+                    $('#image_upload_preview').attr('src', e.target.result);
+                }
+            }
+
+            // video öğesi için
+            if (input.id == "inputFile2") {
+                reader.onload = function (e) {
+                    /* $('#image_upload_for_video').attr('src', e.target.result);*/
+                    $('#image_upload_for_video source').attr('src', e.target.result);
+                    $('#image_upload_for_video')[0].load();
+                }
+            }
+
+
+            reader.readAsDataURL(input.files[0]);
+        }
+
+
+    }
+
+
+</script>
+
+<script>
+    function addImage(input) {
+        var stepId = input.id;
+        var img = document.getElementById(stepId);
+        var file = input.files[0];
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            img.src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+    }
+</script>
+
+

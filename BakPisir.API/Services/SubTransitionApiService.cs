@@ -48,9 +48,9 @@ namespace BakPisir.API.Services
             {
                 
                 var sorgu = efUnitOfWork.RecipeTemplate.GetById(subTransition[i].recipeId).MapTo<RecipeDto>();
-                                                 
-                          
-                recipes.Add(sorgu);
+                  if(sorgu.isDelete==false)
+                    recipes.Add(sorgu);
+
             }
             recipes.OrderBy(o => o.recipeId); // gelen datayı id ye göre sırala)
            var paginatedRecipes= recipes.ToPaginate(page, pageSize);

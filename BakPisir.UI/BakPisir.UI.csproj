@@ -273,6 +273,7 @@
     <Content Include="Views\UserProfile\RecipeListByUser.cshtml" />
     <Content Include="Views\UserProfile\NavbarForUser.cshtml" />
     <Content Include="Views\UserProfile\UpdateRecipe.cshtml" />
+    <Content Include="Views\UserProfile\AddRecipe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BakPisir.CORE\BakPisir.CORE.csproj">

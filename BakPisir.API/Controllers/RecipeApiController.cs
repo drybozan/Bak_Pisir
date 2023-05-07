@@ -7,6 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Http;
 
@@ -73,6 +75,24 @@ namespace BakPisir.API.Controllers
         }
 
 
+        public static string DecodeEncodedFileName(string encodedFileName)
+        {
+            var regex = new Regex(@"=\?utf-8\?B\?(.*?)\?=");
+            var match = regex.Match(encodedFileName);
+
+            if (match.Success)
+            {
+                var base64String = match.Groups[1].Value;
+                var bytes = Convert.FromBase64String(base64String);
+                return System.Text.Encoding.UTF8.GetString(bytes);
+            }
+            else
+            {
+                return encodedFileName;
+            }
+        }
+
+
         [Route("api/RecipeApi/UploadRecipeVideo")]
         [HttpPost]
         public Result UploadRecipeVideo(int id)
@@ -97,12 +117,13 @@ namespace BakPisir.API.Controllers
                 {
                     //dosyayı değişkende tut
                     var postedFile = httpRequest.Files[file];
+                    string decodedString = DecodeEncodedFileName(postedFile.FileName);
 
                     //dosyaya random isim hazırla.
                     string fNAme = Guid.NewGuid().ToString();
 
                     // dosyanın uzantısını al
-                    string fExt = Path.GetExtension(postedFile.FileName);
+                    string fExt = Path.GetExtension(decodedString);
 
                     // oluşturulan path içinde verdiğin isimle dosyayı yerleştir.Dosya yolunu değişkende tut
                     var filePath = Path.Combine(path, fNAme + fExt);
