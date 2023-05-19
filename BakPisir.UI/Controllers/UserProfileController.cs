@@ -1,4 +1,5 @@
 ﻿using BakPisir.DTO.Dtos;
+using BakPisir.DTO.ModelforList;
 using BakPisir.UI.Models;
 using BakPisir.UI.Services;
 using Microsoft.Owin;
@@ -25,6 +26,7 @@ namespace BakPisir.UI.Controllers
         static int pageNumber = 1;
         static int pageSize = 9;
 
+     
         List<HttpPostedFileBase> ImageFileforStep = new List<HttpPostedFileBase>();
         int returnRecipeId;
 
@@ -55,6 +57,15 @@ namespace BakPisir.UI.Controllers
 
             return View(recipes);
         }
+
+        [HttpGet]
+        public JsonResult getNextRecipeListByUser(int number)
+        {
+            // seesiondan userId gelecek.
+            RecipeListModel recipes = recipeService.GetRecipeByUserId(1, number, pageSize);
+            return Json(recipes, JsonRequestBehavior.AllowGet);
+        }
+
 
         public PartialViewResult NavbarForUser(int id)
         {
@@ -94,8 +105,7 @@ namespace BakPisir.UI.Controllers
         {
             //int id = SessionHelper.LoggedUserInfo.userId; ileryene zamanda giriş yapan id yi yükle
             int recipeId = recipeStepSubCategoryModelView.recipeDto.recipeId;            
-            int subTransitonId = recipeStepSubCategoryModelView.recipeDto.recipeId;
-            int subCategoryId = recipeStepSubCategoryModelView.subCategoryDto.subCategoryId;
+          
 
             recipeService.UpdateRecipe(recipeId, recipeStepSubCategoryModelView.recipeDto);
             if (recipeStepSubCategoryModelView.ImageFile[0] != null)
@@ -121,8 +131,18 @@ namespace BakPisir.UI.Controllers
                 }
 
             }
-           
-                     
+
+            SubTransitionDto subTransiton = subTransitionService.GetSubCategoryByRecipeId(recipeId);
+            int categoryTransitionId = subTransiton.categoryTransitionId; 
+            int subCategoryId = recipeStepSubCategoryModelView.subCategoryDto.subCategoryId;
+
+            SubTransitionDto subTransitionDto = new SubTransitionDto();
+            subTransitionDto.recipeId = recipeId;
+            subTransitionDto.subCategoryId = subCategoryId;
+            subTransitionDto.isDelete = false;
+
+            subTransitionService.UpdateSubTransition(categoryTransitionId, subTransitionDto);
+
 
             return "Tarifiniz Başarıyla Güncellendi.";
         }

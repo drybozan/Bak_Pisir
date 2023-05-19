@@ -119,8 +119,8 @@
                     Swal.fire('İşlem Başarılı',
                         response, 'success');
                     setTimeout(function () {
-                        location.reload(true);
-                    }, 3000); // 3000 milisaniye = 3 saniye
+                        window.location = '/UserProfile/RecipeListByUser'
+                    }, 2000); // 2000 milisaniye = 2 saniye
                 },
                 error: function (response) {
                     Swal.fire('Hata', response, 'error');

@@ -70,10 +70,10 @@ namespace BakPisir.API.Services
             //gönderilen categoryId parametresi ile koşşulu sorgu atar.
             //projecTo, autommaper aracı. DB varlığımı dto ya mapler.
 
-            var subTransitions = efUnitOfWork.SubTransitionTemplate.GetAll(i => i.recipeId == recipeId).ToList();
-            var subTransitionDtoList = subTransitions.MapTo<List<SubTransitionDto>>();
+            var subTransitions = efUnitOfWork.SubTransitionTemplate.Get(i => i.recipeId == recipeId);
+            var subTransitionDto = subTransitions.MapTo<SubTransitionDto>();
 
-            return JsonConvert.SerializeObject(subTransitionDtoList);
+            return JsonConvert.SerializeObject(subTransitionDto);
         }
 
         //Verilen id değerine sahip datayı veritabanından siler.

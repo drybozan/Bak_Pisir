@@ -60,11 +60,10 @@
 
                 <dt class="col-sm-3">ALT KATEGORİ</dt>
                 <dd class="col-sm-9">
-                    @foreach (var subTransition in Model.subTransitionDto)
-                    {
-                        @subTransition.subCategory.subCategoryName
+                
+                        @Model.subTransitionDto.subCategory.subCategoryName
                         <br />
-                    }
+                   
                 </dd>
 
                 <dt class="col-sm-3">PİŞME SÜRESİ</dt>

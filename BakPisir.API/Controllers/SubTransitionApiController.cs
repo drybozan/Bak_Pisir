@@ -39,7 +39,7 @@ namespace BakPisir.API.Controllers
 
         [Route("api/SubTransitionApi/GetByRecipeId")]
         [HttpGet]
-        public string GetByCategoryId(int id)
+        public string GetByRecipeId(int id)
         {
             return _subTransitionApiService.GetSubCategoryByRecipeId(id);
         }

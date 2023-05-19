@@ -22,6 +22,8 @@ namespace BakPisir.UI.Controllers
 
         static int pageNumber = 1;
         static int pageSize = 9;
+
+       static int visitedUserId ;
         [HttpGet]
         public ActionResult UserHomePage()
         {
@@ -37,6 +39,14 @@ namespace BakPisir.UI.Controllers
         public JsonResult getNextRecipe(int id)
         {
             RecipeListModel recipes = recipeService.GetAllRecipes(id, pageSize);
+            return Json(recipes, JsonRequestBehavior.AllowGet);
+        }
+
+        //UserHomeView üzerinden JQuery ile sayfa numarası verilir. Sorgu sonucu burdan veriler Json formatından viewa gider. getNextRecipe Fonsiyonu ile data yerleştirlir.
+        [HttpGet]
+        public JsonResult getNextRecipeForUser(int number)
+        {
+            RecipeListModel recipes = recipeService.GetRecipeByUserId(visitedUserId, number, pageSize);
             return Json(recipes, JsonRequestBehavior.AllowGet);
         }
 
@@ -133,6 +143,7 @@ namespace BakPisir.UI.Controllers
         [HttpGet]
         public ActionResult VisitedProfile(int id)
         {
+            visitedUserId = id;
             var recipes = recipeService.GetRecipeByUserId(id, pageNumber, pageSize);
             return View(recipes);
         }
