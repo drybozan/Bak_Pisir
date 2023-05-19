@@ -46,9 +46,9 @@ namespace BakPisir.UI.Services
         }
 
         //Yeni recipe ekler.
-        public String AddRecipe(RecipeDto value)
+        public int AddRecipe(RecipeDto value)
         {
-            return was.Add("RecipeApi/Add", value);
+            return was.AddReturnId("RecipeApi/Add", value);
         }
 
         //Verilen id değerine sahip recipe verisini günceller.

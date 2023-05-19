@@ -46,6 +46,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.0.0\lib\net451\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -152,6 +158,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Templates\ErrorTemplate\css\style.css" />
+    <Content Include="Templates\ErrorTemplate\index.html" />
     <Content Include="Templates\Images\loginmanicon.svg" />
     <Content Include="Templates\Images\loginwomanicon.svg" />
     <Content Include="Templates\Images\titleicon.svg" />
@@ -274,6 +282,7 @@
     <Content Include="Views\UserProfile\NavbarForUser.cshtml" />
     <Content Include="Views\UserProfile\UpdateRecipe.cshtml" />
     <Content Include="Views\UserProfile\AddRecipe.cshtml" />
+    <Content Include="Views\Shared\ErrorPageView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BakPisir.CORE\BakPisir.CORE.csproj">

@@ -38,10 +38,10 @@ namespace BakPisir.API.Controllers
 
         [Route("api/SubCategoryApi/Add")]
         [HttpPost]
-        public void Post(SubCategoryDto newSubCategory)
+        public Result Post(SubCategoryDto newSubCategory)
         {
 
-            subCategoryApiService.AddSubCategory(newSubCategory);
+           return subCategoryApiService.AddSubCategory(newSubCategory);
         }
 
         [Route("api/SubCategoryApi/Delete")]

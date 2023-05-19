@@ -37,9 +37,9 @@ namespace BakPisir.UI.Services
         }
 
         //Yeni step ekler.
-        public String AddStep(StepDto value)
+        public int AddStep(StepDto value)
         {
-            return was.Add("StepApi/Add", value);
+            return was.AddReturnId("StepApi/Add", value);
         }
 
         //Verilen id değerine sahip step verisini günceller.

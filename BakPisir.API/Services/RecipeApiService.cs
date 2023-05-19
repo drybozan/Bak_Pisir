@@ -104,8 +104,8 @@ public class RecipeApiService
             efUnitOfWork.RecipeTemplate.Add(mappedRecipe);
             efUnitOfWork.SaveChanges();
 
-            result = Result.Instance.Success("Tarif kaydınız başarıyla alındı.");
-
+            result = Result.Instance.Success("Tarif kaydınız başarıyla alındı.", mappedRecipe.recipeId);
+            
             return result;
         }
         return result;

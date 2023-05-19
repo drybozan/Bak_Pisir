@@ -58,7 +58,8 @@
                 @Html.HiddenFor(m => m.recipeDto.recipeImageUrl)
                 @Html.HiddenFor(m => m.recipeDto.recipeVideoUrl)
 
-                <div class="row mb-4 mt-3">
+
+                @*<div class="row mb-4 mt-3">
                     <div>
                         <label style="color: #4a47a3" for="stepName" class="form-label">TARİF ADIM</label>
                         <input style="color:black" id="stepName" name="stepName" class="form-control" type="text" placeholder="Adım adı giriniz">
@@ -75,7 +76,8 @@
                         </div>
                     </div>
 
-                </div>
+                </div>*@
+
                 <div id="addStepDiv">
 
                 </div>
@@ -110,7 +112,9 @@
 <script>
     $(document).ready(function () {
 
-         var stepDtoList = [];
+        var stepDtoList = [];
+
+
         // Yeni alan ekle butonuna tıklandığında
         $("#addStep").click(function () {
             // Yeni bir id oluştur
@@ -120,56 +124,25 @@
             var newRow = $('<div class="row mb-4 mt-3"></div>');
 
             // Adım adı inputunu oluştur
-            var stepNameInput = $('<input style="color:black" id="' + newId + '_stepName" name="' + newId + '_stepName" class="form-control" type="text" placeholder="Adım adı giriniz" />');
-            var stepNameDiv = $('<div></div>').append('<label style="color: #4a47a3" for="' + newId + '_stepName" class="form-label">TARİF ADIM</label>').append(stepNameInput);
+            var stepNameInput = $('<input style="color:black" id="stepName" name="stepName" class="form-control" type="text" placeholder="Adım adı giriniz" />');
+            var stepNameDiv = $('<div></div>').append('<label style="color: #4a47a3" for="stepName" class="form-label">TARİF ADIM</label>').append(stepNameInput);
             newRow.append(stepNameDiv);
 
             // Adım detayı textarea'yı oluştur
-            var stepDetailTextarea = $('<textarea class="form-control" id="' + newId + '_stepDetail" name="' + newId + '_stepDetail" style="color:black" rows="5"></textarea>');
-            var stepDetailDiv = $('<div class="col-8" style="margin-top:10px"></div>').append('<label style="color: #4a47a3" for="' + newId + '_stepDetail" class="form-label">TARİF ADIMI DETAY</label>').append(stepDetailTextarea);
+            var stepDetailTextarea = $('<textarea class="form-control" id="stepDetail" name="stepDetail" style="color:black" rows="5"></textarea>');
+            var stepDetailDiv = $('<div class="col-8" style="margin-top:10px"></div>').append('<label style="color: #4a47a3" for="stepDetail" class="form-label">TARİF ADIMI DETAY</label>').append(stepDetailTextarea);
             newRow.append(stepDetailDiv);
 
             // Adım resmi input ve resim görüntüleyiciyi oluştur
-            var stepImageInput = $('<input type="file" id="' + newId + '_stepImageFile" onchange="addImage(this)" name="' + newId + '_ImageFile" accept="image/*" />');
-            var stepImageDiv = $('<div class="col-3" style="margin-top:15px"></div>').append('<img id="' + newId + '_stepImage" class="card-img-top" src="" alt="step_image" height="180" width="700" />').append($('<div class="my-auto"></div>').append(stepImageInput));
+            var stepImageInput = $('<input type="file" id="'+ newId +'_stepImageFile" onchange="addImage(this)" name="ImageFile" accept="image/*" />');
+            var stepImageDiv = $('<div class="col-3" style="margin-top:15px"></div>').append('<img id="' +newId +'stepImage" class="card-img-top" src="" alt="step_image" height="180" width="700" />').append($('<div class="my-auto"></div>').append(stepImageInput));
             newRow.append(stepImageDiv);
 
             // Yeni row'u Adımlar div'ine ekle
             $("#addStepDiv").append(newRow);
-            // Yeni adımı oluşturmak için gerekli verileri al
-            var stepName = $("#stepName").val();
-            var stepDetail = $("#stepDescription").val();
 
 
-            // Yeni bir StepDto oluştur
-            var newStep = {
-                stepName: stepName,
-                stepDescription: stepDetail
 
-            };
-
-            // Yeni adımı stepDto listesine ekleyin
-            
-            stepDtoList.push(newStep);
-            $("#addStepDiv .row").each(function () {
-                var row = $(this);
-                var nameInput = row.find("input[id$='_stepName']");
-                var detailInput = row.find("textarea[id$='_stepDetail']");
-
-
-                var name = nameInput.val();
-                var detail = detailInput.val();
-
-
-                var step = {
-                    stepName: name,
-                    stepDescription: detail
-
-                };
-                stepDtoList.push(step);
-            });
-
-          
 
         });
 
@@ -178,14 +151,28 @@
             $("#addRecipeForm").submit(function (e) {
                 e.preventDefault();
 
-                // stepDto listesini RecipeStepSubCategoryModelView nesnesine atayın
-                var recipeStepSubCategoryModelView = {
-                    stepDto: stepDtoList
-                }
+                $("#addStepDiv .row").each(function () {
+                    var row = $(this);
+                    var nameInput = row.find("input[name='stepName']");
+                    var detailInput = row.find("textarea[id='stepDetail']");
+
+
+                    var name = nameInput.val();
+                    var detail = detailInput.val();
+
+
+                    var step = {
+                        stepName: name,
+                        stepDescription: detail
+
+                    };
+                    stepDtoList.push(step);
+                });
+                var steps = JSON.stringify(stepDtoList)
+                
+
                 var formData = new FormData($("#addRecipeForm")[0]);
-                formData.append("recipeStepSubCategoryModelView", JSON.stringify(recipeStepSubCategoryModelView));
-
-
+                formData.append("stepDto", steps);
                 $.ajax({
                     url: this.action,
                     type: 'post',
@@ -196,7 +183,7 @@
                         Swal.fire('İşlem Başarılı',
                             response, 'success');
                         setTimeout(function () {
-                            location.reload(true);
+                            window.location = '/UserProfile/RecipeListByUser'
                         }, 3000); // 3000 milisaniye = 3 saniye
                     },
                     error: function (response) {
@@ -207,20 +194,28 @@
 
             });
         });
-
+ 
     });
-
-   
-
-
 </script>
-
 
 <script>
-   
+ 
 
+    function addImage(input) {
+        var newId = input.id.replace('_stepImageFile', '');
+        var img = document.getElementById(newId + 'stepImage');
+        var file = input.files[0];
+        var reader = new FileReader();
+
+        reader.addEventListener("load", function () {
+            img.src = reader.result;
+        }, false);
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
 </script>
-
 
 <script>
 
@@ -254,7 +249,7 @@
             // video öğesi için
             if (input.id == "inputFile2") {
                 reader.onload = function (e) {
-                    /* $('#image_upload_for_video').attr('src', e.target.result);*/
+                   
                     $('#image_upload_for_video source').attr('src', e.target.result);
                     $('#image_upload_for_video')[0].load();
                 }
@@ -270,17 +265,6 @@
 
 </script>
 
-<script>
-    function addImage(input) {
-        var stepId = input.id;
-        var img = document.getElementById(stepId);
-        var file = input.files[0];
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            img.src = e.target.result;
-        }
-        reader.readAsDataURL(file);
-    }
-</script>
+
 
 

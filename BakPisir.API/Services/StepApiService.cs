@@ -69,7 +69,7 @@ namespace BakPisir.API.Services
                 efUnitOfWork.StepTemplate.Add(mappedStep);
                 efUnitOfWork.SaveChanges();
 
-                result = Result.Instance.Success("Başarıyla eklendi.");
+                result = Result.Instance.Success("Başarıyla eklendi.",mappedStep.stepId);
 
                 return result;
             }

@@ -115,6 +115,25 @@ namespace BakPisir.UI.Services
 
         }
 
+        //Gelen yeni veriyi veritabanına ekler.Ardından kaydettiği verinin id sini döndürür.
+        // post metodları için
+        public int AddReturnId(string method, T value)
+        {
+            using (HttpClient _httpClient = new HttpClient())
+            {
+                _httpClient.BaseAddress = new Uri(url);
+                _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + SessionHelper.TokenInfo.access_token);
+                StringContent httpContent = new StringContent(JsonConvert.SerializeObject(value), Encoding.UTF8, "application/json");
+                HttpResponseMessage response = _httpClient.PostAsync(method, httpContent).Result;
+                var data = response.Content.ReadAsStringAsync().Result;
+                dynamic newData = JsonConvert.DeserializeObject(data);
+                var id = newData.ReturnId;
+                return id;
+            }
+
+        }
+
 
         //Verilen mail adresini yollar.
         public string GetMailFeedback(string method, string mail)

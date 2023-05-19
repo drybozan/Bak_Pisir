@@ -1,6 +1,8 @@
 ﻿using BakPisir.DTO.Dtos;
 using BakPisir.UI.Models;
 using BakPisir.UI.Services;
+using Microsoft.Owin;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Printing;
@@ -17,11 +19,17 @@ namespace BakPisir.UI.Controllers
         StepService stepService = new StepService();
         CategoryService categoryService = new CategoryService();
         SubCategoryService subCategoryService = new SubCategoryService();
+        SubTransitionService subTransitionService = new SubTransitionService();
+
 
         static int pageNumber = 1;
         static int pageSize = 9;
 
-        [HttpGet]
+        List<HttpPostedFileBase> ImageFileforStep = new List<HttpPostedFileBase>();
+        int returnRecipeId;
+
+
+       [HttpGet]
         public ActionResult UserProfile()
         {
           
@@ -113,6 +121,9 @@ namespace BakPisir.UI.Controllers
                 }
 
             }
+           
+                     
+
             return "Tarifiniz Başarıyla Güncellendi.";
         }
 
@@ -131,8 +142,54 @@ namespace BakPisir.UI.Controllers
         [HttpPost]
         public string AddRecipe(RecipeStepSubCategoryModelView recipeStepSubCategoryModelView)
         {
+            // StepDto listesini alma
+            var stepDtoListJson = Request.Form["stepDto"];
+            var stepDtoList = JsonConvert.DeserializeObject<List<StepDto>>(stepDtoListJson);
+
+            //int id = SessionHelper.LoggedUserInfo.userId; ileryene zamanda giriş yapan id yi yükle
+            recipeStepSubCategoryModelView.recipeDto.userId = 1;
+            returnRecipeId = recipeService.AddRecipe(recipeStepSubCategoryModelView.recipeDto);
+
+
+            //recipeImage kaydı yapar
+            if (recipeStepSubCategoryModelView.ImageFile[0] != null)
+            {
+                recipeService.UploadRecipePicture(returnRecipeId, recipeStepSubCategoryModelView.ImageFile[0]);
+
+            }
+            //recipeVideo kaydı yapar
+            if (recipeStepSubCategoryModelView.ImageFile[recipeStepSubCategoryModelView.ImageFile.Count - 1] != null)
+            {
+                recipeService.UploadRecipeVideo(returnRecipeId, recipeStepSubCategoryModelView.ImageFile[recipeStepSubCategoryModelView.ImageFile.Count - 1]);
+
+            }
+
+          
+                // step resimlerini listeye toplar
+           for (int i = 0; i < recipeStepSubCategoryModelView.ImageFile.Count - 2; i++)
+             {
+                    ImageFileforStep.Add(recipeStepSubCategoryModelView.ImageFile[i + 1]);
+
+           }
            
-            return "Tarifiniz Başarıyla Eklendi";
+
+            int returnStepId;
+            for (int i = 0; i < stepDtoList.Count; i++)
+            {
+                stepDtoList[i].recipeId = returnRecipeId;
+                returnStepId = stepService.AddStep(stepDtoList[i]);
+                stepService.UploadStepPicture(returnStepId, ImageFileforStep[i]);
+            }
+            SubTransitionDto subTransitionDto = new SubTransitionDto();
+            subTransitionDto.recipeId = returnRecipeId;
+            subTransitionDto.subCategoryId = recipeStepSubCategoryModelView.subCategoryDto.subCategoryId;
+            subTransitionDto.isDelete = false;
+
+            subTransitionService.AddSubTransition(subTransitionDto);
+
+            return "Tarifiniz Başarıyla Kaydedildi";
         }
+
+ 
     }
 }
