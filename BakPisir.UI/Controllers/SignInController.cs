@@ -1,4 +1,5 @@
-﻿using BakPisir.CORE.Helper;
+﻿using BakPisir.CORE.Filter;
+using BakPisir.CORE.Helper;
 using BakPisir.DTO.Dtos;
 using BakPisir.UI.Services;
 using System;
@@ -39,7 +40,12 @@ namespace BakPisir.UI.Controllers
                 //cookie'ye session üzerinden çektiğimiz kullanıcı bilgilerini ekliyoruz.
                 FormsAuthentication.SetAuthCookie(SessionHelper.LoggedUserInfo.username, false);
 
-                return RedirectToAction("anasayafaya gidecek", "Member");
+                if (SessionHelper.LoggedUserInfo.userType == true)
+                {
+                    return RedirectToAction("AdminHomePage", "Admin");
+                }
+
+                return RedirectToAction("UserHomePage", "UserHomePage");
                 
             }
             else
@@ -55,7 +61,7 @@ namespace BakPisir.UI.Controllers
             Session.Abandon();
             Session.RemoveAll();
             FormsAuthentication.SignOut();
-            return View("Signin");
+            return RedirectToAction("UserHomePage", "UserHomePage");
         }
     }
 }

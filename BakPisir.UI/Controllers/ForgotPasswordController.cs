@@ -1,4 +1,5 @@
-﻿using BakPisir.DTO.Dtos;
+﻿using BakPisir.CORE.Filter;
+using BakPisir.DTO.Dtos;
 using BakPisir.UI.Services;
 using Microsoft.Ajax.Utilities;
 using System;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace BakPisir.UI.Controllers
 {
+    [LogAction]
     public class ForgotPasswordController : Controller
     {
         // GET: ForgotPassword

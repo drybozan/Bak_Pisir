@@ -28,7 +28,7 @@ namespace BakPisir.API.Services
 
 
 
-        public string GetAllRequest(int page, int pageSize)
+        public string GetAllRequest()
         {
 
             //projecTo, autommaper aracı. DB varlığımı dto ya mapler.
@@ -36,12 +36,8 @@ namespace BakPisir.API.Services
             var requests = efUnitOfWork.RequestTemplate.GetAll(i => i.isDelete == false)
                 .OrderBy(o => o.requestId) // gelen datayı id ye göre sırala
                 .ProjectTo<RequestDto>()
-                .ToList()
-                .ToPaginate(page, pageSize);
-
-
-            RequestListModel mappedRequestListModel = requests.MapTo<RequestListModel>();
-            return JsonConvert.SerializeObject(mappedRequestListModel);
+                .ToList();
+            return JsonConvert.SerializeObject(requests);
         }
 
 
@@ -148,7 +144,7 @@ namespace BakPisir.API.Services
         {
             var result = Result.Instance.Warning("HATA! Kayıtlı email adresi bulunamadı.");
 
-            var email = efUnitOfWork.RequestTemplate.Get(x => x.mail == mail.ToString()).MapTo<RequestDto>();
+            var email = efUnitOfWork.RequestTemplate.Get(x => x.mail == mail && x.isDelete == false).MapTo<RequestDto>();
             if (email != null)
             {
                 Guid randomkey = Guid.NewGuid(); //32 karakterli kodu ürettik
@@ -160,7 +156,7 @@ namespace BakPisir.API.Services
                 //oluşturulan başvuruyu günceller.
                 UpdateRequest(email.requestId, email);
 
-                result = Result.Instance.Success("Yeni şifreniz email adresinize yollandı.");
+                result = Result.Instance.Success("Başvuru onay maili gonderildi.");
                 return result;
             }
             else
@@ -170,11 +166,11 @@ namespace BakPisir.API.Services
         }
 
         //Verilen mail adresine başvurunun reddini bildirir.
-        public Result SendMailRejection(object mail)
+        public Result SendMailRejection(string mail)
         {
             var result = Result.Instance.Warning("HATA! Kayıtlı email adresi bulunamadı.");
 
-            var email = efUnitOfWork.RequestTemplate.Get(x => x.mail == mail).MapTo<RequestDto>();
+            var email = efUnitOfWork.RequestTemplate.Get(x => x.mail == mail && x.isDelete == false).MapTo<RequestDto>();
             if (email != null)
             {
                 Mail sender = new Mail();
@@ -190,7 +186,7 @@ namespace BakPisir.API.Services
         }
 
         //Verilen mail adresine başvurunun alındığını mail atar.
-        public Result SendMailInfo(object mail)
+        public Result SendMailInfo(string mail)
         {
             var result = Result.Instance.Success("HATA! Kayıtlı email adresi bulunamadı.");
             var email = efUnitOfWork.RequestTemplate.Get(x => x.mail == mail).MapTo<RequestDto>();

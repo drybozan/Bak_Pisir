@@ -107,7 +107,7 @@
         $("#updateRecipeForm").submit(function (e) {
             e.preventDefault();
             var formData = new FormData($("#updateRecipeForm")[0]);
-           
+
 
             $.ajax({
                 url: this.action,
@@ -119,7 +119,7 @@
                     Swal.fire('İşlem Başarılı',
                         response, 'success');
                     setTimeout(function () {
-                        window.location = '/UserProfile/RecipeListByUser'
+                        window.location = '/UserProfile/RecipeListByUser/@SessionHelper.LoggedUserInfo.userId'
                     }, 2000); // 2000 milisaniye = 2 saniye
                 },
                 error: function (response) {

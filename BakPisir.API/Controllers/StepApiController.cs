@@ -37,6 +37,7 @@ namespace BakPisir.API.Controllers
             return stepApiService.GetStepByRecipeId(id);
         }
 
+        [Authorize]
         [Route("api/StepApi/Add")]
         [HttpPost]
         public Result Post(StepDto newStep)
@@ -45,6 +46,7 @@ namespace BakPisir.API.Controllers
             return stepApiService.AddStep(newStep);
         }
 
+        [Authorize]
         [Route("api/StepApi/Delete")]
         [HttpDelete]
         public Result Delete(int id)
@@ -53,7 +55,7 @@ namespace BakPisir.API.Controllers
             return stepApiService.DeleteStep(id);
         }
 
-
+        [Authorize]
         [Route("api/StepApi/Update")]
         [HttpPut]
         public Result Update(int id, StepDto stepDto)
@@ -63,6 +65,7 @@ namespace BakPisir.API.Controllers
         }
 
 
+        [Authorize]
         [Route("api/StepApi/UploadStepPicture")]
         [HttpPost]
         public Result UploadStepPicture(int id)

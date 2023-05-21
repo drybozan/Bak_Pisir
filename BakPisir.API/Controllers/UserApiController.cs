@@ -12,17 +12,19 @@ using System.Web.Http;
 
 namespace BakPisir.API.Controllers
 {
-    //[Authorize]    
+      
     public class UserApiController : ApiController
     {
         private UserApiService _userApiService = new UserApiService();
 
+        [Authorize]
         [Route("api/UserApi/GetAll")]
         [HttpGet]
-        public string Get(int page, int pageSize)
+        public string GetAll()
         {
-            return _userApiService.GetAllUser(page,pageSize);
+            return _userApiService.GetAllUser();
         }
+
 
         [Route("api/UserApi/Get")]
         [HttpGet]
@@ -31,6 +33,16 @@ namespace BakPisir.API.Controllers
             return _userApiService.GetUserById(id);
         }
 
+        [Authorize]
+        [Route("api/UserApi/ActiveUser")]
+        [HttpGet]
+        public Result ActiveUser(int id)
+        {
+
+            return _userApiService.ActiveUser(id);
+        }
+
+        [Authorize]
         [Route("api/UserApi/Add")]
         [HttpPost]
         public Result Post(UserDto newUser)
@@ -39,6 +51,7 @@ namespace BakPisir.API.Controllers
             return _userApiService.AddUser(newUser);
         }
 
+        [Authorize]
         [Route("api/UserApi/Delete")]
         [HttpDelete]
         public Result Delete(int id)
@@ -47,7 +60,7 @@ namespace BakPisir.API.Controllers
             return _userApiService.DeleteUser(id);
         }
 
-
+        [Authorize]
         [Route("api/UserApi/Update")]
         [HttpPut]
         public Result Update(int id, UserDto userDto)
@@ -56,7 +69,7 @@ namespace BakPisir.API.Controllers
             return _userApiService.UpdateUser(id, userDto);
         }
 
-
+        [Authorize]
         [Route("api/UserApi/SendMail")]
         [HttpPost]
         public Result SendMail(string mail)
@@ -64,6 +77,15 @@ namespace BakPisir.API.Controllers
             return _userApiService.SendMailPassword(mail);
         }
 
+        [Authorize]
+        [Route("api/UserApi/SendMailActiveUser")]
+        [HttpPost]
+        public Result SendMailActiveUser(string mail)
+        {
+            return _userApiService.SendMailActiveUser(mail);
+        }
+
+        [Authorize]
         [Route("api/UserApi/UploadProfilePicture")]
         [HttpPost]
         public Result UploadProfilePicture(int id)

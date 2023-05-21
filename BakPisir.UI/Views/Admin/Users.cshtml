@@ -1,0 +1,153 @@
+﻿
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/AdminView.cshtml";
+}
+
+@model List<BakPisir.DTO.Dtos.UserDto>
+
+
+<div class="container mt-5 ">
+    <div class="row">
+        <table class="display" id="UserList">
+            <thead>
+                <tr>
+                    <th class=" text-secondary text-xxs font-weight-bolder opacity-7">Ad</th>
+                    <th class=" text-secondary text-xxs font-weight-bolder opacity-7 ps-4"> Soyad</th>
+                    <th class=" text-secondary text-xxs font-weight-bolder opacity-7 ps-4"> Kullanıcı Adı</th>
+                    <th class="text-center  text-secondary text-xxs font-weight-bolder opacity-7">Mail</th>
+                    <th class="text-center  text-secondary text-xxs font-weight-bolder opacity-7">Telefon</th>
+                    <th class="text-center  text-secondary text-xxs font-weight-bolder opacity-7">Kayıt Tarihi</th>
+                    <th class="text-center  text-secondary text-xxs font-weight-bolder opacity-7">Aktif/Pasif</th>
+                    <th class="text-secondary opacity-7"></th>
+                    <th class="text-secondary opacity-7"></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $('#UserList').DataTable({
+            ajax: '/Admin/GetUsers',
+            sAjaxDataProp: "",
+            columns: [
+                { "data": "name" },
+                { "data": "surname" },
+                { "data": "username" },
+                { "data": "mail" },
+                { "data": "phone" },
+                {
+                    "data": "registrationDate",
+                    "render": function (data, type, full) {
+                        if (data != null) {
+                            var dtStart = new Date(parseInt(data.substr(6)));
+                            return dtStart.toLocaleDateString();
+                        } else {
+                            return "";
+                        }
+
+
+                    }
+                },
+                {
+                    "data": "isDelete",
+                    "render": function (data) {
+                        if (data == false) {
+                            return '<span class="badge badge-sm badge-success"  style="background-color: green;">Aktif</span>'
+                        } else {
+                            return '<span class="badge badge-sm badge-secondary" style="background-color: red;">Pasif</span>'
+                        }
+
+
+                    }
+                },
+                {
+                    "data": "userId", "render": function (data) {
+                        return '<button onclick="window.location.href=\'/UserHomePage/VisitedProfile/' + data + '\'" class="btn btn-primary">Profili Gör</button>';
+
+
+
+                    }
+                },
+
+                {
+                    "data": "isDelete",
+                    "render": function (data, type, full) {
+                        if (data == false) {
+                            return '<button id="btnDelete", class="btn btn-danger", onclick=DeleteUser(' + full.userId + ')>Üyeyi Pasif Yap</button>';
+                        } else {
+                            return '<button id="btnDelete", class="btn btn-success", onclick=AddUser(' + full.userId + ')>Üyeyi Aktif Yap</button>';
+                        }
+                    }
+                }
+
+            ]
+        });
+    });
+
+</script>
+
+
+
+<script>
+    function DeleteUser(id) {
+        $.ajax({
+            url: '@Url.Action("DeleteUser", "Admin")/' + id,
+            datatype: 'JSON',
+            type: 'POST',
+            success: function(response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Üyenin hesabı pasif edildi',
+                });
+
+                setTimeout(function () {
+                    window.location.href = "/Admin/Users/";
+                }, 3000); // 3000 milisaniye (3 saniye) bekletme süresi
+
+
+            },
+            error: function() {
+                response.toString();
+            }
+
+        });
+
+    }
+
+</script>
+
+
+
+<script>
+    function AddUser(id) {
+        $.ajax({
+            url: '@Url.Action("ActiveUser", "Admin")/' + id,
+            datatype: 'JSON',
+            type: 'POST',
+            success: function(response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Üyenin hesabı aktif edildi',
+                });
+
+                setTimeout(function () {
+                    window.location.href = "/Admin/Users/";
+                }, 3000); // 3000 milisaniye (3 saniye) bekletme süresi
+
+
+            },
+            error: function() {
+                response.toString();
+            }
+
+        });
+
+    }
+
+</script>

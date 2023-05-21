@@ -183,7 +183,7 @@
                         Swal.fire('İşlem Başarılı',
                             response, 'success');
                         setTimeout(function () {
-                            window.location = '/UserProfile/RecipeListByUser'
+                            window.location = '/UserProfile/RecipeListByUser/@SessionHelper.LoggedUserInfo.userId'
                         }, 3000); // 3000 milisaniye = 3 saniye
                     },
                     error: function (response) {

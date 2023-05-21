@@ -10,12 +10,18 @@ namespace BakPisir.UI.Services
     public class UserService
     {
         WebApiService<UserDto> was = new WebApiService<UserDto>();
-        WebApiService<UserListModel> _was = new WebApiService<UserListModel>();
 
         //Bütün user tablosunu çeker.
-        public UserListModel GetAllUsers(int page, int pageSize)
+        public List<UserDto> GetAllUsers()
         {
-            return _was.Get("UserApi/GetAll", page, pageSize);
+            return was.GetAll("UserApi/GetAll");
+        }
+
+
+        //Verilen id değerine sahip user verisini veritabanından siler.
+        public String ActiveUser(int id)
+        {
+            return was.ActiveUser("UserApi/ActiveUser", id);
         }
 
         //Verilen id değerine sahip user verisini çeker.
@@ -52,6 +58,12 @@ namespace BakPisir.UI.Services
         public string SendMailPassword(string mail)
         {
             return was.GetMailFeedback("UserApi/SendMail", mail);
+        }
+
+
+        public string SendMailActiveUser(string mail)
+        {
+            return was.GetMailFeedback("UserApi/SendMailActiveUser", mail);
         }
     }
 }

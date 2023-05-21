@@ -17,9 +17,9 @@ namespace BakPisir.API.Controllers
 
         [Route("api/LogApi/GetAll")]
         [HttpGet]
-        public string Get(int page, int pageSize)
+        public string GetAll()
         {
-            return logApiService.GetAllLog(page,pageSize);
+            return logApiService.GetAllLog();
         }
 
         [Route("api/LogApi/Get")]

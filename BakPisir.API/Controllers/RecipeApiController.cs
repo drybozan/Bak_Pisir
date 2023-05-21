@@ -14,7 +14,7 @@ using System.Web.Http;
 
 namespace BakPisir.API.Controllers
 {
-    //[Authorize]
+  
     public class RecipeApiController : ApiController
     {
 
@@ -49,6 +49,15 @@ namespace BakPisir.API.Controllers
             return recipeApiService.GetRecipeById(id);
         }
 
+
+        [Route("api/RecipeApi/GetRecipeByRecipeName")]
+        [HttpGet]
+        public string GetRecipeByRecipeName(string recipeName)
+        {
+            return recipeApiService.GetRecipeByRecipeName(recipeName);
+        }
+
+        [Authorize]
         [Route("api/RecipeApi/Add")]
         [HttpPost]
         public Result Post(RecipeDto newRecipe)
@@ -57,6 +66,7 @@ namespace BakPisir.API.Controllers
            return recipeApiService.AddRecipe(newRecipe);
         }
 
+        [Authorize]
         [Route("api/RecipeApi/Delete")]
         [HttpDelete]
         public Result Delete(int id)
@@ -65,7 +75,7 @@ namespace BakPisir.API.Controllers
             return recipeApiService.DeleteRecipe(id);
         }
 
-
+        [Authorize]
         [Route("api/RecipeApi/Update")]
         [HttpPut]
         public Result Update(int id, RecipeDto recipeDto)
@@ -92,7 +102,7 @@ namespace BakPisir.API.Controllers
             }
         }
 
-
+        [Authorize]
         [Route("api/RecipeApi/UploadRecipeVideo")]
         [HttpPost]
         public Result UploadRecipeVideo(int id)
@@ -138,6 +148,7 @@ namespace BakPisir.API.Controllers
             return Result.Instance.Warning("HATA! Yüklemek istediğiniz video yüklenemedi.");
         }
 
+        [Authorize]
         [Route("api/RecipeApi/UploadRecipePicture")]
         [HttpPost]
         public Result UploadRecipePicture(int id)

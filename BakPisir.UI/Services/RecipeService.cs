@@ -31,6 +31,7 @@ namespace BakPisir.UI.Services
             var recipes = _was.Get("RecipeApi/GetRecipeByUserId", id, page, pageSize);
             return recipes;
         }
+      
 
         //Verilen id değerine sahip recipe verisini çeker.
         public RecipeDto GetSingleRecipe(int id)

@@ -41,9 +41,9 @@ namespace BakPisir.API.Token
                     //Kullanıcı bilgilerine göre kimlik oluşturur.
                     ClaimsIdentity identity = new ClaimsIdentity(context.Options.AuthenticationType);
                     identity.AddClaim(new Claim(ClaimTypes.Role, userType));
-                    identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
+                    identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));                 
                     identity.AddClaim(new Claim("UserId", loginData.userId.ToString()));
-                    identity.AddClaim(new Claim("LoggedOn", DateTime.Now.ToString()));
+                    identity.AddClaim(new Claim("LoggedOn", DateTime.Now.ToString()));            
                     context.Validated(identity);
                 }
                 else

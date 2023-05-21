@@ -16,15 +16,15 @@ namespace BakPisir.EF.Models
     {
         public int requestId { get; set; }
         public string name { get; set; }
+        public string surname { get; set; }
         public string mail { get; set; }
         public Nullable<System.DateTime> requestDate { get; set; }
         public string phone { get; set; }
+        public string username { get; set; }
         public Nullable<bool> isDelete { get; set; }
+        public Nullable<System.DateTime> birthdate { get; set; }
         public Nullable<bool> agreement { get; set; }
         public string identityNumber { get; set; }
-        public string surname { get; set; }
-        public string username { get; set; }
-        public Nullable<System.DateTime> birthdate { get; set; }
         public string password { get; set; }
     }
 }

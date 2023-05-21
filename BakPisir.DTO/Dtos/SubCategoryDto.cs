@@ -18,9 +18,6 @@ namespace BakPisir.DTO.Dtos
         [Required]
         public int categoryId { get; set; }
 
-        [Display(Name = "Tarif Id")]
-        [Required]
-        public int recipeId { get; set; }
 
         [Display(Name = "Alt Kategori Adı")]
         [Required]

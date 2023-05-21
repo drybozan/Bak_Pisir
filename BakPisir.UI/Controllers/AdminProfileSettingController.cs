@@ -1,6 +1,5 @@
 ﻿using BakPisir.CORE.Filter;
 using BakPisir.CORE.Helper;
-using BakPisir.DTO.Dtos;
 using BakPisir.UI.Models;
 using BakPisir.UI.Services;
 using System;
@@ -12,59 +11,70 @@ using System.Web.Mvc;
 namespace BakPisir.UI.Controllers
 {
     [LogAction]
-    public class UserProfileSettingController : Controller
+    public class AdminProfileSettingController : Controller
     {
         UserService userService = new UserService();
 
-      
-        public ActionResult UserProfileSetting()
+        [HttpGet]
+        public ActionResult AdminProfile(int id)
+        {
+             
+            var user = userService.GetSingleUser(id);
+            return View(user);
+        }
+
+        /// <summary>
+        /// UserProfile.cshtml de hesap silme formu için tetiklenmekte.CheckBox da yapılan seçimle kullanıcını hesabını siler.
+        /// </summary>
+        /// <param name="id"></param>
+
+        [HttpGet]
+        public ActionResult AdminProfileSetting()
         {
             return View();
         }
 
-       
+
         [HttpGet]
-        public PartialViewResult ProfileSetting(int id)
+        public PartialViewResult AdmnProfileSetting(int id)
         {
             var profil = userService.GetSingleUser(id);
             ProfileSettingViewModel psvm = new ProfileSettingViewModel();
             psvm.userDto = profil;
             return PartialView(psvm);
         }
-      
+
         [HttpPost]
         public string ProfileSetting(ProfileSettingViewModel viewModel)
         {
             int id = SessionHelper.LoggedUserInfo.userId;
-          
-            userService.UpdateUser(id, viewModel.userDto);
            
+            userService.UpdateUser(id, viewModel.userDto);
+
             if (viewModel.ImageFile != null)
             {
-                userService.UploadPicture(viewModel.ImageFile, id);               
+                userService.UploadPicture(viewModel.ImageFile, id);
 
             }
             return "Bilgileriniz başarıyla kaydedilmiştir.";
         }
 
-       
         [HttpGet]
-        public PartialViewResult AccountSetting(int id)
+        public PartialViewResult AdminAccountSetting(int id)
         {
             AccountSettingsViewModel accountSettingsViewModel = new AccountSettingsViewModel();
-             var profil = userService.GetSingleUser(id);
-             accountSettingsViewModel.userDto = profil;
-            
+            var profil = userService.GetSingleUser(id);
+            accountSettingsViewModel.userDto = profil;
+
             return PartialView(accountSettingsViewModel);
         }
 
-       
         [HttpPost]
         public string AccountSetting(AccountSettingsViewModel accountSettingsViewModel)
         {
 
             int id = SessionHelper.LoggedUserInfo.userId;
-
+           
 
             if (accountSettingsViewModel.oldPassword == accountSettingsViewModel.userDto.password)
             {

@@ -73,6 +73,17 @@ public class RecipeApiService
         return JsonConvert.SerializeObject(recipe);
     }
 
+    //Verilen recipeName  değerine sahip tarifi veritabanında bulur ve döndürür.
+    public string GetRecipeByRecipeName(string recipeName)
+    {
+        var recipes = efUnitOfWork.RecipeTemplate.GetAll()
+       .Where(r => r.recipeName.ToLower().StartsWith(recipeName.ToLower()))
+       .ToList()
+       .Select(r => r.MapTo<RecipeDto>());
+
+        return JsonConvert.SerializeObject(recipes);
+    }
+
     //Verilen id değerine sahip tarifi veritabanından siler.
     public Result DeleteRecipe(int id)
     {
@@ -100,6 +111,7 @@ public class RecipeApiService
 
         if (recipeDto != null) //girilen bilgilerin kontrolü yapılır.
         {
+            recipeDto.recipeName.ToLower();
             var mappedRecipe = recipeDto.MapTo<RecipeTBL>();
             efUnitOfWork.RecipeTemplate.Add(mappedRecipe);
             efUnitOfWork.SaveChanges();

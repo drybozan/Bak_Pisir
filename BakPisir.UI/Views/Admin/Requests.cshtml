@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewBag.Title = "Requests";
+    Layout = "~/Views/Shared/AdminView.cshtml";
+}
+
+@model List<BakPisir.DTO.Dtos.RequestDto>
+
+
+<div class="container mt-5 ">
+    <div class="row">
+        <table class="display" id="basvurulistele">
+            <thead>
+                <tr>
+                    <th class=" text-secondary text-xxs font-weight-bolder opacity-7">Ad</th>
+                    <th class=" text-secondary text-xxs font-weight-bolder opacity-7 ps-4"> Soyad</th>
+                    <th class=" text-secondary text-xxs font-weight-bolder opacity-7 ps-4"> Kullanıcı Adı</th>
+                    <th class="text-center  text-secondary text-xxs font-weight-bolder opacity-7">Telefon</th>
+                    <th class="text-center  text-secondary text-xxs font-weight-bolder opacity-7">Mail</th>
+                    <th class="text-center  text-secondary text-xxs font-weight-bolder opacity-7">Başvuru Tarihi</th>
+                    <th class="text-center  text-secondary text-xxs font-weight-bolder opacity-7">Sözleşme</th>
+                    <th class="text-secondary opacity-7"></th>
+                    <th class="text-secondary opacity-7"></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        $('#basvurulistele').DataTable({
+            ajax: '/Admin/GetRequest',
+            sAjaxDataProp: "",
+            columns: [
+                { "data": "name" },
+                { "data": "surname" },
+                { "data": "username" },
+                { "data": "phone" },
+                { "data": "mail" },
+                {
+                    "data": "requestDate",
+                    "render": function (data, type, full) {
+                        if (data != null) {
+                            var dtStart = new Date(parseInt(data.substr(6)));
+                            return dtStart.toLocaleDateString();
+                        } else {
+                            return "";
+                        }
+
+
+                    }
+                },
+                { "data": "agreement" },
+                { "data": "requestId", "render": function (data) { return '<button id="btnDelete", class="btn btn-success", onclick=AcceptRequest(' + data + ')>Onayla</button>' } },
+
+                { "data": "requestId", "render": function (data) { return '<button id="btnDelete", class="btn btn-warning", onclick=DeleteRequest(' + data + ')>Reddet</button>'; } }
+
+            ]
+        });
+    });
+
+</script>
+
+<script>
+        function DeleteRequest(id) {
+            $.ajax({
+                url: '@Url.Action("DeleteRequest", "Admin")/' + id,
+                datatype: 'JSON',
+                type: 'POST',
+                success: function(response) {
+
+                    window.location.href = "/Admin/Requests/";
+                },
+                error: function() {
+                    response.toString();
+                }
+
+            });
+
+        }
+
+</script>
+
+<script>
+        function AcceptRequest(id) {
+            $.ajax({
+                url: '@Url.Action("AcceptRequest", "Admin")/' + id,
+                datatype: 'JSON',
+                type: 'POST',
+                success: function(response) {
+
+                   window.location.href = "/Admin/Requests/";
+
+                },
+                error: function() {
+                    response.toString();
+                }
+
+            });
+
+        }
+
+</script>
+
+@if (ViewBag.Msg != null)
+{
+    <script type="text/javascript">
+    window.onload = function () {
+        Swal.fire({
+            title: 'Bilgi',
+            text: '@ViewBag.Msg',
+            icon: 'info'
+        })
+    };
+    </script>
+
+}

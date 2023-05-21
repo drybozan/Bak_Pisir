@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="BakPisirDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="BakPisirDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CategoryTBL">
           <Key>
             <PropertyRef Name="categoryId" />
@@ -87,7 +87,6 @@
           <Property Name="subCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="categoryId" Type="int" />
           <Property Name="subCategoryName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="recipeId" Type="int" />
           <Property Name="isDelete" Type="bit" />
         </EntityType>
         <EntityType Name="SubTransitionTBL">
@@ -187,18 +186,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SubCatego__recip__37A5467C">
-          <End Role="RecipeTBL" Type="Self.RecipeTBL" Multiplicity="0..1" />
-          <End Role="SubCategoryTBL" Type="Self.SubCategoryTBL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RecipeTBL">
-              <PropertyRef Name="recipeId" />
-            </Principal>
-            <Dependent Role="SubCategoryTBL">
-              <PropertyRef Name="recipeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__SubTransi__recip__38996AB5">
           <End Role="RecipeTBL" Type="Self.RecipeTBL" Multiplicity="0..1" />
           <End Role="SubTransitionTBL" Type="Self.SubTransitionTBL" Multiplicity="*" />
@@ -278,10 +265,6 @@
             <End Role="CategoryTBL" EntitySet="CategoryTBL" />
             <End Role="SubCategoryTBL" EntitySet="SubCategoryTBL" />
           </AssociationSet>
-          <AssociationSet Name="FK__SubCatego__recip__37A5467C" Association="Self.FK__SubCatego__recip__37A5467C">
-            <End Role="RecipeTBL" EntitySet="RecipeTBL" />
-            <End Role="SubCategoryTBL" EntitySet="SubCategoryTBL" />
-          </AssociationSet>
           <AssociationSet Name="FK__SubTransi__recip__38996AB5" Association="Self.FK__SubTransi__recip__38996AB5">
             <End Role="RecipeTBL" EntitySet="RecipeTBL" />
             <End Role="SubTransitionTBL" EntitySet="SubTransitionTBL" />
@@ -299,7 +282,8 @@
             <End Role="RecipeTBL" EntitySet="RecipeTBL" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BakPisirDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -324,9 +308,9 @@
           <Property Name="parentId" Type="Int32" />
           <Property Name="commentImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="isDelete" Type="Boolean" />
+          <Property Name="commentDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="RecipeTBL" Relationship="Self.FK__CommentTB__recip__31EC6D26" FromRole="CommentTBL" ToRole="RecipeTBL" />
           <NavigationProperty Name="UserTBL" Relationship="Self.FK__CommentTB__userI__32E0915F" FromRole="CommentTBL" ToRole="UserTBL" />
-          <Property Name="commentDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="LogTBL">
           <Key>
@@ -337,8 +321,8 @@
           <Property Name="logActivity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="logDate" Type="DateTime" Precision="3" />
           <Property Name="ipAddress" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="UserTBL" Relationship="Self.FK_logTBL_UserTBL" FromRole="LogTBL" ToRole="UserTBL" />
           <Property Name="logUsername" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserTBL" Relationship="Self.FK_logTBL_UserTBL" FromRole="LogTBL" ToRole="UserTBL" />
         </EntityType>
         <EntityType Name="RecipeTBL">
           <Key>
@@ -350,16 +334,15 @@
           <Property Name="recipeVideoUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ingredients" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="isDelete" Type="Boolean" />
-          <NavigationProperty Name="CategoryTBL" Relationship="Self.FK_RecipeTBL_CategoryTBL" FromRole="RecipeTBL" ToRole="CategoryTBL" />
-          <NavigationProperty Name="CommentTBL" Relationship="Self.FK__CommentTB__recip__31EC6D26" FromRole="RecipeTBL" ToRole="CommentTBL" />
-          <NavigationProperty Name="UserTBL" Relationship="Self.FK__RecipeTBL__userI__33D4B598" FromRole="RecipeTBL" ToRole="UserTBL" />
-          <NavigationProperty Name="StepTBL" Relationship="Self.FK__StepTBL__recipeI__35BCFE0A" FromRole="RecipeTBL" ToRole="StepTBL" />
-          <NavigationProperty Name="SubCategoryTBL" Relationship="Self.FK__SubCatego__recip__37A5467C" FromRole="RecipeTBL" ToRole="SubCategoryTBL" />
-          <NavigationProperty Name="SubTransitionTBL" Relationship="Self.FK__SubTransi__recip__38996AB5" FromRole="RecipeTBL" ToRole="SubTransitionTBL" />
           <Property Name="cookingTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="recipeDate" Type="DateTime" Precision="3" />
           <Property Name="recipeName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="recipeImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CategoryTBL" Relationship="Self.FK_RecipeTBL_CategoryTBL" FromRole="RecipeTBL" ToRole="CategoryTBL" />
+          <NavigationProperty Name="CommentTBL" Relationship="Self.FK__CommentTB__recip__31EC6D26" FromRole="RecipeTBL" ToRole="CommentTBL" />
+          <NavigationProperty Name="UserTBL" Relationship="Self.FK__RecipeTBL__userI__33D4B598" FromRole="RecipeTBL" ToRole="UserTBL" />
+          <NavigationProperty Name="StepTBL" Relationship="Self.FK__StepTBL__recipeI__35BCFE0A" FromRole="RecipeTBL" ToRole="StepTBL" />
+          <NavigationProperty Name="SubTransitionTBL" Relationship="Self.FK__SubTransi__recip__38996AB5" FromRole="RecipeTBL" ToRole="SubTransitionTBL" />
         </EntityType>
         <EntityType Name="RequestTBL">
           <Key>
@@ -367,15 +350,15 @@
           </Key>
           <Property Name="requestId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="surname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="mail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="requestDate" Type="DateTime" Precision="3" />
           <Property Name="phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="isDelete" Type="Boolean" />
+          <Property Name="birthdate" Type="DateTime" Precision="0" />
           <Property Name="agreement" Type="Boolean" />
           <Property Name="identityNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="surname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="birthdate" Type="DateTime" Precision="0" />
           <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="StepTBL">
@@ -397,10 +380,8 @@
           <Property Name="subCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="categoryId" Type="Int32" />
           <Property Name="subCategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="recipeId" Type="Int32" />
           <Property Name="isDelete" Type="Boolean" />
           <NavigationProperty Name="CategoryTBL" Relationship="Self.FK__SubCatego__categ__36B12243" FromRole="SubCategoryTBL" ToRole="CategoryTBL" />
-          <NavigationProperty Name="RecipeTBL" Relationship="Self.FK__SubCatego__recip__37A5467C" FromRole="SubCategoryTBL" ToRole="RecipeTBL" />
           <NavigationProperty Name="SubTransitionTBL" Relationship="Self.FK__SubTransi__subCa__398D8EEE" FromRole="SubCategoryTBL" ToRole="SubTransitionTBL" />
         </EntityType>
         <EntityType Name="SubTransitionTBL">
@@ -430,20 +411,20 @@
           </Key>
           <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="surname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="mail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="registrationDate" Type="DateTime" Precision="3" />
           <Property Name="phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="userType" Type="Boolean" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="profilePictureUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="isDelete" Type="Boolean" />
+          <Property Name="birthdate" Type="DateTime" Precision="0" />
           <Property Name="identityNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CommentTBL" Relationship="Self.FK__CommentTB__userI__32E0915F" FromRole="UserTBL" ToRole="CommentTBL" />
           <NavigationProperty Name="LogTBL" Relationship="Self.FK_logTBL_UserTBL" FromRole="UserTBL" ToRole="LogTBL" />
           <NavigationProperty Name="RecipeTBL" Relationship="Self.FK__RecipeTBL__userI__33D4B598" FromRole="UserTBL" ToRole="RecipeTBL" />
-          <Property Name="surname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="birthdate" Type="DateTime" Precision="0" />
         </EntityType>
         <Association Name="FK__SubCatego__categ__36B12243">
           <End Role="CategoryTBL" Type="Self.CategoryTBL" Multiplicity="0..1" />
@@ -529,18 +510,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SubCatego__recip__37A5467C">
-          <End Role="RecipeTBL" Type="Self.RecipeTBL" Multiplicity="0..1" />
-          <End Role="SubCategoryTBL" Type="Self.SubCategoryTBL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RecipeTBL">
-              <PropertyRef Name="recipeId" />
-            </Principal>
-            <Dependent Role="SubCategoryTBL">
-              <PropertyRef Name="recipeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__SubTransi__recip__38996AB5">
           <End Role="RecipeTBL" Type="Self.RecipeTBL" Multiplicity="0..1" />
           <End Role="SubTransitionTBL" Type="Self.SubTransitionTBL" Multiplicity="*" />
@@ -604,10 +573,6 @@
             <End Role="RecipeTBL" EntitySet="RecipeTBL" />
             <End Role="StepTBL" EntitySet="StepTBL" />
           </AssociationSet>
-          <AssociationSet Name="FK__SubCatego__recip__37A5467C" Association="Self.FK__SubCatego__recip__37A5467C">
-            <End Role="RecipeTBL" EntitySet="RecipeTBL" />
-            <End Role="SubCategoryTBL" EntitySet="SubCategoryTBL" />
-          </AssociationSet>
           <AssociationSet Name="FK__SubTransi__recip__38996AB5" Association="Self.FK__SubTransi__recip__38996AB5">
             <End Role="RecipeTBL" EntitySet="RecipeTBL" />
             <End Role="SubTransitionTBL" EntitySet="SubTransitionTBL" />
@@ -635,7 +600,6 @@
           <EntitySetMapping Name="CommentTBL">
             <EntityTypeMapping TypeName="BakPisirDBModel.CommentTBL">
               <MappingFragment StoreEntitySet="CommentTBL">
-                <ScalarProperty Name="commentDate" ColumnName="commentDate" />
                 <ScalarProperty Name="commentId" ColumnName="commentId" />
                 <ScalarProperty Name="recipeId" ColumnName="recipeId" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
@@ -643,52 +607,53 @@
                 <ScalarProperty Name="parentId" ColumnName="parentId" />
                 <ScalarProperty Name="commentImageUrl" ColumnName="commentImageUrl" />
                 <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+                <ScalarProperty Name="commentDate" ColumnName="commentDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LogTBL">
             <EntityTypeMapping TypeName="BakPisirDBModel.LogTBL">
               <MappingFragment StoreEntitySet="LogTBL">
-                <ScalarProperty Name="logUsername" ColumnName="logUsername" />
                 <ScalarProperty Name="logId" ColumnName="logId" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
                 <ScalarProperty Name="logActivity" ColumnName="logActivity" />
                 <ScalarProperty Name="logDate" ColumnName="logDate" />
                 <ScalarProperty Name="ipAddress" ColumnName="ipAddress" />
+                <ScalarProperty Name="logUsername" ColumnName="logUsername" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RecipeTBL">
             <EntityTypeMapping TypeName="BakPisirDBModel.RecipeTBL">
               <MappingFragment StoreEntitySet="RecipeTBL">
-                <ScalarProperty Name="recipeImageUrl" ColumnName="recipeImageUrl" />
-                <ScalarProperty Name="recipeName" ColumnName="recipeName" />
-                <ScalarProperty Name="recipeDate" ColumnName="recipeDate" />
-                <ScalarProperty Name="cookingTime" ColumnName="cookingTime" />
                 <ScalarProperty Name="recipeId" ColumnName="recipeId" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
                 <ScalarProperty Name="categoryId" ColumnName="categoryId" />
                 <ScalarProperty Name="recipeVideoUrl" ColumnName="recipeVideoUrl" />
                 <ScalarProperty Name="ingredients" ColumnName="ingredients" />
                 <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+                <ScalarProperty Name="cookingTime" ColumnName="cookingTime" />
+                <ScalarProperty Name="recipeDate" ColumnName="recipeDate" />
+                <ScalarProperty Name="recipeName" ColumnName="recipeName" />
+                <ScalarProperty Name="recipeImageUrl" ColumnName="recipeImageUrl" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RequestTBL">
             <EntityTypeMapping TypeName="BakPisirDBModel.RequestTBL">
               <MappingFragment StoreEntitySet="RequestTBL">
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="birthdate" ColumnName="birthdate" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="surname" ColumnName="surname" />
                 <ScalarProperty Name="requestId" ColumnName="requestId" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
                 <ScalarProperty Name="mail" ColumnName="mail" />
                 <ScalarProperty Name="requestDate" ColumnName="requestDate" />
                 <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+                <ScalarProperty Name="birthdate" ColumnName="birthdate" />
                 <ScalarProperty Name="agreement" ColumnName="agreement" />
                 <ScalarProperty Name="identityNumber" ColumnName="identityNumber" />
+                <ScalarProperty Name="password" ColumnName="password" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -710,7 +675,6 @@
                 <ScalarProperty Name="subCategoryId" ColumnName="subCategoryId" />
                 <ScalarProperty Name="categoryId" ColumnName="categoryId" />
                 <ScalarProperty Name="subCategoryName" ColumnName="subCategoryName" />
-                <ScalarProperty Name="recipeId" ColumnName="recipeId" />
                 <ScalarProperty Name="isDelete" ColumnName="isDelete" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -739,18 +703,18 @@
           <EntitySetMapping Name="UserTBL">
             <EntityTypeMapping TypeName="BakPisirDBModel.UserTBL">
               <MappingFragment StoreEntitySet="UserTBL">
-                <ScalarProperty Name="birthdate" ColumnName="birthdate" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="surname" ColumnName="surname" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
                 <ScalarProperty Name="mail" ColumnName="mail" />
                 <ScalarProperty Name="registrationDate" ColumnName="registrationDate" />
                 <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="userType" ColumnName="userType" />
+                <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="profilePictureUrl" ColumnName="profilePictureUrl" />
                 <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+                <ScalarProperty Name="birthdate" ColumnName="birthdate" />
                 <ScalarProperty Name="identityNumber" ColumnName="identityNumber" />
               </MappingFragment>
             </EntityTypeMapping>

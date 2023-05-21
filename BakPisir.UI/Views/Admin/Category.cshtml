@@ -1,0 +1,486 @@
+﻿
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Views/Shared/AdminView.cshtml";
+}
+
+
+<div style="display:flex">
+    <div class="left-section">
+
+        <button class="btn btn-success" style="margin-left:30px" data-toggle="modal" data-target="#addCategoryModal" id="addCategoryButton"> Kategori Ekle</button>
+
+
+        <div class="container mt-5 ">
+            <div class="row">
+                <table class="display" id="CategoryList">
+                    <thead>
+                        <tr>
+                            <th class=" text-secondary text-xxs font-weight-bolder opacity-7">Kategori Adı</th>
+                            <th class="text-secondary opacity-7"></th>
+                            <th class="text-secondary opacity-7"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <script>
+
+            $(document).ready(function () {
+                $('#CategoryList').DataTable({
+                    ajax: '/Admin/GetCategories',
+                    sAjaxDataProp: "",
+                    columns: [
+                        { "data": "categoryName" },
+
+                        {
+                            "data": "categoryId", "render": function (data) {
+                                return '<button  class="btn btn-primary" data-toggle="modal" data-target="#editCategoryModal" id="editCategoryButton" data-categoryid="' + data + '">Düzenle</button>';
+
+                            }
+                        },
+
+                        {
+                            "data": "categoryId", "render": function (data) {
+                                return '<button id="btnDelete", class="btn btn-danger", onclick=DeleteCategory(' + data + ')>Sil</button>';
+                            }
+                        }
+
+                    ]
+                });
+            });
+
+        </script>
+
+        @*Kategoriyi düzenlemek için kullanılan modal*@
+        <div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editCategoryModalLabel">Kategori Düzenle</h5>
+
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="editCategoryId">
+                        <div class="form-group">
+                            <label for="editCategoryName">Kategori Adı:</label>
+                            <input type="text" class="form-control" id="editCategoryName">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">Kapat</button>
+                        <button type="button" class="btn btn-success" id="saveCategoryChanges">Değişiklikleri Kaydet</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+
+            $('#editCategoryModal').on('click', '#close', function () {
+                $('#editCategoryModal').modal('hide');
+            })
+
+        </script>
+
+        @*kategoryi düzenlemek için kullanılan script*@
+        <script>
+            $(document).on('click', '#editCategoryButton', function () {
+
+                var categoryId = $(this).data('categoryid');
+                $('#editCategoryId').val(categoryId);
+                // additional code to populate other input fields for editing category information
+                $('#editCategoryModal').modal('show');
+            });
+        </script>
+
+        @*modaldaki kategoryi düzenlenmiş kategoriyi kaydetmek için kullanılan script*@
+        <script>
+            $(document).on('click', '#saveCategoryChanges', function () {
+                // AJAX isteği yapılır
+                $.ajax({
+                    url: '/Admin/UpdataCategory',
+                    type: 'POST',
+                    data: {
+                        // toplanan veriler
+                        categoryId: $('#editCategoryId').val(),
+                        categoryName: $('#editCategoryName').val()
+                    },
+                    success: function (result) {
+                        // başarılı cevap durumunda yapılacak işlemler
+                        console.log(result);
+                        // modalı kapat
+                        $('#editCategoryModal').modal('hide');
+                        window.location.href = "/Admin/Category/";
+                    },
+                    error: function (xhr, status, error) {
+                        // hata durumunda yapılacak işlemler
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        </script>
+
+
+        @*Kategoriyi eklemek için kullanılan modal*@
+        <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editCategoryModalLabel">Kategori Ekle</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="editCategoryName">Kategori Adı:</label>
+                            <input type="text" class="form-control" id="addCategoryName">
+                            <div id="errorContainer1" style="color: red;"></div> <!-- Hata mesajının gösterileceği alan -->
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">Kapat</button>
+                        <button type="button" class="btn btn-success" id="addCategory">Kaydet</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+
+            $('#addCategoryModal').on('click', '#close', function () {
+                $('#addCategoryModal').modal('hide');
+            })
+
+        </script>
+
+        <script>
+            $(document).on('click', '#addCategoryButton', function () {
+
+                $('#addCategoryModal').modal('show');
+            });
+        </script>
+
+
+        <script>
+            $(document).on('click', '#addCategory', function () {
+                // AJAX isteği yapılır
+                var categoryName = $('#addCategoryName').val();
+                if (categoryName.trim() === '') {
+                    $('#errorContainer1').text('Bu alan boş bırakılamaz.'); // Hata mesajını göster
+                    return;
+                } else {
+                    $('#errorContainer1').empty(); // Hata mesajını temizle
+                }
+                $.ajax({
+                    url: '/Admin/AddCategory',
+                    type: 'POST',
+                    data: {
+
+                        categoryName: categoryName
+                    },
+                    success: function (result) {
+                        // başarılı cevap durumunda yapılacak işlemler
+                        console.log(result);
+                        // modalı kapat
+                        $('#addCategoryModal').modal('hide');
+                        window.location.href = "/Admin/Category/";
+                    },
+                    error: function (xhr, status, error) {
+                        // hata durumunda yapılacak işlemler
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        </script>
+
+        <script>
+    function DeleteCategory(id) {
+        $.ajax({
+            url: '@Url.Action("DeleteCategory", "Admin")/' + id,
+            datatype: 'JSON',
+            type: 'POST',
+            success: function(response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Kategori başarıyla silindi.',
+
+                });
+                setTimeout(function () {
+                    window.location.href = "/Admin/Category/"
+                }, 3000); // 3000 milisaniye = 2 saniye
+            
+
+            },
+            error: function() {
+                response.toString();
+            }
+
+        });
+
+    }
+
+        </script>
+    </div>
+    <div class="right-section">
+        <button class="btn btn-success" style="margin-left:30px" data-toggle="modal" data-target="#addSubCategoryModal" id="addSubCategoryButton"> Alt Kategori Ekle</button>
+
+        @{
+            List<BakPisir.DTO.Dtos.CategoryDto> categories = ViewBag.Categories;
+        }
+
+        @*Kategoriyi eklemek için kullanılan modal*@
+        <div class="modal fade" id="addSubCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addSubCategoryModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editSubCategoryModalLabel">Alt Kategori Ekle</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="categoryDropdown">Kategori:</label>
+                            <select id="categoryDropdown" class="form-control">
+
+                                @foreach (var category in categories)
+                                {
+
+                                    <option value="@category.categoryId">@category.categoryName</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editSubCategoryName">Alt Kategori Adı:</label>
+                            <input type="text" class="form-control" id="addSubCategoryName">
+                            <div id="errorContainer" style="color: red;"></div> <!-- Hata mesajının gösterileceği alan -->
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">Kapat</button>
+                        <button type="button" class="btn btn-success" id="addSubCategory">Kaydet</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script>
+
+            $('#addSubCategoryModal').on('click', '#close', function () {
+                $('#addSubCategoryModal').modal('hide');
+            })
+
+        </script>
+
+        <script>
+            $(document).on('click', '#addSubCategoryButton', function () {
+
+                $('#addSubCategoryModal').modal('show');
+            });
+        </script>
+
+
+        <script>
+            $(document).on('click', '#addSubCategory', function () {
+                // AJAX isteği yapılır
+
+                var selectedCategoryId = $('#categoryDropdown').val(); // Seçilen kategori Id'sini al
+                var subCategoryName = $('#addSubCategoryName').val()
+                if (subCategoryName.trim() === '') {
+                    $('#errorContainer').text('Bu alan boş bırakılamaz.'); // Hata mesajını göster
+                    return;
+                } else {
+                    $('#errorContainer').empty(); // Hata mesajını temizle
+                }
+
+                $.ajax({
+                    url: '/Admin/AddSubCategory',
+                    type: 'POST',
+                    data: {
+                        categoryId: selectedCategoryId,
+                        subCategoryName: subCategoryName
+                    },
+                    success: function (result) {
+                        // başarılı cevap durumunda yapılacak işlemler
+                        console.log(result);
+                        // modalı kapat
+                        $('#addSubCategoryModal').modal('hide');
+                        window.location.href = "/Admin/Category/";
+                    },
+                    error: function (xhr, status, error) {
+                        // hata durumunda yapılacak işlemler
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        </script>
+
+        <div class="container mt-5 ">
+            <div class="row">
+                <table class="display" id="SubCategoryList">
+                    <thead>
+                        <tr>
+                            <th class=" text-secondary text-xxs font-weight-bolder opacity-7">Alt Kategori Adı</th>
+                            <th class="text-secondary opacity-7"></th>
+                            <th class="text-secondary opacity-7"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <script>
+
+            $(document).ready(function () {
+                $('#SubCategoryList').DataTable({
+                    ajax: '/Admin/GetSubCategories',
+                    sAjaxDataProp: "",
+                    columns: [
+                        { "data": "subCategoryName" },
+
+
+                        {
+                            "data": "subCategoryId", "render": function (data) {
+                                return '<button  class="btn btn-primary" data-toggle="modal" data-target="#editSubCategoryModal" id="editSubCategoryButton" data-categoryid="' + data + '">Düzenle</button>';
+
+                            }
+                        },
+
+                        {
+                            "data": "subCategoryId", "render": function (data) {
+                                return '<button id="btnDelete", class="btn btn-danger", onclick=DeleteSubCategory(' + data + ')>Sil</button>';
+                            }
+                        },
+
+
+                        {
+                            "data": "categoryId",
+                            "visible": false,
+                            "render": function (data, type, row) {
+                                return '<span data-categoryid>' + data + '</span>';
+                            }
+                        }
+
+                    ]
+                });
+            });
+
+        </script>
+
+        @*SubKategoriyi düzenlemek için kullanılan modal*@
+        <div class="modal fade" id="editSubCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editSubCategoryModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editSubCategoryModalLabel">Alt Kategori Düzenle</h5>
+
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="editSubCategoryId">
+                        <input type="hidden" id="editCategoryId">
+                        <div class="form-group">
+                            <label for="editSubCategoryName">Kategori Adı:</label>
+                            <input type="text" class="form-control" id="editSubCategoryName">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">Kapat</button>
+                        <button type="button" class="btn btn-success" id="saveSubCategoryChanges">Değişiklikleri Kaydet</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+
+            $('#editSubCategoryModal').on('click', '#close', function () {
+                $('#editSubCategoryModal').modal('hide');
+            })
+
+        </script>
+
+
+
+        @*Subkategoryi düzenlemek için kullanılan script*@
+        <script>
+            $(document).on('click', '#editSubCategoryButton', function () {
+
+                var subCategoryId = $(this).data('categoryid');
+                var categoryId = $('[data-categoryid]').data('categoryid');
+
+
+                $('#editSubCategoryId').val(subCategoryId);
+                $('#editCategoryId').val(categoryId);
+                // additional code to populate other input fields for editing category information
+                $('#editSubCategoryModal').modal('show');
+            });
+        </script>
+
+        @*modaldaki kategoryi düzenlenmiş kategoriyi kaydetmek için kullanılan script*@
+        <script>
+            $(document).on('click', '#saveSubCategoryChanges', function () {
+
+                // AJAX isteği yapılır
+                $.ajax({
+                    url: '/Admin/UpdataSubCategory',
+                    type: 'POST',
+                    data: {
+                        // toplanan veriler
+                        subCategoryId: $('#editSubCategoryId').val(),
+                        subCategoryName: $('#editSubCategoryName').val(),
+                        categoryId: $('#editCategoryId').val(), // Modal içindeki categoryId input alanının id'si
+                    },
+                    success: function (result) {
+                        // başarılı cevap durumunda yapılacak işlemler
+                        console.log(result);
+                        // modalı kapat
+                        $('#editSubCategoryModal').modal('hide');
+                        window.location.href = "/Admin/Category/";
+                    },
+                    error: function (xhr, status, error) {
+                        // hata durumunda yapılacak işlemler
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        </script>
+
+
+
+
+        <script>
+    function DeleteSubCategory(id) {
+        $.ajax({
+            url: '@Url.Action("DeleteSubCategory", "Admin")/' + id,
+            datatype: 'JSON',
+            type: 'POST',
+            success: function(response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Kategori başarıyla silindi.',
+
+                });
+                setTimeout(function () {
+                    window.location.href = "/Admin/Category/";
+                }, 3000); // 3000 milisaniye = 3 saniye
+
+
+
+            },
+            error: function() {
+                response.toString();
+            }
+
+        });
+
+    }
+
+        </script>
+
+    </div>
+</div>

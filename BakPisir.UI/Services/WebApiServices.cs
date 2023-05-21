@@ -81,6 +81,7 @@ namespace BakPisir.UI.Services
             }
         }
 
+     
 
         //Fverilen parametreye göre koşullu sorgu sonuçlarını getirir
         public List<T> GetSpecial(string method, int id)
@@ -185,6 +186,26 @@ namespace BakPisir.UI.Services
             }
 
         }
+
+
+        //Verilen id değerine sahip kullanıcıyı aktif yapar.
+        public String ActiveUser(string method, int id)
+        {
+
+            using (HttpClient _httpClient = new HttpClient())
+            {
+                _httpClient.BaseAddress = new Uri(url);
+                _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + SessionHelper.TokenInfo.access_token);
+                HttpResponseMessage response = _httpClient.GetAsync(method + "?id=" + id).Result;
+                var data = response.Content.ReadAsStringAsync().Result;
+                dynamic newData = JsonConvert.DeserializeObject(data);
+                var message = newData.Message;
+                return message;
+            }
+
+        }
+
 
         //Webapiden gelen veriyi listeye çevirir
         public List<T> ConvertList(HttpResponseMessage response)

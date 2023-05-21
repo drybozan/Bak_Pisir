@@ -4,10 +4,227 @@
     Layout = "~/Views/Shared/UserHomeView.cshtml";
 }
 
+@using BakPisir.CORE.Helper
 
 @model BakPisir.DTO.ModelforList.RecipeListModel
 
-<div class="container " id="listRecipe">
+<nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+     id="layout-navbar" style="margin-bottom:25px; margin-top:-10px">
+
+
+    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+        <!-- Search -->
+        <div class="navbar-nav align-items-center">
+            <div class="nav-item d-flex align-items-center">
+                <i class="bx bx-search fs-4 lh-0"></i>
+                <input type="text"
+                       class="form-control border-0 shadow-none"
+                       placeholder="Search..."
+                       aria-label="Search..."
+                       id="recipeSearchInput" />
+            </div>
+        </div>
+        <script>
+            // Arama alanı elementini seçin
+            var recipeSearchInput = document.getElementById('recipeSearchInput');
+
+            // Her tuşa basıldığında arama işlevini tetikleyen olay dinleyicisi ekleyin
+            recipeSearchInput.addEventListener('keyup', function (event) {
+                var searchText = event.target.value; // Arama metnini alın
+
+                if (searchText.trim() === '') {
+                    // Arama çubuğu boş olduğunda yapılacak işlemleri burada gerçekleştirin
+                    window.location.href = '/UserHomePage/UserHomePage'; // Yönlendirmek istediğiniz URL'i buraya ekleyin
+                    return; // İşlemi sonlandırın
+                }
+
+                // AJAX isteği gönderin
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'http://localhost:44355/api/RecipeApi/GetRecipeByRecipeName?recipeName=' + searchText, true); // API endpointine isteği yapın
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        var recipes = JSON.parse(xhr.responseText); // API'den gelen veriyi ayrıştırın
+
+                        if (recipes !== "null") {
+
+                            displayRecipes(JSON.parse(recipes));
+                        } else {
+                            Swal.fire({
+                                title: 'Bilgi',
+                                text: 'Kayıt bulunamadı.',
+                                icon: 'info'
+                            })
+                        }
+
+
+                    }
+                };
+                xhr.send();
+            });
+
+            function displayRecipes(recipes) {
+                var listRecipe = document.getElementById('listRecipe');
+                listRecipe.innerHTML = ''; // Tarif listesini temizleyin
+
+                // Tarifleri diziye dönüştürün
+                var recipesArray = Array.isArray(recipes) ? recipes : [recipes];
+
+                // Her bir tarifi listeye ekleyin
+                var recipeHtml = '<div class="row">'; // Satırın başlangıcını belirtin
+
+                for (var i = 0; i < recipesArray.length; i++) {
+                    var recipe = recipesArray[i];
+
+                    recipeHtml += '<div class="col-md-6 col-lg-4 mb-3">' +
+                        '<div class="card h-100">' +
+                        '<img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/' + recipe.recipeImageUrl + '" alt="Card image cap" height="300" weight="700" />' +
+                        '<div class="card-body">' +
+                        '<h4 class="card-title">' + recipe.recipeName + '</h4>' +
+                        '<h6>Cooking Time: ' + recipe.cookingTime + '</h6>' +
+                        '<p class="card-text">Ingredients: ' + recipe.ingredients + '</p>' +
+                        '<a href="/UserHomePage/RecipeDetail/' + recipe.recipeId + '" class="btn btn-outline-primary">Tarifi Dene</a>' +
+                        '</div></div></div>';
+
+                    if ((i + 1) % 3 === 0) {
+                        recipeHtml += '</div><div class="row">'; // Her üç tariften sonra yeni bir satır başlatın
+                    }
+                }
+
+                recipeHtml += '</div>'; // Satırın sonunu belirtin
+
+                listRecipe.innerHTML = recipeHtml; // Tüm tarifleri listeye ekle
+            }
+
+        </script>
+
+
+
+
+        <!-- /Search -->
+
+        @if (SessionHelper.LoggedUserInfo.userId != 0)
+        {
+            <script>
+
+                function setProfilePicture(userDto) {
+                    var profilePictureUrl = userDto.profilePictureUrl;
+                    var profilePictureElement = document.querySelector('.avatar img');
+                    profilePictureElement.src = "http://localhost:44355/Uploads/UserProfile/" + profilePictureUrl;
+
+                    var profilePictureElement = document.querySelector('#avatar2 img');
+                    profilePictureElement.src = "http://localhost:44355/Uploads/UserProfile/" + profilePictureUrl;
+
+                    var nameElement = document.querySelector('.fw-semibold');
+                    nameElement.textContent = userDto.name + ' ' + userDto.surname;
+
+                    var usernameElement = document.querySelector('.text-muted');
+                    usernameElement.textContent = userDto.username;
+                }
+
+                // AJAX isteği tamamlandığında setProfilePicture işlevini çağırın
+               var xhr = new XMLHttpRequest();
+                var id = @SessionHelper.LoggedUserInfo.userId;
+                xhr.open('GET', 'http://localhost:44355/api/UserApi/Get?id=' + id, true);
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        var user = JSON.parse(xhr.responseText);
+
+                        if (user !== null) {
+                            var userDto = JSON.parse(user);
+                            setProfilePicture(userDto);
+                        } else {
+                            Swal.fire({
+                                title: 'Bilgi',
+                                text: 'Kayıt bulunamadı.',
+                                icon: 'info'
+                            });
+                        }
+                    }
+                };
+
+                xhr.send();
+            </script>
+
+            <ul class="navbar-nav flex-row align-items-center ms-auto">
+
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown ">
+                    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                        <div class="avatar avatar-online">
+                            <img class="w-px-40 h-auto rounded-circle" src="" />
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="/UserProfile/RecipeListByUser/@SessionHelper.LoggedUserInfo.userId">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0 me-3">
+                                        <div class="avatar avatar-online" id="avatar2">
+                                            <img class="w-px-40 h-auto rounded-circle" src="" />
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <span class="fw-semibold d-block"> </span>
+                                        <small class="text-muted"></small>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown-divider"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/UserProfile/UserProfile/@SessionHelper.LoggedUserInfo.userId">
+                                <i class="bx bx-user me-2"></i>
+                                <span class="align-middle">Profilim</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/UserProfileSetting/UserProfileSetting/@SessionHelper.LoggedUserInfo.userId">
+                                <i class="bx bx-cog me-2"></i>
+                                <span class="align-middle">Ayarlar</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/UserProfile/RecipeListByUser/@SessionHelper.LoggedUserInfo.userId">
+                                <span class="d-flex align-items-center align-middle">
+                                    <i class="flex-shrink-0 bx bx-food-menu me-2"></i>
+                                    <span class="flex-grow-1 align-middle">Tariflerim</span>
+
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown-divider"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/SignIn/LogOut">
+                                <i class="bx bx-power-off me-2"></i>
+                                <span class="align-middle">Çıkış Yap</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!--/ User -->
+        }
+        else
+        {
+            <div class="d-flex gap-3" style="margin-left:450px">
+
+                <a href="/SignIn/SignIn" class="btn btn-primary">GİRİŞ YAP</a>
+                <a href="/SignUp/SignUp" class="btn btn-primary">KAYIT OL</a>
+            </div>
+        }
+
+
+
+
+    </div>
+</nav>
+
+
+<div class="container" id="listRecipe">
     @if (Model.Items.Count % 3 == 0)
     {
         for (int i = 0; i < Model.Items.Count; i = i + 3)
@@ -68,7 +285,7 @@
             <div class="row">
                 <div class="col-md-6 col-lg-4 mb-3">
                     <div class="card h-100">
-                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i].recipeImageUrl" alt="Card image cap" height="300" weight="700"/>
+                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i].recipeImageUrl" alt="Card image cap" height="300" weight="700" />
                         <div class="card-body">
                             <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i].recipeName) </h4>
                             <h6>@Html.DisplayNameFor(model => model.Items[i].cookingTime):@Html.DisplayFor(model => model.Items[i].cookingTime)</h6>
@@ -197,7 +414,7 @@
             </div>
             <div class="col-md-6 col-lg-4 mb-3">
                 <div class="card h-100">
-                    <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[(Model.Items.Count) - 2].recipeImageUrl" alt="Card image cap" height="300" weight="700"/>
+                    <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[(Model.Items.Count) - 2].recipeImageUrl" alt="Card image cap" height="300" weight="700" />
                     <div class="card-body">
                         <h4 class="card-title"> @Html.DisplayFor(model => model.Items[(Model.Items.Count) - 2].recipeName) </h4>
                         <h6>@Html.DisplayNameFor(model => model.Items[(Model.Items.Count) - 2].cookingTime):@Html.DisplayFor(model => model.Items[(Model.Items.Count) - 2].cookingTime)</h6>
@@ -221,12 +438,32 @@
                     <i class="tf-icon bx bx-chevrons-left">ÖNCEKİ</i>
                 </a>
             </li>
-
-            @for (int i = 1; i <= 3; i++)
+            @if (Model.Pages == 1)
             {
                 <li class="page-item">
-                    <a class="page-link" onclick="getNextRecipe(@i)">@i</a>
+                    <a class="page-link" onclick="getNextRecipe(1)">1</a>
                 </li>
+
+            }
+            else if (Model.Pages == 2)
+            {
+                for (int i = 1; i <= 2; i++)
+                {
+                    <li class="page-item">
+                        <a class="page-link" onclick="getNextRecipe(@i)">@i</a>
+                    </li>
+                }
+
+            }
+            else if (Model.Pages == 3)
+            {
+                for (int i = 1; i <= 3; i++)
+                {
+                    <li class="page-item">
+                        <a class="page-link" onclick="getNextRecipe(@i)">@i</a>
+                    </li>
+                }
+
             }
 
             <li class="page-item last">
@@ -253,7 +490,7 @@
 
 <script>
     function getNextRecipe(number) {
-    
+
         $.ajax({
             url: '@Url.Action("getNextRecipe", "UserHomePage")/' + number,
             datatype: 'JSON',
@@ -385,15 +622,37 @@
                         .appendTo($ul);
 
 
-                for (i = 1; i <= 3; i++) {
+                if (data.Pages == 1) {
+
                     $('<li>').addClass('page-item')
                         .append($('<a>').addClass('page-link').text(i)
                             .on('click', function () {
-                                getNextRecipe($(this).text()); // sıradaki tarifi isityoruz.
-
+                                getNextRecipe($(this).text());
                             }))
                         .appendTo($ul);
+
+                } else if (data.Pages == 2) {
+                    for (i = 1; i <= 2; i++) {
+                        $('<li>').addClass('page-item')
+                            .append($('<a>').addClass('page-link').text(i)
+                                .on('click', function () {
+                                    getNextRecipe($(this).text());
+                                }))
+                            .appendTo($ul);
+                    }
+
+                } else if (data.Pages > 3) {
+                    for (i = 1; i <= 3; i++) {
+                        $('<li>').addClass('page-item')
+                            .append($('<a>').addClass('page-link').text(i)
+                                .on('click', function () {
+                                    getNextRecipe($(this).text());
+                                }))
+                            .appendTo($ul);
+                    }
+
                 }
+
 
                     $('<li>').addClass('page-item last')
                         .append($('<a>').addClass('page-link')

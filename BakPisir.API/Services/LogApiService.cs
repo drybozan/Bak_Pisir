@@ -23,19 +23,16 @@ namespace BakPisir.API.Services
         // unitofwork nesnemi oluşturuyorum ve db context dosyamı parametre veriyorum.
         private EFUnitOfWork efUnitOfWork = new EFUnitOfWork(bakPisirDBEntities);
 
-        public string GetAllLog(int page, int pageSize)
+        public string GetAllLog()
         {
             //projecTo, autommaper aracı. DB varlığımı dto ya mapler.
-           
+
             var logs = efUnitOfWork.LogTemplate.GetAll()
             .OrderBy(o => o.logId) // gelen datayı id ye göre sırala           
             .ProjectTo<LogDto>()
-               .ToList()
-               .ToPaginate(page, pageSize);
+               .ToList();
 
-
-            LogListModel mappedLogListModel = logs.MapTo<LogListModel>();
-            return JsonConvert.SerializeObject(mappedLogListModel);
+            return JsonConvert.SerializeObject(logs);
         }
 
         //Verilen id değerine sahip logu veritabanında bulur ve döndürür.

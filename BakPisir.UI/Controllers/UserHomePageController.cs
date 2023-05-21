@@ -1,4 +1,5 @@
-﻿using BakPisir.DTO.Dtos;
+﻿using BakPisir.CORE.Filter;
+using BakPisir.DTO.Dtos;
 using BakPisir.DTO.ModelforList;
 using BakPisir.UI.Models;
 using BakPisir.UI.Services;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 
 namespace BakPisir.UI.Controllers
 {
+    [LogAction]
     public class UserHomePageController : Controller
     {
 

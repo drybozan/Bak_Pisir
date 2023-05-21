@@ -24,18 +24,16 @@ namespace BakPisir.API.Services
         // unitofwork nesnemi oluşturuyorum ve db context dosyamı parametre veriyorum.
         private EFUnitOfWork efUnitOfWork = new EFUnitOfWork(bakPisirDBEntities);
 
-        public string GetAllUser(int page, int pageSize)
+        public string GetAllUser()
         {
             //projecTo, autommaper aracı. DB varlığımı dto ya mapler.
-            var users = efUnitOfWork.UserTemplate.GetAll(i => i.isDelete == false)
+            var users = efUnitOfWork.UserTemplate.GetAll()
             .OrderBy(o => o.userId) // gelen datayı id ye göre sırala
             .ProjectTo<UserDto>()
-            .ToList()
-            .ToPaginate(page, pageSize);
+            .ToList();          
 
 
-            UserListModel mappedUserListModel = users.MapTo<UserListModel>();
-            return JsonConvert.SerializeObject(mappedUserListModel);
+            return JsonConvert.SerializeObject(users);
         }
 
         //Verilen id değerine sahip user verisini veritabanında bulur ve döndürür.
@@ -63,6 +61,24 @@ namespace BakPisir.API.Services
                 efUnitOfWork.SaveChanges();
 
                 result = Result.Instance.Success("Başarıyla silindi.");
+                return result;
+            }
+
+            return result;
+        }
+
+
+        //Verilen id değerine sahip user verisini veritabanından siler.
+        public Result ActiveUser(int id)
+        {
+            var result = Result.Instance.Warning("HATA! Böyle bir kullanıcı yok.");
+            var user = efUnitOfWork.UserTemplate.GetById(id);
+            if (user != null)
+            {
+                user.isDelete = false;
+                efUnitOfWork.SaveChanges();
+
+                result = Result.Instance.Success("Kullanıcı aktif edildi.");
                 return result;
             }
 
@@ -110,7 +126,7 @@ namespace BakPisir.API.Services
         }
 
         // şifremi unuttum
-        public Result SendMailPassword(object mail)
+        public Result SendMailPassword(string mail)
         {
             var result = Result.Instance.Warning("HATA! Kayıtlı email adresi bulunamadı.");
             var user = efUnitOfWork.UserTemplate.Get(x => x.mail == mail).MapTo<UserDto>();
@@ -132,31 +148,33 @@ namespace BakPisir.API.Services
             }
         }
 
-      
+
+        // kullanıcı hesabını aktif edince mail atılacak.
+        public Result SendMailActiveUser(string mail)
+        {
+            var result = Result.Instance.Warning("HATA! Kayıtlı email adresi bulunamadı.");
+            var user = efUnitOfWork.UserTemplate.Get(x => x.mail == mail).MapTo<UserDto>();
+            if (user != null)
+            {
+                Guid randomkey = Guid.NewGuid(); //32 karakterli kodu ürettik
+                string Password = randomkey.ToString().Substring(0, 6); /// 6 haneli keyi password için aldık"
+                Mail sender = new Mail();
+                sender.sendMail(mail.ToString(), "Hesabınız aktif edilmiştir.", "Hesabınıza giriş yapmanız için tek seferlik şifre belirledik. Şifrenizle giriş yapabilirsiniz. Giriş yaptıktan sonra lütfen şifrenizi değiştiriniz.\n Şifre : " + Password);
+                user.password = Password;
+                UpdateUser(user.userId, user);
+
+                result = Result.Instance.Success("Yeni şifreniz email adresinize yollandı.");
+                return result;
+            }
+            else
+            {
+                return result;
+            }
+        }
+
+
         public Result UploadProfilePicture(int id, string filePath)
         {
-            //var result = Result.Instance.Warning("HATA! Güncellemek istediğiniz kayıt bulunamadı.");
-
-            //// gelen id yi sorgula db de sorgula. Bu id ile kullanıcı kayıtlı ise onu UserDto entity ile maple.
-            //var user = efUnitOfWork.UserTemplate.GetById(id).MapTo<UserDto>();
-
-            //if (user != null)
-            //{
-            //    //kullanıcının profil fotoğrafına gönderilen dosyanın yolunu gönder.
-            //    user.profilePictureUrl = filePath;
-
-            //    //kullanıcıyı veritabanı nesnesi ile maple.
-            //    var mappedUser = user.MapTo<UserTBL>();
-            //    // yapılan değişikliği güncelle
-            //    efUnitOfWork.UserTemplate.Update(mappedUser);
-
-            //    // değişiklikleri kaydet ve veritabanına yansıt
-            //    efUnitOfWork.SaveChanges();
-
-            //    result = Result.Instance.Success("Kullanıcı profili başarıyla güncellendi.");
-            //    return result;
-            //}
-            //return result;
 
             var result = Result.Instance.Warning("HATA! Güncellemek istediğiniz kayıt bulunamadı.");
 

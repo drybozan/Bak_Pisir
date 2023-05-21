@@ -1,4 +1,6 @@
-﻿using BakPisir.DTO.Dtos;
+﻿using BakPisir.CORE.Filter;
+using BakPisir.CORE.Helper;
+using BakPisir.DTO.Dtos;
 using BakPisir.DTO.ModelforList;
 using BakPisir.UI.Models;
 using BakPisir.UI.Services;
@@ -13,6 +15,7 @@ using System.Web.Mvc;
 
 namespace BakPisir.UI.Controllers
 {
+    [LogAction]
     public class UserProfileController : Controller
     {
         UserService userService = new UserService();
@@ -32,10 +35,10 @@ namespace BakPisir.UI.Controllers
 
 
        [HttpGet]
-        public ActionResult UserProfile()
+        public ActionResult UserProfile(int id)
         {
           
-            var user = userService.GetSingleUser(1);
+            var user = userService.GetSingleUser(id);
             return View(user);
         }
 
@@ -51,9 +54,9 @@ namespace BakPisir.UI.Controllers
 
         //session bilgiisnden user id si alınacak ve parametre olarak verilecek
         [HttpGet]
-        public ActionResult RecipeListByUser()
+        public ActionResult RecipeListByUser(int id)
         {
-            var recipes = recipeService.GetRecipeByUserId(1, pageNumber, pageSize);
+            var recipes = recipeService.GetRecipeByUserId(id, pageNumber, pageSize);
 
             return View(recipes);
         }
@@ -61,8 +64,9 @@ namespace BakPisir.UI.Controllers
         [HttpGet]
         public JsonResult getNextRecipeListByUser(int number)
         {
-            // seesiondan userId gelecek.
-            RecipeListModel recipes = recipeService.GetRecipeByUserId(1, number, pageSize);
+            int id = SessionHelper.LoggedUserInfo.userId; 
+
+            RecipeListModel recipes = recipeService.GetRecipeByUserId(id, number, pageSize);
             return Json(recipes, JsonRequestBehavior.AllowGet);
         }
 
@@ -103,9 +107,9 @@ namespace BakPisir.UI.Controllers
         [HttpPost]
         public string UpdateRecipe(RecipeStepSubCategoryModelView recipeStepSubCategoryModelView)
         {
-            //int id = SessionHelper.LoggedUserInfo.userId; ileryene zamanda giriş yapan id yi yükle
-            int recipeId = recipeStepSubCategoryModelView.recipeDto.recipeId;            
-          
+            int id = SessionHelper.LoggedUserInfo.userId; 
+            int recipeId = recipeStepSubCategoryModelView.recipeDto.recipeId;
+            recipeStepSubCategoryModelView.recipeDto.userId = id;
 
             recipeService.UpdateRecipe(recipeId, recipeStepSubCategoryModelView.recipeDto);
             if (recipeStepSubCategoryModelView.ImageFile[0] != null)
@@ -166,8 +170,7 @@ namespace BakPisir.UI.Controllers
             var stepDtoListJson = Request.Form["stepDto"];
             var stepDtoList = JsonConvert.DeserializeObject<List<StepDto>>(stepDtoListJson);
 
-            //int id = SessionHelper.LoggedUserInfo.userId; ileryene zamanda giriş yapan id yi yükle
-            recipeStepSubCategoryModelView.recipeDto.userId = 1;
+            recipeStepSubCategoryModelView.recipeDto.userId = SessionHelper.LoggedUserInfo.userId;
             returnRecipeId = recipeService.AddRecipe(recipeStepSubCategoryModelView.recipeDto);
 
 

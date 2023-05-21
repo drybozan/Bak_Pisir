@@ -223,11 +223,32 @@
                 </a>
             </li>
 
-            @for (int i = 1; i <= 3; i++)
+            @if (Model.Pages == 1)
             {
                 <li class="page-item">
-                    <a class="page-link" onclick="getNextRecipeForUser(@i)">@i</a>
+                    <a class="page-link" onclick="getNextRecipeForUser(1)">1</a>
                 </li>
+
+            }
+            else if (Model.Pages == 2)
+            {
+                for (int i = 1; i <= 2; i++)
+                {
+                    <li class="page-item">
+                        <a class="page-link" onclick="getNextRecipeForUser(@i)">@i</a>
+                    </li>
+                }
+
+            }
+            else if (Model.Pages == 3)
+            {
+                for (int i = 1; i <= 3; i++)
+                {
+                    <li class="page-item">
+                        <a class="page-link" onclick="getNextRecipeForUser(@i)">@i</a>
+                    </li>
+                }
+
             }
 
             <li class="page-item last">
@@ -251,118 +272,118 @@
             type: 'GET',
             success: function (data) {
                 var $myHtml = $('<div>');
-             if (data.Items.length % 3 == 0) {
-                    for ( i = 0; i < data.Items.length; i=i+3){
+                if (data.Items.length % 3 == 0) {
+                    for (i = 0; i < data.Items.length; i = i + 3) {
                         $myHtml.append('<div class="row">\
                                 <div class="col-md-6 col-lg-4 mb-3">\
                                     <div class="card h-100">\
-                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i].recipeImageUrl+'" alt="Card image cap" height="200" weight="300" />\
+                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i].recipeImageUrl + '" alt="Card image cap" height="200" weight="300" />\
                                      <div class="card-body">\
                                          <h4 class="card-title">' + data.Items[i].recipeName + '</h4>\
                                           <h6>Pişirme Süresi:' + data.Items[i].cookingTime + '</h6>\
                                                  <p class="card-text">İçindekiler:' + data.Items[i].ingredients + '</p>\
-                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
+                                                 <a href="/UserHomePage/RecipeDetail/'+ data.Items[i].recipeId + '" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
                                  <div class="col-md-6 col-lg-4 mb-3">\
                                     <div class="card h-100">\
-                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i+1].recipeImageUrl +'" alt="Card image cap" height="200" weight="300" />\
+                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i + 1].recipeImageUrl + '" alt="Card image cap" height="200" weight="300" />\
                                      <div class="card-body">\
                                          <h4 class="card-title">' + data.Items[i + 1].recipeName + '</h4>\
                                           <h6>Pişirme Süresi:' + data.Items[i + 1].cookingTime + '</h6>\
                                                  <p class="card-text">İçindekiler:' + data.Items[i + 1].ingredients + '</p>\
-                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
+                                                 <a href="/UserHomePage/RecipeDetail/'+ data.Items[i + 1].recipeId + '" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
                                   <div class="col-md-6 col-lg-4 mb-3">\
                                    <div class="card h-100">\
-                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i+2].recipeImageUrl +'" alt="Card image cap" height="200" weight="300" />\
+                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i + 2].recipeImageUrl + '" alt="Card image cap" height="200" weight="300" />\
                                 <div class="card-body">\
                                  <h4 class="card-title">' + data.Items[i + 2].recipeName + ' </h4>\
                                   <h6>Pişirme Süresi:' + data.Items[i + 2].cookingTime + '</h6>\
                                     <p class="card-text">İçindekiler:' + data.Items[i + 2].ingredients + '</p>\
-                                         <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div></div>')
-                     }
+                                         <a href="/UserHomePage/RecipeDetail/'+ data.Items[i + 2].recipeId + '" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div></div>')
+                    }
                 }
-             if (data.Items.length % 3 == 1) {
-                    for (i = 0; i < (data.Items.length-1); i = i + 3) {
+                if (data.Items.length % 3 == 1) {
+                    for (i = 0; i < (data.Items.length - 1); i = i + 3) {
                         $myHtml.append('<div class="row">\
                                 <div class="col-md-6 col-lg-4 mb-3">\
                                     <div class="card h-100">\
-                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i].recipeImageUrl +'" alt="Card image cap" height="200" weight="300" />\
+                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i].recipeImageUrl + '" alt="Card image cap" height="200" weight="300" />\
                                      <div class="card-body">\
                                          <h4 class="card-title">' + data.Items[i].recipeName + '</h4>\
                                           <h6>Pişirme Süresi:' + data.Items[i].cookingTime + '</h6>\
                                                  <p class="card-text">İçindekiler:' + data.Items[i].ingredients + '</p>\
-                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
+                                                 <a href="/UserHomePage/RecipeDetail/'+ data.Items[i].recipeId + '" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
                                  <div class="col-md-6 col-lg-4 mb-3">\
                                     <div class="card h-100">\
-                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i+1].recipeImageUrl +'" alt="Card image cap" height="200" weight="300" />\
+                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i + 1].recipeImageUrl + '" alt="Card image cap" height="200" weight="300" />\
                                      <div class="card-body">\
-                                         <h4 class="card-title">' + data.Items[i+1].recipeName + '</h4>\
-                                          <h6>Pişirme Süresi:' + data.Items[i+1].cookingTime + '</h6>\
-                                                 <p class="card-text">İçindekiler:' + data.Items[i+1].ingredients + '</p>\
-                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
+                                         <h4 class="card-title">' + data.Items[i + 1].recipeName + '</h4>\
+                                          <h6>Pişirme Süresi:' + data.Items[i + 1].cookingTime + '</h6>\
+                                                 <p class="card-text">İçindekiler:' + data.Items[i + 1].ingredients + '</p>\
+                                                 <a href="/UserHomePage/RecipeDetail/'+ data.Items[i + 1].recipeId + '" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
                                   <div class="col-md-6 col-lg-4 mb-3">\
                                    <div class="card h-100">\
-                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i+2].recipeImageUrl +'" alt="Card image cap" height="200" weight="300" />\
+                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i + 2].recipeImageUrl + '" alt="Card image cap" height="200" weight="300" />\
                                 <div class="card-body">\
                                  <h4 class="card-title">' + data.Items[i + 2].recipeName + ' </h4>\
                                   <h6>Pişirme Süresi:' + data.Items[i + 2].cookingTime + '</h6>\
                                     <p class="card-text">İçindekiler:' + data.Items[i + 2].ingredients + '</p>\
-                                         <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div></div>')
+                                         <a href="/UserHomePage/RecipeDetail/'+ data.Items[i + 2].recipeId + '" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div></div>')
                     }
                     $myHtml.append('<div class="col-md-6 col-lg-4 mb-3" >\
                             <div class="card h-100">\
-                                <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[(data.Items.length)-1].recipeImageUrl +'" alt="Card image cap" height="300" weight="300" />\
-                                        <div class="card-body">\
-                                        <h4 class="card-title">' + data.Items[(data.Items.length)-1].recipeName + '</h4>\
-                                             <h6>Pişirme Süresi:' + data.Items[(data.Items.length)-1].cookingTime + '</h6>\
-                                              <p class="card-text">İçindekiler:' + data.Items[(data.Items.length)-1].ingredients + '</p>\
-                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>')
-
-                }
-             if (data.Items.length % 3 == 2) {
-                    for (i = 0; i <(data.Items.length-2); i = i + 3) {
-                        $myHtml.append('<div class="row">\
-                                <div class="col-md-6 col-lg-4 mb-3">\
-                                    <div class="card h-100">\
-                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i].recipeImageUrl +'" alt="Card image cap" height="200" weight="300" />\
-                                     <div class="card-body">\
-                                         <h4 class="card-title">' + data.Items[i].recipeName + '</h4>\
-                                          <h6>Pişirme Süresi:' + data.Items[i].cookingTime + '</h6>\
-                                                 <p class="card-text">İçindekiler:' + data.Items[i].ingredients + '</p>\
-                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
-                                 <div class="col-md-6 col-lg-4 mb-3">\
-                                    <div class="card h-100">\
-                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i+1].recipeImageUrl +'" alt="Card image cap" height="200" weight="300" />\
-                                     <div class="card-body">\
-                                         <h4 class="card-title">' + data.Items[i + 1].recipeName + '</h4>\
-                                          <h6>Pişirme Süresi:' + data.Items[i + 1].cookingTime + '</h6>\
-                                                 <p class="card-text">İçindekiler:' + data.Items[i + 1].ingredients + '</p>\
-                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
-                                  <div class="col-md-6 col-lg-4 mb-3">\
-                                   <div class="card h-100">\
-                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i+2].recipeImageUrl +'" alt="Card image cap" height="200" weight="300" />\
-                                <div class="card-body">\
-                                 <h4 class="card-title">' + data.Items[i + 2].recipeName + ' </h4>\
-                                  <h6>Pişirme Süresi:' + data.Items[i + 2].cookingTime + '</h6>\
-                                    <p class="card-text">İçindekiler:' + data.Items[i + 2].ingredients + '</p>\
-                                         <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div></div>')
-                    }
-                    $myHtml.append('<div class="row">\
-                                        <div class="col-md-6 col-lg-4 mb-3" >\
-                                         <div class="card h-100">\
-                                             <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[(data.Items.length) - 1].recipeImageUrl +'" alt="Card image cap" height="200" weight="300" />\
+                                <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[(data.Items.length) - 1].recipeImageUrl + '" alt="Card image cap" height="300" weight="300" />\
                                         <div class="card-body">\
                                         <h4 class="card-title">' + data.Items[(data.Items.length) - 1].recipeName + '</h4>\
                                              <h6>Pişirme Süresi:' + data.Items[(data.Items.length) - 1].cookingTime + '</h6>\
                                               <p class="card-text">İçindekiler:' + data.Items[(data.Items.length) - 1].ingredients + '</p>\
-                                                 <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
+                                                 <a href="/UserHomePage/RecipeDetail/'+ data.Items[(data.Items.length) - 1].recipeId + '" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>')
+
+                }
+                if (data.Items.length % 3 == 2) {
+                    for (i = 0; i < (data.Items.length - 2); i = i + 3) {
+                        $myHtml.append('<div class="row">\
+                                <div class="col-md-6 col-lg-4 mb-3">\
+                                    <div class="card h-100">\
+                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i].recipeImageUrl + '" alt="Card image cap" height="200" weight="300" />\
+                                     <div class="card-body">\
+                                         <h4 class="card-title">' + data.Items[i].recipeName + '</h4>\
+                                          <h6>Pişirme Süresi:' + data.Items[i].cookingTime + '</h6>\
+                                                 <p class="card-text">İçindekiler:' + data.Items[i].ingredients + '</p>\
+                                                 <a href="/UserHomePage/RecipeDetail/'+ data.Items[i].recipeId + '" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
+                                 <div class="col-md-6 col-lg-4 mb-3">\
+                                    <div class="card h-100">\
+                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i + 1].recipeImageUrl + '" alt="Card image cap" height="200" weight="300" />\
+                                     <div class="card-body">\
+                                         <h4 class="card-title">' + data.Items[i + 1].recipeName + '</h4>\
+                                          <h6>Pişirme Süresi:' + data.Items[i + 1].cookingTime + '</h6>\
+                                                 <p class="card-text">İçindekiler:' + data.Items[i + 1].ingredients + '</p>\
+                                                 <a href="/UserHomePage/RecipeDetail/'+ data.Items[i + 1].recipeId + '" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
+                                  <div class="col-md-6 col-lg-4 mb-3">\
+                                   <div class="card h-100">\
+                                  <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[i + 2].recipeImageUrl + '" alt="Card image cap" height="200" weight="300" />\
+                                <div class="card-body">\
+                                 <h4 class="card-title">' + data.Items[i + 2].recipeName + ' </h4>\
+                                  <h6>Pişirme Süresi:' + data.Items[i + 2].cookingTime + '</h6>\
+                                    <p class="card-text">İçindekiler:' + data.Items[i + 2].ingredients + '</p>\
+                                         <a href="/UserHomePage/RecipeDetail/'+ data.Items[i + 2].recipeId + '" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div></div>')
+                    }
+                    $myHtml.append('<div class="row">\
+                                        <div class="col-md-6 col-lg-4 mb-3" >\
+                                         <div class="card h-100">\
+                                             <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[(data.Items.length) - 1].recipeImageUrl + '" alt="Card image cap" height="200" weight="300" />\
+                                        <div class="card-body">\
+                                        <h4 class="card-title">' + data.Items[(data.Items.length) - 1].recipeName + '</h4>\
+                                             <h6>Pişirme Süresi:' + data.Items[(data.Items.length) - 1].cookingTime + '</h6>\
+                                              <p class="card-text">İçindekiler:' + data.Items[(data.Items.length) - 1].ingredients + '</p>\
+                                                 <a href="/UserHomePage/RecipeDetail/'+ data.Items[(data.Items.length) - 1].recipeId + '" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div>\
                                            <div class="col-md-6 col-lg-4 mb-3" >\
                                          <div class="card h-100">\
-                                             <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[(data.Items.length) - 2].recipeImageUrl +'" alt="Card image cap" height="200" weight="300" />\
+                                             <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/'+ data.Items[(data.Items.length) - 2].recipeImageUrl + '" alt="Card image cap" height="200" weight="300" />\
                                         <div class="card-body">\
                                         <h4 class="card-title">' + data.Items[(data.Items.length) - 2].recipeName + '</h4>\
                                              <h6>Pişirme Süresi:' + data.Items[(data.Items.length) - 2].cookingTime + '</h6>\
                                               <p class="card-text">İçindekiler:' + data.Items[(data.Items.length) - 2].ingredients + '</p>\
-                                <a href="javascript:void(0)" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div ></div>')
+                                <a href="/UserHomePage/RecipeDetail/'+ data.Items[(data.Items.length) - 2].recipeId + '" class="btn btn-outline-primary">Tarifi Dene</a></div></div></div ></div>')
                 }
 
 
@@ -375,15 +396,39 @@
                             .append($('<i>').addClass('tf-icon bx bx-chevrons-left').text('ÖNCEKİ')))
                         .appendTo($ul);
 
+                         
 
-                for (i = 1; i <= 3; i++) {
+                if (data.Pages == 1) {
+
                     $('<li>').addClass('page-item')
                         .append($('<a>').addClass('page-link').text(i)
                             .on('click', function () {
                                 getNextRecipeForUser($(this).text());
                             }))
                         .appendTo($ul);
+
+                } else if (data.Pages == 2) {
+                    for (i = 1; i <= 2; i++) {
+                        $('<li>').addClass('page-item')
+                            .append($('<a>').addClass('page-link').text(i)
+                                .on('click', function () {
+                                    getNextRecipeForUser($(this).text());
+                                }))
+                            .appendTo($ul);
+                    }
+
+                } else if (data.Pages > 3) {
+                    for (i = 1; i <= 3; i++) {
+                        $('<li>').addClass('page-item')
+                            .append($('<a>').addClass('page-link').text(i)
+                                .on('click', function () {
+                                    getNextRecipeForUser($(this).text());
+                                }))
+                            .appendTo($ul);
+                    }
+
                 }
+
 
                     $('<li>').addClass('page-item last')
                         .append($('<a>').addClass('page-link')
@@ -397,41 +442,108 @@
 
                 $("#listRecipeForUser2").html($myHtml);
 
-            $(document).ready(function () {
-            var currentPage = parseInt(data.Index);
-            var totalPages = parseInt(data.Pages);
+        //    $(document).ready(function () {
+        //    var currentPage = parseInt(data.Index);
+        //    var totalPages = parseInt(data.Pages);
 
-            $('.first a').on('click', function () {
-                if (currentPage > 1) {
-                    currentPage--;
-                    updatePageNumbers();
-                }
-            });
+        //    $('.first a').on('click', function () {
+        //        if (currentPage > 1) {
+        //            currentPage--;
+        //            updatePageNumbers();
+        //        }
+        //    });
 
-            $('.last a').on('click', function () {
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    updatePageNumbers();
-                }
-            });
+        //    $('.last a').on('click', function () {
+        //        if (currentPage < totalPages) {
+        //            currentPage++;
+        //            updatePageNumbers();
+        //        }
+        //    });
 
-            $('.page-link').on('click', function () {
-                event.preventDefault();
-                currentPage = parseInt($(this).text());
+        //    $('.page-link').on('click', function () {
+        //        event.preventDefault();
+        //        currentPage = parseInt($(this).text());
 
 
-            });
+        //    });
 
-            function updatePageNumbers() {
-                $('.page-link').each(function () {
-                    var pageNum = parseInt($.trim($(this).text()));
-                    if (!isNaN(pageNum)) {
-                        $(this).text(pageNum + currentPage - 1);
+        //    function updatePageNumbers() {
+        //        $('.page-link').each(function () {
+        //            var pageNum = parseInt($.trim($(this).text()));
+        //            if (!isNaN(pageNum)) {
+        //                $(this).text(pageNum + currentPage - 1);
+        //            }
+        //        });
+        //    }
+        //});
+                $(document).ready(function () {
+                    var currentPage = parseInt(data.Index, 10);// 10'luk sayı sistemi kullanıldığını belirtiyoruz
+                    var totalPages = parseInt(data.Pages);
+                    $('<div>').text(currentPage + 1 + '. sayfayı görüntülüyorsunuz.')
+                        .css('margin-left', '700px')
+                        .appendTo($myHtml);
+
+                    // Son tıklanan sayfa butonunu vurgula
+                    $('.page-link').on('click', function () {
+                        $('.active').removeClass('active');
+                        $(this).addClass('active');
+                    });
+
+                    $('.first a').on('click', function () {
+
+                        if (currentPage > 0) {
+                            currentPage--;
+                            updatePageNumbersDecrease();
+
+                        }
+                    });
+
+                    $('.last a').on('click', function () {
+
+                        if (currentPage < totalPages) {
+                            currentPage++;
+                            updatePageNumbersIncrease();
+                        }
+                    });
+
+
+                    function updatePageNumbersIncrease() {
+                        $('.page-link').each(function () {
+                            var pageNum = parseInt($.trim($(this).text()));
+                            if (!isNaN(pageNum)) {
+                                $(this).text(pageNum + currentPage);
+                                if (pageNum + currentPage > totalPages) // sayfa numarası sınırı aşıyorsa
+                                {
+                                    $('.last').addClass('d-none'); // sonraki butonunu gizle
+                                    $(this).parent().addClass('d-none'); // gizle
+                                } else {
+                                    $('.last').removeClass('d-none'); // sonraki butonunu göster
+                                    $(this).parent().removeClass('d-none'); // aksi halde göster
+                                }
+                            }
+                        });
                     }
-                });
-            }
-        });
 
+                    updatePageNumbersIncrease(); // sayfaların ilk yüklenişinde de güncelle
+
+
+                    function updatePageNumbersDecrease() {
+                        $('.page-link').each(function () {
+                            var pageNum = parseInt($.trim($(this).text()) - 1);
+                            if (!isNaN(pageNum)) {
+                                $(this).text(pageNum - 1);
+                                if (pageNum - 2 < 0)// sayfa numarası sınırı aşıyorsa
+                                {
+                                    $(this).parent().addClass('d-none'); // gizle
+                                } else {
+                                    $(this).parent().removeClass('d-none'); // aksi halde göster
+                                }
+                            }
+                        });
+                    }
+
+                    // updatePageNumbersDecrease();
+                });
 
 
              },

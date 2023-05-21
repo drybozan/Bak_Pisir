@@ -5,226 +5,145 @@
 
 @model BakPisir.DTO.ModelforList.RecipeListModel
 
+@using BakPisir.CORE.Helper
 
-@{ Html.RenderAction("NavbarForUser", new { id = @Model.Items[0].userId });}
-<div class="container " id="listRecipeListByUser">
-    @if (Model.Items.Count % 3 == 0)
-    {
-        for (int i = 0; i < Model.Items.Count; i = i + 3)
+@{ Html.RenderAction("NavbarForUser", new { id = SessionHelper.LoggedUserInfo.userId }); }
+
+@if (Model.Count != 0)
+{
+    <div class="container " id="listRecipeListByUser">
+        @if (Model.Items.Count % 3 == 0)
         {
-            <div class="row">
-                <div class="col-md-6 col-lg-4 mb-3">
-                    <div class="card h-100">
-                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i].recipeImageUrl" alt="Card image cap" height="200" width="700" />
-                        <div class="card-body">
-                            <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i].recipeName) </h4>
-                            <h6>@Html.DisplayNameFor(model => model.Items[i].cookingTime):@Html.DisplayFor(model => model.Items[i].cookingTime)</h6>
-                            <p class="card-text">
-                                @Html.DisplayNameFor(model => model.Items[i].ingredients): @Html.DisplayFor(model => model.Items[i].ingredients)
-                            </p>
-                            <div class="row">
-                                <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[i].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
-                                <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[i].recipeId)" class="btn btn-outline-warning">Güncelle</a>
-                                <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[i].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
+            for (int i = 0; i < Model.Items.Count; i = i + 3)
+            {
+                <div class="row">
+                    <div class="col-md-6 col-lg-4 mb-3">
+                        <div class="card h-100">
+                            <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i].recipeImageUrl" alt="Card image cap" height="200" width="700" />
+                            <div class="card-body">
+                                <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i].recipeName) </h4>
+                                <h6>@Html.DisplayNameFor(model => model.Items[i].cookingTime):@Html.DisplayFor(model => model.Items[i].cookingTime)</h6>
+                                <p class="card-text">
+                                    @Html.DisplayNameFor(model => model.Items[i].ingredients): @Html.DisplayFor(model => model.Items[i].ingredients)
+                                </p>
+                                <div class="row">
+                                    <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[i].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
+                                    <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[i].recipeId)" class="btn btn-outline-warning">Güncelle</a>
+                                    <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[i].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
 
-                            </div>
+                                </div>
 
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4 mb-3">
-                    <div class="card h-100">
-                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i+1].recipeImageUrl" alt="Card image cap" height="200" width="700" />
-                        <div class="card-body">
-                            <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i + 1].recipeName) </h4>
-                            <h6>@Html.DisplayNameFor(model => model.Items[i + 1].cookingTime):@Html.DisplayFor(model => model.Items[i + 1].cookingTime)</h6>
-                            <p class="card-text">
-                                @Html.DisplayNameFor(model => model.Items[i + 1].ingredients): @Html.DisplayFor(model => model.Items[i + 1].ingredients)
-                            </p>
-                            <div class="row">
-                                <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[i+1].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
-                                <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[i+1].recipeId)" class="btn btn-outline-warning">Güncelle</a>
-                                <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[i+1].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-6 col-lg-4 mb-3">
-                    <div class="card h-100">
-                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i+2].recipeImageUrl" alt="Card image cap" height="200" width="700" />
-                        <div class="card-body">
-                            <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i + 2].recipeName) </h4>
-                            <h6>@Html.DisplayNameFor(model => model.Items[i + 2].cookingTime):@Html.DisplayFor(model => model.Items[i + 2].cookingTime)</h6>
-
-                            <p class="card-text">
-                                @Html.DisplayNameFor(model => model.Items[i + 2].ingredients): @Html.DisplayFor(model => model.Items[i + 2].ingredients)
-                            </p>
-                            <div class="row">
-                                <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[i+2].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
-                                <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[i+2].recipeId)" class="btn btn-outline-warning">Güncelle</a>
-                                <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[i+2].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
+                    <div class="col-md-6 col-lg-4 mb-3">
+                        <div class="card h-100">
+                            <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i + 1].recipeImageUrl" alt="Card image cap" height="200" width="700" />
+                            <div class="card-body">
+                                <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i + 1].recipeName) </h4>
+                                <h6>@Html.DisplayNameFor(model => model.Items[i + 1].cookingTime):@Html.DisplayFor(model => model.Items[i + 1].cookingTime)</h6>
+                                <p class="card-text">
+                                    @Html.DisplayNameFor(model => model.Items[i + 1].ingredients): @Html.DisplayFor(model => model.Items[i + 1].ingredients)
+                                </p>
+                                <div class="row">
+                                    <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[i + 1].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
+                                    <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[i + 1].recipeId)" class="btn btn-outline-warning">Güncelle</a>
+                                    <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[i + 1].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-            </div>
+                    <div class="col-md-6 col-lg-4 mb-3">
+                        <div class="card h-100">
+                            <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i + 2].recipeImageUrl" alt="Card image cap" height="200" width="700" />
+                            <div class="card-body">
+                                <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i + 2].recipeName) </h4>
+                                <h6>@Html.DisplayNameFor(model => model.Items[i + 2].cookingTime):@Html.DisplayFor(model => model.Items[i + 2].cookingTime)</h6>
 
-        }
-    }
-
-    @if ((Model.Items.Count % 3) == 1)
-    {
-        for (int i = 0; i < (Model.Items.Count - 1); i = i + 3)
-        {
-
-            <div class="row">
-                <div class="col-md-6 col-lg-4 mb-3">
-                    <div class="card h-100">
-                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i].recipeImageUrl" alt="Card image cap" height="200" width="700" />
-                        <div class="card-body">
-                            <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i].recipeName) </h4>
-                            <h6>@Html.DisplayNameFor(model => model.Items[i].cookingTime):@Html.DisplayFor(model => model.Items[i].cookingTime)</h6>
-                            <p class="card-text">
-                                @Html.DisplayNameFor(model => model.Items[i].ingredients): @Html.DisplayFor(model => model.Items[i].ingredients)
-                            </p>
-                            <div class="row">
-                                <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[i].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
-                                <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[i].recipeId)" class="btn btn-outline-warning">Güncelle</a>
-                                <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[i].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
+                                <p class="card-text">
+                                    @Html.DisplayNameFor(model => model.Items[i + 2].ingredients): @Html.DisplayFor(model => model.Items[i + 2].ingredients)
+                                </p>
+                                <div class="row">
+                                    <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[i + 2].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
+                                    <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[i + 2].recipeId)" class="btn btn-outline-warning">Güncelle</a>
+                                    <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[i + 2].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
 
-                <div class="col-md-6 col-lg-4 mb-3">
-                    <div class="card h-100">
-                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i + 1].recipeImageUrl" alt="Card image cap" height="200" width="700" />
-                        <div class="card-body">
-                            <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i + 1].recipeName) </h4>
-                            <h6>@Html.DisplayNameFor(model => model.Items[i + 1].cookingTime):@Html.DisplayFor(model => model.Items[i + 1].cookingTime)</h6>
-                            <p class="card-text">
-                                @Html.DisplayNameFor(model => model.Items[i + 1].ingredients): @Html.DisplayFor(model => model.Items[i + 1].ingredients)
-                            </p>
-                            <div class="row">
-                                <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[i + 1].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
-                                <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[i + 1].recipeId)" class="btn btn-outline-warning">Güncelle</a>
-                                <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[i + 1].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4 mb-3">
-                    <div class="card h-100">
-                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i + 2].recipeImageUrl" alt="Card image cap" height="200" width="700" />
-                        <div class="card-body">
-                            <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i + 2].recipeName) </h4>
-                            <h6>@Html.DisplayNameFor(model => model.Items[i + 2].cookingTime):@Html.DisplayFor(model => model.Items[i + 2].cookingTime)</h6>
-
-                            <p class="card-text">
-                                @Html.DisplayNameFor(model => model.Items[i + 2].ingredients): @Html.DisplayFor(model => model.Items[i + 2].ingredients)
-                            </p>
-                            <div class="row">
-                                <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[i + 2].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
-                                <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[i + 2].recipeId)" class="btn btn-outline-warning">Güncelle</a>
-                                <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[i + 2].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            }
         }
 
-        <div class="col-md-6 col-lg-4 mb-3">
-            <div class="card h-15">
-                <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[(Model.Items.Count) - 1].recipeImageUrl" alt="Card image cap" height="200" width="700" />
-                <div class="card-body">
-                    <h4 class="card-title"> @Html.DisplayFor(model => model.Items[(Model.Items.Count) - 1].recipeName) </h4>
-                    <h6>@Html.DisplayNameFor(model => model.Items[(Model.Items.Count) - 1].cookingTime):@Html.DisplayFor(model => model.Items[(Model.Items.Count) - 1].cookingTime)</h6>
-
-                    <p class="card-text">
-                        @Html.DisplayNameFor(model => model.Items[(Model.Items.Count) - 1].ingredients): @Html.DisplayFor(model => model.Items[(Model.Items.Count) - 1].ingredients)
-                    </p>
-                    <div class="row">
-                        <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[(Model.Items.Count) - 1].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
-                        <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[(Model.Items.Count) - 1].recipeId)" class="btn btn-outline-warning">Güncelle</a>
-                        <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[(Model.Items.Count) - 1].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-
-    @if ((Model.Items.Count % 3) == 2)
-    {
-        for (int i = 0; i < (Model.Items.Count - 2); i = i + 3)
+        @if ((Model.Items.Count % 3) == 1)
         {
-            <div class="row">
-                <div class="col-md-6 col-lg-4 mb-3">
-                    <div class="card h-100">
-                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i].recipeImageUrl" alt="Card image cap" height="200" width="700" />
-                        <div class="card-body">
-                            <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i].recipeName) </h4>
-                            <h6>@Html.DisplayNameFor(model => model.Items[i].cookingTime):@Html.DisplayFor(model => model.Items[i].cookingTime)</h6>
-                            <p class="card-text">
-                                @Html.DisplayNameFor(model => model.Items[i].ingredients): @Html.DisplayFor(model => model.Items[i].ingredients)
-                            </p>
-                            <div class="row">
-                                <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[i].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
-                                <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[i].recipeId)" class="btn btn-outline-warning">Güncelle</a>
-                                <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[i].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
+            for (int i = 0; i < (Model.Items.Count - 1); i = i + 3)
+            {
+
+                <div class="row">
+                    <div class="col-md-6 col-lg-4 mb-3">
+                        <div class="card h-100">
+                            <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i].recipeImageUrl" alt="Card image cap" height="200" width="700" />
+                            <div class="card-body">
+                                <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i].recipeName) </h4>
+                                <h6>@Html.DisplayNameFor(model => model.Items[i].cookingTime):@Html.DisplayFor(model => model.Items[i].cookingTime)</h6>
+                                <p class="card-text">
+                                    @Html.DisplayNameFor(model => model.Items[i].ingredients): @Html.DisplayFor(model => model.Items[i].ingredients)
+                                </p>
+                                <div class="row">
+                                    <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[i].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
+                                    <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[i].recipeId)" class="btn btn-outline-warning">Güncelle</a>
+                                    <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[i].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4 mb-3">
+                        <div class="card h-100">
+                            <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i + 1].recipeImageUrl" alt="Card image cap" height="200" width="700" />
+                            <div class="card-body">
+                                <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i + 1].recipeName) </h4>
+                                <h6>@Html.DisplayNameFor(model => model.Items[i + 1].cookingTime):@Html.DisplayFor(model => model.Items[i + 1].cookingTime)</h6>
+                                <p class="card-text">
+                                    @Html.DisplayNameFor(model => model.Items[i + 1].ingredients): @Html.DisplayFor(model => model.Items[i + 1].ingredients)
+                                </p>
+                                <div class="row">
+                                    <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[i + 1].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
+                                    <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[i + 1].recipeId)" class="btn btn-outline-warning">Güncelle</a>
+                                    <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[i + 1].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4 mb-3">
+                        <div class="card h-100">
+                            <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i + 2].recipeImageUrl" alt="Card image cap" height="200" width="700" />
+                            <div class="card-body">
+                                <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i + 2].recipeName) </h4>
+                                <h6>@Html.DisplayNameFor(model => model.Items[i + 2].cookingTime):@Html.DisplayFor(model => model.Items[i + 2].cookingTime)</h6>
+
+                                <p class="card-text">
+                                    @Html.DisplayNameFor(model => model.Items[i + 2].ingredients): @Html.DisplayFor(model => model.Items[i + 2].ingredients)
+                                </p>
+                                <div class="row">
+                                    <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[i + 2].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
+                                    <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[i + 2].recipeId)" class="btn btn-outline-warning">Güncelle</a>
+                                    <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[i + 2].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            }
 
-                <div class="col-md-6 col-lg-4 mb-3">
-                    <div class="card h-100">
-                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i + 1].recipeImageUrl" alt="Card image cap" height="200" width="700" />
-                        <div class="card-body">
-                            <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i + 1].recipeName) </h4>
-                            <h6>@Html.DisplayNameFor(model => model.Items[i + 1].cookingTime):@Html.DisplayFor(model => model.Items[i + 1].cookingTime)</h6>
-                            <p class="card-text">
-                                @Html.DisplayNameFor(model => model.Items[i + 1].ingredients): @Html.DisplayFor(model => model.Items[i + 1].ingredients)
-                            </p>
-                            <div class="row">
-                                <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[i + 1].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
-                                <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[i + 1].recipeId)" class="btn btn-outline-warning">Güncelle</a>
-                                <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[i + 1].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4 mb-3">
-                    <div class="card h-100">
-                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i + 2].recipeImageUrl" alt="Card image cap" height="200" width="700" />
-                        <div class="card-body">
-                            <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i + 2].recipeName) </h4>
-                            <h6>@Html.DisplayNameFor(model => model.Items[i + 2].cookingTime):@Html.DisplayFor(model => model.Items[i + 2].cookingTime)</h6>
-
-                            <p class="card-text">
-                                @Html.DisplayNameFor(model => model.Items[i + 2].ingredients): @Html.DisplayFor(model => model.Items[i + 2].ingredients)
-                            </p>
-                            <div class="row">
-                                <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[i + 2].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
-                                <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[i + 2].recipeId)" class="btn btn-outline-warning">Güncelle</a>
-                                <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[i + 2].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        }
-
-        <div class="row">
             <div class="col-md-6 col-lg-4 mb-3">
-                <div class="card h-100">
+                <div class="card h-15">
                     <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[(Model.Items.Count) - 1].recipeImageUrl" alt="Card image cap" height="200" width="700" />
                     <div class="card-body">
                         <h4 class="card-title"> @Html.DisplayFor(model => model.Items[(Model.Items.Count) - 1].recipeName) </h4>
@@ -241,60 +160,166 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4 mb-3">
-                <div class="card h-100">
-                    <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[(Model.Items.Count) - 2].recipeImageUrl" alt="Card image cap" height="200" width="700" />
-                    <div class="card-body">
-                        <h4 class="card-title"> @Html.DisplayFor(model => model.Items[(Model.Items.Count) - 2].recipeName) </h4>
-                        <h6>@Html.DisplayNameFor(model => model.Items[(Model.Items.Count) - 2].cookingTime):@Html.DisplayFor(model => model.Items[(Model.Items.Count) - 2].cookingTime)</h6>
+        }
 
-                        <p class="card-text">
-                            @Html.DisplayNameFor(model => model.Items[(Model.Items.Count) - 2].ingredients): @Html.DisplayFor(model => model.Items[(Model.Items.Count) - 2].ingredients)
-                        </p>
-                        <div class="row">
-                            <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[(Model.Items.Count) - 2].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
-                            <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[(Model.Items.Count) - 2].recipeId)" class="btn btn-outline-warning">Güncelle</a>
-                            <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[(Model.Items.Count) - 2].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
+        @if ((Model.Items.Count % 3) == 2)
+        {
+            for (int i = 0; i < (Model.Items.Count - 2); i = i + 3)
+            {
+                <div class="row">
+                    <div class="col-md-6 col-lg-4 mb-3">
+                        <div class="card h-100">
+                            <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i].recipeImageUrl" alt="Card image cap" height="200" width="700" />
+                            <div class="card-body">
+                                <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i].recipeName) </h4>
+                                <h6>@Html.DisplayNameFor(model => model.Items[i].cookingTime):@Html.DisplayFor(model => model.Items[i].cookingTime)</h6>
+                                <p class="card-text">
+                                    @Html.DisplayNameFor(model => model.Items[i].ingredients): @Html.DisplayFor(model => model.Items[i].ingredients)
+                                </p>
+                                <div class="row">
+                                    <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[i].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
+                                    <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[i].recipeId)" class="btn btn-outline-warning">Güncelle</a>
+                                    <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[i].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4 mb-3">
+                        <div class="card h-100">
+                            <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i + 1].recipeImageUrl" alt="Card image cap" height="200" width="700" />
+                            <div class="card-body">
+                                <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i + 1].recipeName) </h4>
+                                <h6>@Html.DisplayNameFor(model => model.Items[i + 1].cookingTime):@Html.DisplayFor(model => model.Items[i + 1].cookingTime)</h6>
+                                <p class="card-text">
+                                    @Html.DisplayNameFor(model => model.Items[i + 1].ingredients): @Html.DisplayFor(model => model.Items[i + 1].ingredients)
+                                </p>
+                                <div class="row">
+                                    <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[i + 1].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
+                                    <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[i + 1].recipeId)" class="btn btn-outline-warning">Güncelle</a>
+                                    <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[i + 1].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4 mb-3">
+                        <div class="card h-100">
+                            <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[i + 2].recipeImageUrl" alt="Card image cap" height="200" width="700" />
+                            <div class="card-body">
+                                <h4 class="card-title"> @Html.DisplayFor(model => model.Items[i + 2].recipeName) </h4>
+                                <h6>@Html.DisplayNameFor(model => model.Items[i + 2].cookingTime):@Html.DisplayFor(model => model.Items[i + 2].cookingTime)</h6>
+
+                                <p class="card-text">
+                                    @Html.DisplayNameFor(model => model.Items[i + 2].ingredients): @Html.DisplayFor(model => model.Items[i + 2].ingredients)
+                                </p>
+                                <div class="row">
+                                    <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[i + 2].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
+                                    <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[i + 2].recipeId)" class="btn btn-outline-warning">Güncelle</a>
+                                    <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[i + 2].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            }
+
+            <div class="row">
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[(Model.Items.Count) - 1].recipeImageUrl" alt="Card image cap" height="200" width="700" />
+                        <div class="card-body">
+                            <h4 class="card-title"> @Html.DisplayFor(model => model.Items[(Model.Items.Count) - 1].recipeName) </h4>
+                            <h6>@Html.DisplayNameFor(model => model.Items[(Model.Items.Count) - 1].cookingTime):@Html.DisplayFor(model => model.Items[(Model.Items.Count) - 1].cookingTime)</h6>
+
+                            <p class="card-text">
+                                @Html.DisplayNameFor(model => model.Items[(Model.Items.Count) - 1].ingredients): @Html.DisplayFor(model => model.Items[(Model.Items.Count) - 1].ingredients)
+                            </p>
+                            <div class="row">
+                                <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[(Model.Items.Count) - 1].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
+                                <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[(Model.Items.Count) - 1].recipeId)" class="btn btn-outline-warning">Güncelle</a>
+                                <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[(Model.Items.Count) - 1].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="http://localhost:44355/Uploads/RecipePictures/@Model.Items[(Model.Items.Count) - 2].recipeImageUrl" alt="Card image cap" height="200" width="700" />
+                        <div class="card-body">
+                            <h4 class="card-title"> @Html.DisplayFor(model => model.Items[(Model.Items.Count) - 2].recipeName) </h4>
+                            <h6>@Html.DisplayNameFor(model => model.Items[(Model.Items.Count) - 2].cookingTime):@Html.DisplayFor(model => model.Items[(Model.Items.Count) - 2].cookingTime)</h6>
+
+                            <p class="card-text">
+                                @Html.DisplayNameFor(model => model.Items[(Model.Items.Count) - 2].ingredients): @Html.DisplayFor(model => model.Items[(Model.Items.Count) - 2].ingredients)
+                            </p>
+                            <div class="row">
+                                <a style="margin-bottom:5px" href="/UserHomePage/RecipeDetail/@Html.DisplayFor(model => model.Items[(Model.Items.Count) - 2].recipeId)" class="btn btn-outline-primary">Görüntüle</a>
+                                <a style="margin-bottom:5px" href="/UserProfile/UpdateRecipe/@Html.DisplayFor(model => model.Items[(Model.Items.Count) - 2].recipeId)" class="btn btn-outline-warning">Güncelle</a>
+                                <a style="margin-bottom:5px" onclick="deleteRecipe(@Html.DisplayFor(model => model.Items[(Model.Items.Count) - 2].recipeId)); return false; event.preventDefault();" class="btn btn-outline-danger">Sil</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        }
 
 
-    <!-- Basic Pagination -->
-    <nav aria-label="Page navigation" class="d-flex justify-content-center align-items-center mt-4 ">
-        <ul class="pagination position-absolute ">
+        <!-- Basic Pagination -->
+        <nav aria-label="Page navigation" class="d-flex justify-content-center align-items-center mt-4 ">
+            <ul class="pagination position-absolute ">
 
-            <li class="page-item first">
-                <a class="page-link">
-                    <i class="tf-icon bx bx-chevrons-left">ÖNCEKİ</i>
-                </a>
-            </li>
-
-            @for (int i = 1; i <= 3; i++)
-            {
-                <li class="page-item">
-                    <a class="page-link" onclick="getNextRecipeListByUser(@i)">@i</a>
+                <li class="page-item first">
+                    <a class="page-link">
+                        <i class="tf-icon bx bx-chevrons-left">ÖNCEKİ</i>
+                    </a>
                 </li>
-            }
 
-            <li class="page-item last">
-                <a class="page-link">
-                    <i class="tf-icon bx bx-chevrons-right">SONRAKİ</i>
-                </a>
-            </li>
+                @if (Model.Pages == 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" onclick="getNextRecipeListByUser(1)">1</a>
+                    </li>
 
-        </ul>
-    </nav>
+                }
+                else if (Model.Pages == 2)
+                {
+                    for (int i = 1; i <= 2; i++)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" onclick="getNextRecipeListByUser(@i)">@i</a>
+                        </li>
+                    }
+
+                }
+                else if (Model.Pages == 3)
+                {
+                    for (int i = 1; i <= 3; i++)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" onclick="getNextRecipeListByUser(@i)">@i</a>
+                        </li>
+                    }
+
+                }
+
+                <li class="page-item last">
+                    <a class="page-link">
+                        <i class="tf-icon bx bx-chevrons-right">SONRAKİ</i>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
 
 
 
-</div>
+    </div>
+}
 
-
-<script>
+    <script>
     function getNextRecipeListByUser(number) {
         $.ajax({
             url: '@Url.Action("getNextRecipeListByUser", "UserProfile")?number=' + number,
@@ -460,17 +485,40 @@
                     $('<li>').addClass('page-item first')
                         .append($('<a>').addClass('page-link')
                             .append($('<i>').addClass('tf-icon bx bx-chevrons-left').text('ÖNCEKİ')))
-                        .appendTo($ul);
+                    .appendTo($ul);
 
+                if (data.Pages == 1) {
 
-                for (i = 1; i <= 3; i++) {
-                    $('<li>').addClass('page-item')
-                        .append($('<a>').addClass('page-link').text(i)
-                            .on('click', function () {
-                                getNextRecipeListByUser($(this).text());
-                            }))
-                        .appendTo($ul);
+                        $('<li>').addClass('page-item')
+                            .append($('<a>').addClass('page-link').text(i)
+                                .on('click', function () {
+                                    getNextRecipeListByUser($(this).text());
+                                }))
+                            .appendTo($ul);
+
+                } else if (data.Pages == 2) {
+                    for (i = 1; i <= 2; i++) {
+                        $('<li>').addClass('page-item')
+                            .append($('<a>').addClass('page-link').text(i)
+                                .on('click', function () {
+                                    getNextRecipeListByUser($(this).text());
+                                }))
+                            .appendTo($ul);
+                    }
+
+                } else if (data.Pages > 3) {
+                    for (i = 1; i <= 3; i++) {
+                        $('<li>').addClass('page-item')
+                            .append($('<a>').addClass('page-link').text(i)
+                                .on('click', function () {
+                                    getNextRecipeListByUser($(this).text());
+                                }))
+                            .appendTo($ul);
+                    }
+
                 }
+
+
 
                     $('<li>').addClass('page-item last')
                         .append($('<a>').addClass('page-link')
@@ -484,41 +532,108 @@
 
                 $("#listRecipeListByUser").html($myHtml);
 
-            $(document).ready(function () {
-            var currentPage = parseInt(data.Index);
-            var totalPages = parseInt(data.Pages);
+        //    $(document).ready(function () {
+        //    var currentPage = parseInt(data.Index);
+        //    var totalPages = parseInt(data.Pages);
 
-            $('.first a').on('click', function () {
-                if (currentPage > 1) {
-                    currentPage--;
-                    updatePageNumbers();
-                }
-            });
+        //    $('.first a').on('click', function () {
+        //        if (currentPage > 1) {
+        //            currentPage--;
+        //            updatePageNumbers();
+        //        }
+        //    });
 
-            $('.last a').on('click', function () {
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    updatePageNumbers();
-                }
-            });
+        //    $('.last a').on('click', function () {
+        //        if (currentPage < totalPages) {
+        //            currentPage++;
+        //            updatePageNumbers();
+        //        }
+        //    });
 
-            $('.page-link').on('click', function () {
-                event.preventDefault();
-                currentPage = parseInt($(this).text());
+        //    $('.page-link').on('click', function () {
+        //        event.preventDefault();
+        //        currentPage = parseInt($(this).text());
 
 
-            });
+        //    });
 
-            function updatePageNumbers() {
-                $('.page-link').each(function () {
-                    var pageNum = parseInt($.trim($(this).text()));
-                    if (!isNaN(pageNum)) {
-                        $(this).text(pageNum + currentPage - 1);
+        //    function updatePageNumbers() {
+        //        $('.page-link').each(function () {
+        //            var pageNum = parseInt($.trim($(this).text()));
+        //            if (!isNaN(pageNum)) {
+        //                $(this).text(pageNum + currentPage - 1);
+        //            }
+        //        });
+        //    }
+        //});
+                $(document).ready(function () {
+                    var currentPage = parseInt(data.Index, 10);// 10'luk sayı sistemi kullanıldığını belirtiyoruz
+                    var totalPages = parseInt(data.Pages);
+                    $('<div>').text(currentPage + 1 + '. sayfayı görüntülüyorsunuz.')
+                        .css('margin-left', '700px')
+                        .appendTo($myHtml);
+
+                    // Son tıklanan sayfa butonunu vurgula
+                    $('.page-link').on('click', function () {
+                        $('.active').removeClass('active');
+                        $(this).addClass('active');
+                    });
+
+                    $('.first a').on('click', function () {
+
+                        if (currentPage > 0) {
+                            currentPage--;
+                            updatePageNumbersDecrease();
+
+                        }
+                    });
+
+                    $('.last a').on('click', function () {
+
+                        if (currentPage < totalPages) {
+                            currentPage++;
+                            updatePageNumbersIncrease();
+                        }
+                    });
+
+
+                    function updatePageNumbersIncrease() {
+                        $('.page-link').each(function () {
+                            var pageNum = parseInt($.trim($(this).text()));
+                            if (!isNaN(pageNum)) {
+                                $(this).text(pageNum + currentPage);
+                                if (pageNum + currentPage > totalPages) // sayfa numarası sınırı aşıyorsa
+                                {
+                                    $('.last').addClass('d-none'); // sonraki butonunu gizle
+                                    $(this).parent().addClass('d-none'); // gizle
+                                } else {
+                                    $('.last').removeClass('d-none'); // sonraki butonunu göster
+                                    $(this).parent().removeClass('d-none'); // aksi halde göster
+                                }
+                            }
+                        });
                     }
-                });
-            }
-        });
 
+                    updatePageNumbersIncrease(); // sayfaların ilk yüklenişinde de güncelle
+
+
+                    function updatePageNumbersDecrease() {
+                        $('.page-link').each(function () {
+                            var pageNum = parseInt($.trim($(this).text()) - 1);
+                            if (!isNaN(pageNum)) {
+                                $(this).text(pageNum - 1);
+                                if (pageNum - 2 < 0)// sayfa numarası sınırı aşıyorsa
+                                {
+                                    $(this).parent().addClass('d-none'); // gizle
+                                } else {
+                                    $(this).parent().removeClass('d-none'); // aksi halde göster
+                                }
+                            }
+                        });
+                    }
+
+                    // updatePageNumbersDecrease();
+                });
 
 
              },
@@ -532,46 +647,46 @@
     }
 
 
-</script>
+    </script>
 
 
-@*sil butonuna tıklandığında açılan sweatalert ekranı*@
+    @*sil butonuna tıklandığında açılan sweatalert ekranı*@
 
-<script>
-    function deleteRecipe(id) {
-        swal.fire({
-            title: "Emin misiniz?",
-            text: "Bu tarifi silmek istediğinize emin misiniz?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: 'Sil',
-            cancelButtonText: 'Vazgeç',
-            dangerMode: true,
-        })
-            .then((willDelete) => {
-                if (willDelete.isConfirmed) {
-                    $.ajax({
-                        url: "/UserProfile/DeleteRecipe",
-                        type: "POST",
-                        data: { id: id },
-                        success: function () {
-                            swal.fire("Öğe silindi!", {
-                                icon: "success",
+    <script>
+        function deleteRecipe(id) {
+            swal.fire({
+                title: "Emin misiniz?",
+                text: "Bu tarifi silmek istediğinize emin misiniz?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: 'Sil',
+                cancelButtonText: 'Vazgeç',
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete.isConfirmed) {
+                        $.ajax({
+                            url: "/UserProfile/DeleteRecipe",
+                            type: "POST",
+                            data: { id: id },
+                            success: function () {
+                                swal.fire("Öğe silindi!", {
+                                    icon: "success",
 
-                            });
-                            setTimeout(function () {
-                                location.reload(true);
-                            }, 3000); // 3000 milisaniye = 3 saniye
+                                });
+                                setTimeout(function () {
+                                    location.reload(true);
+                                }, 3000); // 3000 milisaniye = 3 saniye
 
-                        },
-                        error: function () {
-                            swal.fire("Bir hata oluştu!", {
-                                icon: "error",
-                            });
-                        }
-                    });
-                }
-            });
-    }
-</script>
+                            },
+                            error: function () {
+                                swal.fire("Bir hata oluştu!", {
+                                    icon: "error",
+                                });
+                            }
+                        });
+                    }
+                });
+        }
+    </script>
 

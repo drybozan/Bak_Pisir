@@ -23,11 +23,9 @@ namespace BakPisir.EF.Models
         public int subCategoryId { get; set; }
         public Nullable<int> categoryId { get; set; }
         public string subCategoryName { get; set; }
-        public Nullable<int> recipeId { get; set; }
         public Nullable<bool> isDelete { get; set; }
     
         public virtual CategoryTBL CategoryTBL { get; set; }
-        public virtual RecipeTBL RecipeTBL { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SubTransitionTBL> SubTransitionTBL { get; set; }
     }

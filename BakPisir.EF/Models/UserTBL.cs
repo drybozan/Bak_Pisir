@@ -24,17 +24,17 @@ namespace BakPisir.EF.Models
     
         public int userId { get; set; }
         public string name { get; set; }
+        public string surname { get; set; }
         public string mail { get; set; }
         public Nullable<System.DateTime> registrationDate { get; set; }
         public string phone { get; set; }
+        public string username { get; set; }
         public Nullable<bool> userType { get; set; }
+        public string password { get; set; }
         public string profilePictureUrl { get; set; }
         public Nullable<bool> isDelete { get; set; }
-        public string identityNumber { get; set; }
-        public string surname { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
         public Nullable<System.DateTime> birthdate { get; set; }
+        public string identityNumber { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CommentTBL> CommentTBL { get; set; }

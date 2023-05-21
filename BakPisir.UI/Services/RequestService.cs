@@ -10,12 +10,12 @@ namespace BakPisir.UI.Services
     public class RequestService
     {
         WebApiService<RequestDto> was = new WebApiService<RequestDto>();
-        WebApiService<RequestListModel> _was = new WebApiService<RequestListModel>();
+       
 
         //Bütün request tablosunu çeker.
-        public RequestListModel GetAllRequest(int page, int pageSize)
+        public List<RequestDto> GetAllRequest()
         {
-            return _was.Get("RequestApi/GetAll", page, pageSize);
+            return was.GetAll("RequestApi/GetAll");
         }
 
         //Verilen id değerine sahip request verisini çeker.
@@ -24,6 +24,8 @@ namespace BakPisir.UI.Services
             var request = was.GetId("RequestApi/Get", id);
             return request;
         }
+
+    
 
         //Verilen id değerine sahip request verisini veritabanından siler.
         public String DeleteRequest(int id)
@@ -46,7 +48,7 @@ namespace BakPisir.UI.Services
         //mail ile kayıt isteğinin onaylandığını ve şifre bildirir.
         public string SendMailPassword(string mail)
         {
-            return was.GetMailFeedback("RequestApi/SendMail", mail);
+            return was.GetMailFeedback("RequestApi/SendMailPassword", mail);
         }
 
         // kayıt isteği red edildiyse mail ile bildirilir

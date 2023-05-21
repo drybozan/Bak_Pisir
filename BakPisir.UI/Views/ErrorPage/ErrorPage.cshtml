@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "ErrorPage";
+    Layout = "~/Views/Shared/ErrorPageView.cshtml";
+}
+
+@using BakPisir.CORE.Helper
+
+
+<div class="notfound-404">
+    <div></div>
+    <h1>@Response.StatusCode</h1>
+</div>
+<h2>@ViewBag.text</h2>
+@if (SessionHelper.TokenInfo.token_type != null)
+{
+    <a href="/UserHomePage/UserHomePage">Home Page</a>
+}
+else
+{
+    <a href="/UserHomePage/UserHomePage">Home Page</a>
+}
+
+

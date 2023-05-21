@@ -23,7 +23,7 @@ namespace BakPisir.API.Services
         public string GetAllSubCategory()
         {
             //projecTo, autommaper aracı. DB varlığımı dto ya mapler.
-            var subCategories = efUnitOfWork.SubCategoryTemplate.GetAll().ProjectTo<SubCategoryDto>().ToList();
+            var subCategories = efUnitOfWork.SubCategoryTemplate.GetAll(i=>i.isDelete == false).ProjectTo<SubCategoryDto>().ToList();
             return JsonConvert.SerializeObject(subCategories);
         }
 

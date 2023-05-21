@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Log";
+    Layout = "~/Views/Shared/AdminView.cshtml";
+}
+
+@model List<BakPisir.DTO.Dtos.LogDto>
+
+
+<div class="container mt-5 ">
+    <div class="row">
+        <table class="display" id="LogList">
+            <thead>
+                <tr>
+                    <th class=" text-secondary text-xxs font-weight-bolder opacity-7">Ip Adresi</th>
+                    <th class=" text-secondary text-xxs font-weight-bolder opacity-7 ps-4"> Kullanıcı Adı</th>
+                    <th class="text-center  text-secondary text-xxs font-weight-bolder opacity-7">Aktivite</th>
+                    <th class="text-center  text-secondary text-xxs font-weight-bolder opacity-7">Aktivite Tarihi</th>
+                    <th class="text-secondary opacity-7"></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $('#LogList').DataTable({
+            ajax: '/Admin/GetLogs',
+            sAjaxDataProp: "",
+            columns: [
+                { "data": "ipAddress" },
+                { "data": "logUsername" },
+                { "data": "logActivity" },
+                {
+                    "data": "logDate",
+                    "render": function (data, type, full) {
+                        if (data != null) {
+                            var dtStart = new Date(parseInt(data.substr(6)));
+                            return dtStart.toLocaleDateString();
+                        } else {
+                            return "";
+                        }
+
+
+                    } },
+
+                { "data": "logId", "render": function (data) { return '<button id="btnDelete", class="btn btn-warning", onclick=DeleteLog(' + data + ')>Sil</button>'; } }
+            ]
+        });
+    });
+
+</script>
+
+
+<script>
+    function DeleteLog(id) {
+            $.ajax({
+                url: '@Url.Action("DeleteLog", "Admin")/' + id,
+                datatype: 'JSON',
+                type: 'POST',
+                success: function(response) {
+                    response.toString();
+                    window.location.href = "/Admin/Log/";
+                },
+                error: function() {
+                    response.toString();
+                }
+
+            });
+
+        }
+
+</script>

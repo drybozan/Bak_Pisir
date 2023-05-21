@@ -10,7 +10,7 @@ using System.Web.Http;
 namespace BakPisir.API.Controllers
 
 {
-    //[Authorize]
+   
     public class CategoryApiController : ApiController
     {
         private CategoryApiService _categoryApiService = new CategoryApiService();
@@ -29,6 +29,7 @@ namespace BakPisir.API.Controllers
             return _categoryApiService.GetCategoryById(id);
         }
 
+        [Authorize]
         [Route("api/CategoryApi/Add")]
         [HttpPost]
         public Result Post(CategoryDto newCategory)
@@ -37,6 +38,7 @@ namespace BakPisir.API.Controllers
            return _categoryApiService.AddCategory(newCategory);
         }
 
+        [Authorize]
         [Route("api/CategoryApi/Delete")]
         [HttpDelete]
         public Result Delete(int id)
@@ -45,7 +47,7 @@ namespace BakPisir.API.Controllers
             return _categoryApiService.DeleteCategory(id);
         }
 
-
+        [Authorize]
         [Route("api/CategoryApi/Update")]
         [HttpPut]
         public Result Update(int id, CategoryDto categoryDto)

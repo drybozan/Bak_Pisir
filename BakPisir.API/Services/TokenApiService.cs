@@ -33,6 +33,8 @@ namespace BakPisir.API.Services
             user.username = idt.Name;
             user.registrationDate = Convert.ToDateTime(idt.Claims.FirstOrDefault(c => c.Type == "LoggedOn").Value);
             user.userId = Convert.ToInt32(idt.Claims.FirstOrDefault(c => c.Type == "UserId").Value);
+                
+
             return JsonConvert.SerializeObject(user);
         }
     }

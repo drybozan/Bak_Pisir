@@ -29,7 +29,7 @@ namespace BakPisir.API.Token
             OAuthAuthorizationServerOptions oAuthAuthorizationServerOptions = new OAuthAuthorizationServerOptions()
             {
                 TokenEndpointPath = new PathString("/token"), //Token talebini yapacağımız dizin.
-                AccessTokenExpireTimeSpan = TimeSpan.FromHours(4), //Oluşturulacak tokenin geçerlilik zamanını ayarlıyoruz.
+                AccessTokenExpireTimeSpan = TimeSpan.FromHours(6), //Oluşturulacak tokenin geçerlilik zamanını ayarlıyoruz.
                 AllowInsecureHttp = true, //Güvensiz http portuna izin veriyoruz.
                 Provider = new ProviderAuthorization() //Sağlayıcı sınıfını belirtiyoruz.
             };

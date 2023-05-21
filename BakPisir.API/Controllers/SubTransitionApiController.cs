@@ -44,6 +44,7 @@ namespace BakPisir.API.Controllers
             return _subTransitionApiService.GetSubCategoryByRecipeId(id);
         }
 
+        [Authorize]
         [Route("api/SubTransitionApi/Add")]
         [HttpPost]
         public Result Post(SubTransitionDto newSubTransition)
@@ -52,6 +53,7 @@ namespace BakPisir.API.Controllers
             return _subTransitionApiService.AddSubTransition(newSubTransition);
         }
 
+        [Authorize]
         [Route("api/SubTransitionApi/Delete")]
         [HttpDelete]
         public Result Delete(int id)
@@ -60,7 +62,7 @@ namespace BakPisir.API.Controllers
             return _subTransitionApiService.DeleteSubTransition(id);
         }
 
-
+        [Authorize]
         [Route("api/SubTransitionApi/Update")]
         [HttpPut]
         public Result Update(int id, SubTransitionDto subTransitionDto)

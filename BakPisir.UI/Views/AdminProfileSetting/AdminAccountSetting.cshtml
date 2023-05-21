@@ -6,7 +6,7 @@
     <div class="card mb-4">
         <h5 class="card-header">Hesap Ayarları</h5>
         <!-- Account -->
-        @using (Html.BeginForm("AccountSetting", "UserProfileSetting", FormMethod.Post, new { id = "userForm" }))
+        @using (Html.BeginForm("AccountSetting", "AdminProfileSetting", FormMethod.Post, new { id = "userForm" }))
         {
 
             <div class="card-body">
@@ -19,12 +19,16 @@
                         @(Html.EMailControl(m => m.userDto.mail))
                     </div>
 
-                    <div class="mb-3 col-md-6">
-                        @(Html.PasswordControlClassic(m => m.oldPassword, new { placeholder = "Eski Şifrenizi Giriniz", @id = "oldPw", autocomplete = "off" }))
-                        <div id="errorContainer1" style="color: red;"></div> <!-- Hata mesajının gösterileceği alan -->
+                   
+                        <div class="mb-3 col-md-6">
+                            @(Html.PasswordControlClassic(m => m.oldPassword, new { placeholder = "Eski Şifrenizi Giriniz", @id = "oldPw", autocomplete = "off" }))
+                            <div id="errorContainer1" style="color: red;"></div> <!-- Hata mesajının gösterileceği alan -->
 
 
-                    </div><br />
+                        </div><br />
+
+
+
                     <div class="mb-3 col-md-6">
                         @(Html.PasswordControlClassic(m => m.newPassword1, new { placeholder = "Yeni Şifrenizi Giriniz", @id = "newPw1", autocomplete = "off" }))
                     </div>
@@ -46,6 +50,7 @@
 
                 <div class="mt-2">
                     <button type="submit" class="btn btn-success me-2">KAYDET</button>
+
                     <button type="reset" class="btn btn-outline-warning">VAZGEÇ</button>
                 </div>
 
@@ -53,11 +58,13 @@
         }
         <!-- /Account -->
     </div>
+
+
+
     <script>
         $(function () {
             $("#userForm").submit(function (e) {
                 e.preventDefault();
-
                 var oldPassword = document.getElementById("oldPw").value;
                 if (oldPassword === "") {
                     $('#errorContainer1').text('Şifrenizi giriniz.'); // Hata mesajını göster
@@ -65,6 +72,7 @@
                 } else {
                     $('#errorContainer1').empty(); // Hata mesajını temizle
                 }
+                           
 
                 var str = $('#newPw1').val();
                 var str2 = $('#newPw2').val();
@@ -76,7 +84,7 @@
                         processData: false,
                         contentType: false,
                         success: function (response) {
-                            Swal.fire(response);
+                            Swal.fire(  response );
                             setTimeout(function () {
                                 location.reload(true);
                             }, 3000); // 3000 milisaniye = 3 saniye
@@ -88,8 +96,7 @@
                     });
                 }
                 else {
-                    Swal.fire('Hata',
-                        'Girdiğiniz şifreler uyuşmuyor !!', 'error');
+                    Swal.fire('Hata',  'Girdiğiniz şifreler uyuşmuyor !!', 'error');
                 }
             });
         });

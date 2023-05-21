@@ -23,8 +23,7 @@ namespace BakPisir.DTO.MappingProfiles
                 .ForMember(d => d.isDelete, o => o.MapFrom(s => s.isDelete))
                 .ForPath(d => d.subCategory.subCategoryId, opt => opt.MapFrom(s => s.SubCategoryTBL.subCategoryId))
                 .ForPath(d => d.subCategory.subCategoryName, opt => opt.MapFrom(s => s.SubCategoryTBL.subCategoryName))
-                .ForPath(d => d.subCategory.categoryId, opt => opt.MapFrom(s => s.SubCategoryTBL.categoryId))
-                .ForPath(d => d.subCategory.recipeId, opt => opt.MapFrom(s => s.SubCategoryTBL.recipeId))
+                .ForPath(d => d.subCategory.categoryId, opt => opt.MapFrom(s => s.SubCategoryTBL.categoryId))              
                 .ForPath(d => d.subCategory.isDelete, opt => opt.MapFrom(s => s.SubCategoryTBL.isDelete))
                 .ReverseMap()
                 .ForMember(s => s.categoryTransitionId, o => o.MapFrom(d => d.categoryTransitionId))
@@ -33,8 +32,7 @@ namespace BakPisir.DTO.MappingProfiles
                 .ForMember(s => s.isDelete, o => o.MapFrom(d => d.isDelete))
                 .ForPath(s => s.SubCategoryTBL.subCategoryId, opt => opt.Ignore())
                 .ForPath(s => s.SubCategoryTBL.subCategoryName, opt => opt.Ignore())
-                .ForPath(s => s.SubCategoryTBL.categoryId, opt => opt.Ignore())
-                .ForPath(s => s.SubCategoryTBL.recipeId, opt => opt.Ignore())
+                .ForPath(s => s.SubCategoryTBL.categoryId, opt => opt.Ignore())               
                 .ForPath(s => s.SubCategoryTBL.isDelete, opt => opt.Ignore())
 
             ;

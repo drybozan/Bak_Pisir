@@ -19,7 +19,6 @@ namespace BakPisir.EF.Models
         {
             this.CommentTBL = new HashSet<CommentTBL>();
             this.StepTBL = new HashSet<StepTBL>();
-            this.SubCategoryTBL = new HashSet<SubCategoryTBL>();
             this.SubTransitionTBL = new HashSet<SubTransitionTBL>();
         }
     
@@ -40,8 +39,6 @@ namespace BakPisir.EF.Models
         public virtual UserTBL UserTBL { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StepTBL> StepTBL { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SubCategoryTBL> SubCategoryTBL { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SubTransitionTBL> SubTransitionTBL { get; set; }
     }
