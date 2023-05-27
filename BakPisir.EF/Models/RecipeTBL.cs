@@ -17,7 +17,6 @@ namespace BakPisir.EF.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public RecipeTBL()
         {
-            this.CommentTBL = new HashSet<CommentTBL>();
             this.StepTBL = new HashSet<StepTBL>();
             this.SubTransitionTBL = new HashSet<SubTransitionTBL>();
         }
@@ -34,8 +33,6 @@ namespace BakPisir.EF.Models
         public string recipeImageUrl { get; set; }
     
         public virtual CategoryTBL CategoryTBL { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CommentTBL> CommentTBL { get; set; }
         public virtual UserTBL UserTBL { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StepTBL> StepTBL { get; set; }

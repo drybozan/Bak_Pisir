@@ -33,7 +33,6 @@ namespace BakPisir.CORE.UnitOfWork
 
         //WORKING WITH TABLES
         private EFRepository<CategoryTBL> _categoryRepository;
-        private EFRepository<CommentTBL> _commentRepository;
         private EFRepository<RecipeTBL> _recipeRepository;
         private EFRepository<RequestTBL> _requestRepository;
         private EFRepository<StepTBL> _stepRepository;
@@ -44,8 +43,6 @@ namespace BakPisir.CORE.UnitOfWork
 
 
         public EFRepository<CategoryTBL> CategoryTemplate => _categoryRepository ?? (_categoryRepository = new EFRepository<CategoryTBL>(_dbContext));
-
-        public EFRepository<CommentTBL> CommentTemplate => _commentRepository ?? (_commentRepository = new EFRepository<CommentTBL>(_dbContext));
 
         public EFRepository<RecipeTBL> RecipeTemplate => _recipeRepository ?? (_recipeRepository = new EFRepository<RecipeTBL>(_dbContext));
 

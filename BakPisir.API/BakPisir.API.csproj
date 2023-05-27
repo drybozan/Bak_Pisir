@@ -196,7 +196,6 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Controllers\CategoryApiController.cs" />
-    <Compile Include="Controllers\CommentApiController.cs" />
     <Compile Include="Controllers\LogApiController.cs" />
     <Compile Include="Controllers\LoginApiController.cs" />
     <Compile Include="Controllers\RecipeApiController.cs" />
@@ -212,7 +211,6 @@
     <Compile Include="Services\CategoryApiService.cs" />
     <Compile Include="Services\Mail.cs" />
     <Compile Include="Services\TokenApiService.cs" />
-    <Compile Include="Services\CommentApiService.cs" />
     <Compile Include="Services\LogApiService.cs" />
     <Compile Include="Services\RecipeApiService.cs" />
     <Compile Include="Services\SubCategoryApiService.cs" />
@@ -269,12 +267,6 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Uploads\CommentPictures\b9414737-8219-461b-b444-16182a72f6b4.png" />
-    <Content Include="Uploads\StepPictures\f2e9ac23-d4a7-4c34-ab49-795fe41a4ec6.jpg" />
-    <Content Include="Uploads\UserProfile\388ee0aa-9afb-46a0-a41e-9a76d79ac812.jpg" />
-    <Content Include="Uploads\UserProfile\82075883-c719-4662-87cb-c63a484daf5e.jpg" />
-    <Content Include="Uploads\UserProfile\9f3ad9ae-14d1-418d-86f1-ede18cf56626.jpg" />
-    <Content Include="Uploads\UserProfile\d351e260-cb61-480d-b1c8-534ad2ff644a.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -289,13 +281,14 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Uploads\UserProfile\304ec80c-16ee-4d3e-b6bd-6b44ae9014dc" />
-    <Content Include="Uploads\UserProfile\bc1b9285-1c8e-4899-afc9-d35d39609681" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Uploads\RecipePictures\" />
+    <Folder Include="Uploads\RecipeVideos\" />
+    <Folder Include="Uploads\StepPictures\" />
+    <Folder Include="Uploads\UserProfile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

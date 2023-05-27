@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="Dtos\CategoryDto.cs" />
     <Compile Include="Dtos\TokenDto.cs" />
-    <Compile Include="Dtos\CommentDto.cs" />
     <Compile Include="Dtos\LogDto.cs" />
     <Compile Include="Dtos\RecipeDto.cs" />
     <Compile Include="Dtos\RequestDto.cs" />
@@ -56,7 +55,6 @@
     <Compile Include="Dtos\SubTransitionDto.cs" />
     <Compile Include="Dtos\UserDto.cs" />
     <Compile Include="MappingProfiles\CategoryProfile.cs" />
-    <Compile Include="MappingProfiles\CommentProfile.cs" />
     <Compile Include="MappingProfiles\LogProfile.cs" />
     <Compile Include="MappingProfiles\RecipeProfile.cs" />
     <Compile Include="MappingProfiles\StepProfile.cs" />

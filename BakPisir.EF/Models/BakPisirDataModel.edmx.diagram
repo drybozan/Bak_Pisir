@@ -4,21 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e61471f4ef5645a8b9c576924eee4fed" Name="Diagram1" ZoomLevel="74">
-        <EntityTypeShape EntityType="BakPisirDBModel.CategoryTBL" Width="1.5" PointX="3.75" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="BakPisirDBModel.CommentTBL" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="BakPisirDBModel.LogTBL" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="BakPisirDBModel.RecipeTBL" Width="1.5" PointX="6" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="BakPisirDBModel.RequestTBL" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BakPisirDBModel.StepTBL" Width="1.5" PointX="8.25" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="BakPisirDBModel.SubCategoryTBL" Width="1.5" PointX="6" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="BakPisirDBModel.SubTransitionTBL" Width="1.5" PointX="8.25" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="BakPisirDBModel.sysdiagrams" Width="1.5" PointX="8.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BakPisirDBModel.UserTBL" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+      <Diagram DiagramId="31c027d146f146f599972f1d0baa2355" Name="Diagram1">
+        <EntityTypeShape EntityType="BakPisirDBModel.CategoryTBL" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BakPisirDBModel.LogTBL" Width="1.5" PointX="3" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BakPisirDBModel.RecipeTBL" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BakPisirDBModel.RequestTBL" Width="1.5" PointX="7.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="BakPisirDBModel.StepTBL" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BakPisirDBModel.SubCategoryTBL" Width="1.5" PointX="3" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BakPisirDBModel.SubTransitionTBL" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BakPisirDBModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="BakPisirDBModel.UserTBL" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="BakPisirDBModel.FK__SubCatego__categ__36B12243" ManuallyRouted="false" />
         <AssociationConnector Association="BakPisirDBModel.FK_RecipeTBL_CategoryTBL" ManuallyRouted="false" />
-        <AssociationConnector Association="BakPisirDBModel.FK__CommentTB__recip__31EC6D26" ManuallyRouted="false" />
-        <AssociationConnector Association="BakPisirDBModel.FK__CommentTB__userI__32E0915F" ManuallyRouted="false" />
         <AssociationConnector Association="BakPisirDBModel.FK_logTBL_UserTBL" ManuallyRouted="false" />
         <AssociationConnector Association="BakPisirDBModel.FK__RecipeTBL__userI__33D4B598" ManuallyRouted="false" />
         <AssociationConnector Association="BakPisirDBModel.FK__StepTBL__recipeI__35BCFE0A" ManuallyRouted="false" />

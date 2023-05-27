@@ -26,7 +26,6 @@ namespace BakPisir.EF.Models
         }
     
         public virtual DbSet<CategoryTBL> CategoryTBL { get; set; }
-        public virtual DbSet<CommentTBL> CommentTBL { get; set; }
         public virtual DbSet<LogTBL> LogTBL { get; set; }
         public virtual DbSet<RecipeTBL> RecipeTBL { get; set; }
         public virtual DbSet<RequestTBL> RequestTBL { get; set; }

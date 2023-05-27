@@ -68,9 +68,6 @@
     <Compile Include="Models\CategoryTBL.cs">
       <DependentUpon>BakPisirDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CommentTBL.cs">
-      <DependentUpon>BakPisirDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\LogTBL.cs">
       <DependentUpon>BakPisirDataModel.tt</DependentUpon>
     </Compile>

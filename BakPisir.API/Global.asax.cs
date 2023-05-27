@@ -28,7 +28,6 @@ namespace BakPisir.API
                 cfg.AddProfile<RequestProfile>();
                 cfg.AddProfile<SubTransitionProfile>();
                 cfg.AddProfile<RecipeProfile>();
-                cfg.AddProfile<CommentProfile>();
                 cfg.AddProfile<CategoryProfile>();
                 cfg.AddProfile<SubCategoryProfile>();
                 cfg.AddProfile<StepProfile>();
