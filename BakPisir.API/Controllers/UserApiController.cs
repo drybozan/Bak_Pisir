@@ -69,7 +69,6 @@ namespace BakPisir.API.Controllers
             return _userApiService.UpdateUser(id, userDto);
         }
 
-        [Authorize]
         [Route("api/UserApi/SendMail")]
         [HttpPost]
         public Result SendMail(string mail)

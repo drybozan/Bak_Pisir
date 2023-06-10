@@ -23,6 +23,7 @@ namespace BakPisir.UI.Controllers
         SubTransitionService subTransitionService = new SubTransitionService();
         CategoryService categoryService = new CategoryService();
         SubCategoryService subCategoryService = new SubCategoryService();
+        UserService userService = new UserService();
 
         static int pageNumber = 1;
         static int pageSize = 9;
@@ -118,6 +119,7 @@ namespace BakPisir.UI.Controllers
         public ActionResult RecipeDetail(int id)
         {
             var singleRecipe = recipeService.GetSingleRecipe(id);
+            var user = userService.GetSingleUser(singleRecipe.userId);
             var categoryName = categoryService.GetSingleCategory(singleRecipe.categoryId).categoryName;
             var subTransitions = subTransitionService.GetSubCategoryByRecipeId(id);
             var subCategoryName = subCategoryService.GetSingleSubCategory(subTransitions.subCategoryId).subCategoryName;
@@ -127,6 +129,7 @@ namespace BakPisir.UI.Controllers
             subTransitions.subCategory.subCategoryName = subCategoryName;
 
             recipeSubTransitionViewModel.recipeDto = singleRecipe;
+            recipeSubTransitionViewModel.recipeDto.user = user;
             recipeSubTransitionViewModel.subTransitionDto = subTransitions;
             return View(recipeSubTransitionViewModel);
         }
