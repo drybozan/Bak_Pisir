@@ -115,6 +115,9 @@
                         success: function (result) {
                             Swal.fire('İşlem Başarılı',
                                 result, 'success');
+                            setTimeout(function () {
+                                location.reload(true); // Sayfayı yenileme
+                            }, 2000); // 2 saniye bekleme süresi (2000 milisaniye)
                         }
                     });
                 }
