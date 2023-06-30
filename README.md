@@ -3,3 +3,9 @@ Bak Pişir projesi kullanıcılar için rahat ve anlaşılır bir arayüze sahip
 Yemekler kategoriler şeklinde filtrelenip kullanıcılara sunulmuştur. Beraberinde admin için de bir arayüz hazırlanmış olup sistem takibi admine sunulmuştur.
 
 ### Kullanılan Teknolojiler
+* C#
+* ASP.Net MVC
+* HTML
+* CSS
+* Bootstrap
+* Jquery
