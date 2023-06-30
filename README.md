@@ -53,6 +53,7 @@ Yemekler kategoriler şeklinde filtrelenip kullanıcılara sunulmuştur. Beraber
 
 ![image](https://github.com/drybozan/Bak_Pisir/assets/86890722/42d17edc-8e96-4c28-a8c6-6b6f7cd8c4da)
 
+
 ![image](https://github.com/drybozan/Bak_Pisir/assets/86890722/42382424-fb02-45c4-ac47-0c51bd830882)
 
 
