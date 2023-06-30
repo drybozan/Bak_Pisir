@@ -41,7 +41,20 @@ Yemekler kategoriler şeklinde filtrelenip kullanıcılara sunulmuştur. Beraber
 
 ![image](https://github.com/drybozan/Bak_Pisir/assets/86890722/bdb07752-2579-4c02-b658-87b5a64216e9)
 
+![image](https://github.com/drybozan/Bak_Pisir/assets/86890722/f12d19bf-17ac-433c-b66f-092772a56632)
+
 ![image](https://github.com/drybozan/Bak_Pisir/assets/86890722/143882ef-b268-4e30-a82d-8624a63ef3ab)
+
+![image](https://github.com/drybozan/Bak_Pisir/assets/86890722/c26389b9-8808-4c95-81f2-7a2b28900f44)
+
+![image](https://github.com/drybozan/Bak_Pisir/assets/86890722/68deed64-6bce-48d7-8684-adffe434df4e)
+
+![image](https://github.com/drybozan/Bak_Pisir/assets/86890722/e06847ac-91f4-4344-af44-9807368bcddd)
+
+![image](https://github.com/drybozan/Bak_Pisir/assets/86890722/42d17edc-8e96-4c28-a8c6-6b6f7cd8c4da)
+
+![image](https://github.com/drybozan/Bak_Pisir/assets/86890722/42382424-fb02-45c4-ac47-0c51bd830882)
+
 
 
 
