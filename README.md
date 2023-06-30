@@ -57,8 +57,19 @@ Yemekler kategoriler şeklinde filtrelenip kullanıcılara sunulmuştur. Beraber
 ![image](https://github.com/drybozan/Bak_Pisir/assets/86890722/42382424-fb02-45c4-ac47-0c51bd830882)
 
 # ADMİN ARAYÜZÜ
+![image](https://github.com/drybozan/Bak_Pisir/assets/86890722/3eb40a0c-5798-4b8a-a047-685734330bfd)
 
+![image](https://github.com/drybozan/Bak_Pisir/assets/86890722/819382cf-e6bd-4e3d-a9de-e95db25197ac)
 
+![image](https://github.com/drybozan/Bak_Pisir/assets/86890722/32cb9460-a2ca-4ca3-843b-234b405e737e)
+
+![image](https://github.com/drybozan/Bak_Pisir/assets/86890722/3b5c56ef-4efc-4ee2-b145-aad97dcf053e)
+
+![image](https://github.com/drybozan/Bak_Pisir/assets/86890722/65fb969d-2ea1-4bd8-a495-141efd44ff59)
+
+![image](https://github.com/drybozan/Bak_Pisir/assets/86890722/d89785a9-5846-4cfc-8fa6-78e1af7b8f4c)
+
+![image](https://github.com/drybozan/Bak_Pisir/assets/86890722/2f3c7d8f-97ed-4a7f-913b-3ca818c60846)
 
 
 
